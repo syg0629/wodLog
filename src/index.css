@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "NotoSerifKR";
+  src: url("/NotoSerifKR-Regular.otf");
+}
+
+body * {
+  font-family: "NotoSerifKR";
+  padding: 5px 10px;
+}
