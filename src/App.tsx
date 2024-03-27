@@ -7,9 +7,12 @@ import Shop from "./pages/Shop";
 import Notice from "./pages/Notice";
 import SignUp from "./pages/SignUp";
 import NotFound from "./pages/NotFound";
-import Header from "./pages/Header";
+import Header from "./components/Header";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import Footer from "./components/Footer";
+import Write from "./components/Write";
+import AddRecord from "./pages/AddRecord";
 
 function App() {
   return (
@@ -24,8 +27,11 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/write" element={<Write />} />
+        <Route path="/addrecord" element={<AddRecord />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer />
     </>
   );
 }
