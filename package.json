@@ -11,13 +11,16 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.24.1",
+    "dayjs": "^1.11.10",
     "github-label-sync": "^2.3.1",
     "jotai": "^2.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.50.1",
+    "react-hook-form": "^7.51.1",
+    "react-quill": "^2.0.0",
     "react-router-dom": "^6.22.2",
-    "swiper": "^11.0.7"
+    "swiper": "^11.0.7",
+    "tesseract.js": "^5.0.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",
