@@ -1,0 +1,9 @@
+.footer {
+  margin-top: 30px;
+  padding: 20px;
+}
+
+.footer_write_button {
+  display: flex;
+  justify-content: flex-end;
+}
