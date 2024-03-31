@@ -6,7 +6,7 @@
   margin: 50px 0 80px 0;
 }
 
-.add_record_grade_wrapper {
+.write_record_grade_wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,28 +17,12 @@
   margin-bottom: 100px;
 }
 
-.add_record_title {
-  margin-right: 20px;
-}
-
-.add_record_grade_wrapper > div {
+.write_record_grade_wrapper > div {
   display: flex;
   align-items: center;
 }
 
-.add_record_grade_wrapper input {
-  font-size: 15px;
-  margin-right: 5px;
-}
-
-.add_record_preview,
-.add_record_tesseract {
-  margin-left: 20px;
-  max-width: 300px;
-  max-height: 300px;
-}
-
-.add_record_grade_wrapper > div > div:first-child {
+.write_record_grade_wrapper > div > div:first-child {
   min-width: 80px;
   margin-right: 20px;
 }
