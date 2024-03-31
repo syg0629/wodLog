@@ -1,13 +1,12 @@
 import "./Table.css";
+import { Database } from "../api/supabase/supabase";
 
-interface TableProps {
-  title: string;
-}
+type Record = Database["public"]["Tables"]["record"]["Row"];
 
-const Table = (props: TableProps) => {
+const Table = ({ rank, name, record, workoutType }: Record) => {
   return (
     <div className="table_wrapper">
-      <h3 className="table_title">{props.title}</h3>
+      <h3 className="table_title">{workoutType}</h3>
       <table className="table">
         <thead>
           <tr>
@@ -19,22 +18,10 @@ const Table = (props: TableProps) => {
         </thead>
         <tbody>
           <tr>
-            <td>1</td>
-            <td>지유</td>
-            <td>3R+16</td>
-            <td>Rx’d</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>지유</td>
-            <td>3R+16</td>
-            <td>Rx’d</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>지유</td>
-            <td>3R+16</td>
-            <td>Rx’d</td>
+            <td>{rank}</td>
+            <td>{name}</td>
+            <td>{record}</td>
+            <td>{workoutType}</td>
           </tr>
         </tbody>
       </table>
