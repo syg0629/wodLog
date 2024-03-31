@@ -1,13 +1,20 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { createPortal } from "react-dom";
 import "./WriteButton.css";
 
-const WriteButton = () => {
-  const { pathname } = useLocation();
-  const targetPath = pathname !== "/record" ? "/write" : "/addrecord";
-  return (
-    <Link to={targetPath} className="write_button">
+interface WriteButtonProps {
+  writePath: string;
+}
+
+const WriteButton = ({ writePath }: WriteButtonProps) => {
+  const writeButtonRoot = document.getElementById("write_btn_root");
+  if (!writeButtonRoot) return;
+
+  return createPortal(
+    <Link to={writePath} className="write_button">
       +
-    </Link>
+    </Link>,
+    writeButtonRoot
   );
 };
 

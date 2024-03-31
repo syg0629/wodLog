@@ -11,3 +11,9 @@
 body * {
   font-family: "NotoSerifKR";
 }
+
+#write_btn_root {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px;
+}

@@ -11,8 +11,8 @@ import Header from "./components/Header";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Footer from "./components/Footer";
-import Write from "./components/Write";
-import AddRecord from "./pages/AddRecord";
+import WriteNotice from "./pages/WriteNotice";
+import WriteRecord from "./pages/WriteRecord";
 
 function App() {
   return (
@@ -21,14 +21,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/notice" element={<Notice />} />
+        <Route path="/notice/writenotice" element={<WriteNotice />} />
         <Route path="/wod" element={<Wod />} />
         <Route path="/record" element={<Record />} />
+        <Route path="/record/writerecord" element={<WriteRecord />} />
         <Route path="/hold" element={<Hold />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/write" element={<Write />} />
-        <Route path="/addrecord" element={<AddRecord />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
