@@ -21,10 +21,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/notice" element={<Notice />} />
-        <Route path="/notice/writenotice" element={<WriteNotice />} />
+        <Route path="/notice/write" element={<WriteNotice />} />
         <Route path="/wod" element={<Wod />} />
         <Route path="/record" element={<Record />} />
-        <Route path="/record/writerecord" element={<WriteRecord />} />
+        <Route path="/record/write" element={<WriteRecord />} />
         <Route path="/hold" element={<Hold />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/login" element={<Login />} />

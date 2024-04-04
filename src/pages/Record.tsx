@@ -1,5 +1,5 @@
 import "./Record.css";
-import WriteButton from "../components/WriteButton";
+import ActionButton from "../components/ActionButton";
 import Table from "../components/Table";
 import { Database } from "../api/supabase/supabase";
 import { supabase } from "../api/supabase/supabaseClient";
@@ -39,7 +39,7 @@ const Record = () => {
           <Table key={record.id} {...record} />
         ))}
       </div>
-      <WriteButton writePath="/record/writerecord" />
+      <ActionButton path="/record/write" text="+" cssType="write_button" />
     </div>
   );
 };

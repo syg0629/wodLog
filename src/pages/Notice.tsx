@@ -1,10 +1,10 @@
-import WriteButton from "../components/WriteButton";
+import ActionButton from "../components/ActionButton";
 
 const Notice = () => {
   return (
     <div>
       Notice
-      <WriteButton writePath="/notice/writenotice" />
+      <ActionButton path="/notice/write" text="+" cssType="write_button" />
     </div>
   );
 };
