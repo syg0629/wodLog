@@ -12,7 +12,7 @@ body * {
   font-family: "NotoSerifKR";
 }
 
-#write_btn_root {
+#action_button_root {
   display: flex;
   justify-content: flex-end;
   padding: 0 20px;
