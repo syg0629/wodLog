@@ -4,26 +4,26 @@ import Tesseract from "tesseract.js";
 
 interface TextRecognizerProps {
   imgUrl: string;
-  idx: number;
-  title: string;
-  onTextRecognition: (text: string, idx: number, title: string) => void;
+  id: number;
+  type: string;
+  onTextRecognition: (text: string, id: number, type: string) => void;
 }
 
 const TextRecognizer = ({
   imgUrl,
-  idx,
-  title,
+  id,
+  type,
   onTextRecognition,
 }: TextRecognizerProps) => {
   const [recognizedText, setRecognizedText] = useState<string>("");
 
   useEffect(() => {
     if (imgUrl) {
-      recognizeImgText(imgUrl, idx, title);
+      recognizeImgText(imgUrl, id, type);
     }
-  }, [imgUrl, idx, title]);
+  }, [imgUrl, id, type]);
 
-  const recognizeImgText = (imgUrl: string, idx: number, title: string) => {
+  const recognizeImgText = (imgUrl: string, id: number, type: string) => {
     Tesseract.recognize(imgUrl, "eng+kor", {
       logger: (m) => {
         if (m.status === "recognizing text") {
@@ -39,7 +39,7 @@ const TextRecognizer = ({
       .then((result) => {
         if (result && result.data.text) {
           setRecognizedText(result.data.text);
-          onTextRecognition(result.data.text, idx, title);
+          onTextRecognition(result.data.text, id, type);
         }
       });
   };

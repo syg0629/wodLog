@@ -4,29 +4,34 @@ import { supabase } from "../api/supabase/supabaseClient";
 import ImageUploader from "../components/ImgUploader";
 import TextRecognizer from "../components/TextRecognizer";
 
-const workoutType = ["Rx’d", "A", "B", "C"];
+const workoutType = [
+  { id: 1, type: "Rx’d" },
+  { id: 2, type: "A" },
+  { id: 3, type: "B" },
+  { id: 4, type: "C" },
+];
 
 const WriteRecord = () => {
   const [uploadImgUrls, setUploadImgUrls] = useState<string[]>([]);
   const [results, setResults] = useState<string[]>([]);
 
   // 이미지 업로드, 업로드된 이미지 url로 변환
-  const handleImgChange = (imgUrl: string, idx: number, title: string) => {
+  const handleImgChange = (imgUrl: string, id: number, type: string) => {
     const newUrls = [...uploadImgUrls];
-    newUrls[idx] = imgUrl;
+    newUrls[id] = imgUrl;
     setUploadImgUrls(newUrls);
   };
 
   // 이미지에서 변환된 url로 텍스트 추출(테서렉서 라이브러리 사용)
-  const handleTextRecognition = (text: string, idx: number, title: string) => {
+  const handleTextRecognition = (text: string, id: number, type: string) => {
     const newResults = [...results];
-    newResults[idx] = text;
+    newResults[id] = text;
     setResults(newResults);
-    handleExtract(newResults[idx], idx, title);
+    handleExtract(newResults[id], id, type);
   };
 
   // 텍스트로 추출된 문자열을 정규식으로 이름, 기록으로 각각 추출
-  const handleExtract = (result: string, idx: number, title: string) => {
+  const handleExtract = (result: string, id: number, type: string) => {
     console.log("추출된 텍스트 >> ", result);
     const regExp = /(\p{L}+)\s+(\d+)(?:\s*R\s*\+\s*(\d+))?|\p{L}+\s+\d+/gu;
     const extractedRecords = [];
@@ -43,7 +48,7 @@ const WriteRecord = () => {
       } else {
         record = `${match[2]}R + ${match[3]}`;
       }
-      const workoutType = title;
+      const workoutType = type;
       extractedRecords.push({ name, record, workoutType });
     }
     console.log(extractedRecords);
@@ -80,17 +85,17 @@ const WriteRecord = () => {
       <h1 className="title">Record</h1>
       <div className="write_record_wrapper">
         <div className="write_record_grade_wrapper">
-          {workoutType.map((title, idx) => (
-            <div key={title}>
+          {workoutType.map(({ id, type }) => (
+            <div key={id}>
               <ImageUploader
                 onImgChange={handleImgChange}
-                idx={idx}
-                title={title}
+                id={id}
+                type={type}
               />
               <TextRecognizer
-                imgUrl={uploadImgUrls[idx]}
-                idx={idx}
-                title={title}
+                imgUrl={uploadImgUrls[id]}
+                id={id}
+                type={type}
                 onTextRecognition={handleTextRecognition}
               />
             </div>

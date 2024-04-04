@@ -2,12 +2,12 @@ import { ChangeEvent, useState } from "react";
 import "./ImgUploader.css";
 
 interface ImageUploaderProps {
-  onImgChange: (imgUrl: string, idx: number, title: string) => void;
-  idx: number;
-  title: string;
+  onImgChange: (imgUrl: string, id: number, type: string) => void;
+  id: number;
+  type: string;
 }
 
-const ImageUploader = ({ onImgChange, idx, title }: ImageUploaderProps) => {
+const ImageUploader = ({ onImgChange, id, type }: ImageUploaderProps) => {
   const [uploadImgUrl, setUploadImgUrl] = useState<string>("");
 
   const onChangeImgUpload = (e: ChangeEvent<HTMLInputElement>) => {
@@ -21,16 +21,16 @@ const ImageUploader = ({ onImgChange, idx, title }: ImageUploaderProps) => {
       const result = reader.result;
       if (typeof result === "string") {
         setUploadImgUrl(result);
-        onImgChange(result, idx, title);
+        onImgChange(result, id, type);
       }
     };
   };
 
   return (
     <div>
-      <div>{title}</div>
-      {uploadImgUrl[idx] === undefined ? (
-        <label htmlFor={`fileTag-${idx}`}>등록하기</label>
+      <div>{type}</div>
+      {uploadImgUrl[id] === undefined ? (
+        <label htmlFor={`fileTag-${id}`}>등록하기</label>
       ) : (
         ""
       )}
@@ -38,10 +38,10 @@ const ImageUploader = ({ onImgChange, idx, title }: ImageUploaderProps) => {
         type="file"
         accept="image/*"
         onChange={onChangeImgUpload}
-        id={`fileTag-${idx}`}
+        id={`fileTag-${id}`}
         hidden={true}
       />
-      {uploadImgUrl[idx] && (
+      {uploadImgUrl[id] && (
         <img className="write_record_preview" src={uploadImgUrl} />
       )}
     </div>
