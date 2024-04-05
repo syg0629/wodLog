@@ -12,14 +12,14 @@ const workoutType = [
 ];
 
 const WriteRecord = () => {
-  const [uploadImgUrls, setUploadImgUrls] = useState<string[]>([]);
+  const [uploadImgUrls, setUploadImgUrls] = useState<string[]>(
+    Array(workoutType.length).fill("")
+  );
   const [results, setResults] = useState<string[]>([]);
 
   // 이미지 업로드, 업로드된 이미지 url로 변환
   const handleImgChange = (imgUrl: string, id: number, type: string) => {
-    const newUrls = [...uploadImgUrls];
-    newUrls[id] = imgUrl;
-    setUploadImgUrls(newUrls);
+    setUploadImgUrls(uploadImgUrls.with(id, imgUrl));
   };
 
   // 이미지에서 변환된 url로 텍스트 추출(테서렉서 라이브러리 사용)
