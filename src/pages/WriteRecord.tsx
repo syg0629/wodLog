@@ -13,7 +13,7 @@ const workoutType = [
 
 const WriteRecord = () => {
   const [uploadImgUrls, setUploadImgUrls] = useState<string[]>(
-    Array(workoutType.length).fill("")
+    Array(workoutType.length).fill(null)
   );
   const [results, setResults] = useState<string[]>([]);
 
