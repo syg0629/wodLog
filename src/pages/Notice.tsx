@@ -1,10 +1,15 @@
+import { Link } from "react-router-dom";
 import ActionButton from "../components/ActionButton";
 
 const Notice = () => {
   return (
     <div>
       Notice
-      <ActionButton path="/notice/write" text="+" cssType="write_button" />
+      <ActionButton>
+        <Link to="/notice/write" className="write_button">
+          +
+        </Link>
+      </ActionButton>
     </div>
   );
 };

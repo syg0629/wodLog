@@ -4,6 +4,7 @@ import Table from "../components/Table";
 import { Database } from "../api/supabase/supabase";
 import { supabase } from "../api/supabase/supabaseClient";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 type Record = Database["public"]["Tables"]["record"]["Row"];
 
@@ -42,7 +43,11 @@ const Record = () => {
           <Table key={record.id} {...record} />
         ))}
       </div>
-      <ActionButton path="/record/write" text="+" cssType="write_button" />
+      <ActionButton>
+        <Link to="/record/write" className="write_button">
+          +
+        </Link>
+      </ActionButton>
     </div>
   );
 };
