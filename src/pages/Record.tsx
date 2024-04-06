@@ -3,39 +3,42 @@ import ActionButton from "../components/ActionButton";
 import Table from "../components/Table";
 import { Database } from "../api/supabase/supabase";
 import { supabase } from "../api/supabase/supabaseClient";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 type Record = Database["public"]["Tables"]["record"]["Row"];
 
 const Record = () => {
-  const [records, setRecords] = useState<Record[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data: records, error } = await supabase
-          .from("record")
-          .select("*")
-          .order("record", { ascending: true });
-
-        if (error) {
-          throw error;
-        }
-        setRecords(records);
-      } catch (error) {
-        if (error instanceof Error) {
-          console.log("Supabase 데이터 가져오는 중 오류 >> ", error.message);
-        }
+  const {
+    data: records,
+    isLoading,
+    error,
+  } = useQuery<Record[], Error, Record[], string[]>({
+    queryKey: ["records"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("record")
+        .select("*")
+        .order("record", { ascending: true });
+      if (error) {
+        throw error;
       }
-    };
-    fetchData();
-  }, []);
+      return data;
+    },
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error instanceof Error) {
+    console.log("Supabase 데이터 가져오는 중 오류 >> ", error.message);
+  }
 
   return (
     <div className="record_wrapper">
       <h1 className="title">Record</h1>
       <div className="record_grade_top">
-        {records.map((record: Record) => (
+        {records?.map((record: Record) => (
           <Table key={record.id} {...record} />
         ))}
       </div>

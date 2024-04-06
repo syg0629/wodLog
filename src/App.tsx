@@ -13,10 +13,13 @@ import Home from "./pages/Home";
 import Footer from "./components/Footer";
 import WriteNotice from "./pages/WriteNotice";
 import WriteRecord from "./pages/WriteRecord";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -32,7 +35,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
-    </>
+    </QueryClientProvider>
   );
 }
 
