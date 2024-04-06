@@ -18,23 +18,27 @@ const TextRecognizer = ({
   const [recognizedText, setRecognizedText] = useState<string>("");
 
   useEffect(() => {
+    let isMounted = true;
     if (imgUrl) {
       recognizeImgText(imgUrl, id, type);
     }
+    return () => {
+      isMounted = false;
+    };
   }, [imgUrl, id, type]);
 
   const recognizeImgText = (imgUrl: string, id: number, type: string) => {
     Tesseract.recognize(imgUrl, "eng+kor", {
-      logger: (m) => {
-        if (m.status === "recognizing text") {
+      logger: ({ status, progress }) => {
+        if (status === "recognizing text") {
           // 텍스트 인식 진행률
-          const progress = Number(m.progress.toFixed(2)) * 100;
-          console.log(`진행률: ${progress}%`);
+          const progressPercentage = Number(progress.toFixed(2)) * 100;
+          console.log(`진행률: ${progressPercentage}%`);
         }
       },
     })
-      .catch((error) => {
-        console.log("err", error);
+      .catch((error: Error) => {
+        console.log("텍스트 추출 중 에러 >> ", error.message);
       })
       .then((result) => {
         if (result && result.data.text) {
