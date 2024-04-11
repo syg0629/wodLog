@@ -5,21 +5,21 @@ import ImageUploader from "../components/ImgUploader";
 import TextRecognizer from "../components/TextRecognizer";
 
 const workoutType = [
-  { id: 1, type: "Rx’d" },
-  { id: 2, type: "A" },
-  { id: 3, type: "B" },
-  { id: 4, type: "C" },
+  { id: 0, type: "Rx’d" },
+  { id: 1, type: "A" },
+  { id: 2, type: "B" },
+  { id: 3, type: "C" },
 ];
 
 const WriteRecord = () => {
-  const [uploadImgUrls, setUploadImgUrls] = useState<string[]>(
+  const [uploadImgUrls, setUploadImgUrls] = useState<string[] | null>(
     Array(workoutType.length).fill(null)
   );
   const [results, setResults] = useState<string[]>([]);
 
   // 이미지 업로드, 업로드된 이미지 url로 변환
   const handleImgChange = (imgUrl: string, id: number, type: string) => {
-    setUploadImgUrls(uploadImgUrls.with(id, imgUrl));
+    if (uploadImgUrls) setUploadImgUrls(uploadImgUrls.with(id, imgUrl));
   };
 
   // 이미지에서 변환된 url로 텍스트 추출(테서렉서 라이브러리 사용)
@@ -93,7 +93,7 @@ const WriteRecord = () => {
                 type={type}
               />
               <TextRecognizer
-                imgUrl={uploadImgUrls[id]}
+                imgUrl={uploadImgUrls ? uploadImgUrls[id] : ""}
                 id={id}
                 type={type}
                 onTextRecognition={handleTextRecognition}
