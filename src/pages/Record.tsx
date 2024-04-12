@@ -1,19 +1,21 @@
 import "./Record.css";
+import "./Component.css";
 import ActionButton from "../components/ActionButton";
 import Table from "../components/Table";
 import { Database } from "../api/supabase/supabase";
 import { supabase } from "../api/supabase/supabaseClient";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
 type Record = Database["public"]["Tables"]["record"]["Row"];
 
 const Record = () => {
-  const {
-    data: records,
-    isLoading,
-    error,
-  } = useQuery<Record[], Error, Record[], string[]>({
+  const { data: records } = useSuspenseQuery<
+    Record[],
+    Error,
+    Record[],
+    string[]
+  >({
     queryKey: ["records"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -26,14 +28,6 @@ const Record = () => {
       return data;
     },
   });
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error instanceof Error) {
-    console.log("Supabase 데이터 가져오는 중 오류 >> ", error.message);
-  }
 
   return (
     <div className="record_wrapper">
