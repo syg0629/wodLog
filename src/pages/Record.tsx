@@ -6,6 +6,7 @@ import { Database } from "../api/supabase/supabase";
 import { supabase } from "../api/supabase/supabaseClient";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import { handleSupabaseResponse } from "../utils/handleSupabaseResponse";
 
 type Record = Database["public"]["Tables"]["record"]["Row"];
 
@@ -22,10 +23,8 @@ const Record = () => {
         .from("record")
         .select("*")
         .order("record", { ascending: true });
-      if (error) {
-        throw error;
-      }
-      return data;
+
+      return handleSupabaseResponse(data, error);
     },
   });
 
