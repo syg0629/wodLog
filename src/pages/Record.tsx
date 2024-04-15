@@ -7,6 +7,7 @@ import { supabase } from "../api/supabase/supabaseClient";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { handleSupabaseResponse } from "../utils/handleSupabaseResponse";
+import { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 type Record = Database["public"]["Tables"]["record"]["Row"];
 
@@ -19,12 +20,12 @@ const Record = () => {
   >({
     queryKey: ["records"],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const data: PostgrestSingleResponse<Record[]> = await supabase
         .from("record")
         .select("*")
         .order("record", { ascending: true });
 
-      return handleSupabaseResponse(async () => data, error);
+      return handleSupabaseResponse(data);
     },
   });
 
