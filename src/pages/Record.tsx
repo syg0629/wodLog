@@ -24,7 +24,7 @@ const Record = () => {
         .select("*")
         .order("record", { ascending: true });
 
-      return handleSupabaseResponse(data, error);
+      return handleSupabaseResponse(async () => data, error);
     },
   });
 

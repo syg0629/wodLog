@@ -1,11 +1,12 @@
 import { PostgrestError } from "@supabase/supabase-js";
 
-export const handleSupabaseResponse = <T>(
-  data: T[] | null,
+export const handleSupabaseResponse = async <T>(
+  fn: () => Promise<T[] | null>,
   error: PostgrestError | null
-): T[] => {
+): Promise<T[]> => {
   if (error) {
     throw error;
   }
+  const data = await fn();
   return data ?? [];
 };
