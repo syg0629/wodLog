@@ -3,7 +3,13 @@ import { Database } from "../api/supabase/supabase";
 
 type Record = Database["public"]["Tables"]["record"]["Row"];
 
-const Table = ({ rank, name, record, workoutType }: Record) => {
+const Table = ({
+  workoutType,
+  records,
+}: {
+  workoutType: string;
+  records: Record[];
+}) => {
   return (
     <div className="table_wrapper">
       <h3 className="table_title">{workoutType}</h3>
@@ -17,12 +23,28 @@ const Table = ({ rank, name, record, workoutType }: Record) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>{rank}</td>
-            <td>{name}</td>
-            <td>{record}</td>
-            <td>{workoutType}</td>
-          </tr>
+          {records && records.length > 0 ? (
+            records
+              .sort((a, b) => {
+                const aRecord = a.record ?? 0;
+                const bRecord = b.record ?? 0;
+                return bRecord - aRecord;
+              })
+              .map((record, index) => (
+                <tr key={record.id}>
+                  <td>{index + 1}</td>
+                  <td>{record.name}</td>
+                  <td>
+                    {record.record && !Number.isInteger(record.record)
+                      ? record.record.toString().replace(".", "R ")
+                      : record.record}
+                  </td>
+                  <td>{record.workoutType}</td>
+                </tr>
+              ))
+          ) : (
+            <div className="no_record">등록된 기록이 없습니다!</div>
+          )}
         </tbody>
       </table>
     </div>
