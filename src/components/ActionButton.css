@@ -14,6 +14,9 @@
     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   display: flex;
   justify-content: center;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 }
 
 .write_button:hover {
