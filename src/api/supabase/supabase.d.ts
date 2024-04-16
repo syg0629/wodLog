@@ -39,7 +39,7 @@ export type Database = {
           id: number;
           name: string;
           rank: number | null;
-          record: string | null;
+          record: number | null;
           workoutType: string;
         };
         Insert: {
@@ -47,7 +47,7 @@ export type Database = {
           id?: number;
           name: string;
           rank?: number | null;
-          record?: string | null;
+          record?: number | null;
           workoutType: string;
         };
         Update: {
@@ -55,7 +55,7 @@ export type Database = {
           id?: number;
           name?: string;
           rank?: number | null;
-          record?: string | null;
+          record?: number | null;
           workoutType?: string;
         };
         Relationships: [];
