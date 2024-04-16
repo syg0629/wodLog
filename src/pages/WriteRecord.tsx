@@ -46,7 +46,8 @@ const WriteRecord = () => {
       if (!match[3]) {
         record = `${match[2]}`;
       } else {
-        record = `${match[2]}R + ${match[3]}`;
+        // supabase 저장될 때는 R를 .으로 바꿔서 소수로 저장
+        record = `${match[2]}.${match[3]}`;
       }
       const workoutType = type;
       extractedRecords.push({ name, record, workoutType });
