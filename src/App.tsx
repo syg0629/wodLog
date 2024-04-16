@@ -4,29 +4,43 @@ import Wod from "./pages/Wod";
 import Record from "./pages/Record";
 import Hold from "./pages/Hold";
 import Shop from "./pages/Shop";
-import Notice from "./pages/Notice";
+import Notice from "./pages/notice/Notice";
 import SignUp from "./pages/SignUp";
 import NotFound from "./pages/NotFound";
-import Header from "./pages/Header";
+import Header from "./components/Header";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import Footer from "./components/Footer";
+import WriteNotice from "./pages/notice/WriteNotice";
+import WriteRecord from "./pages/WriteRecord";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import DetailNotice from "./pages/notice/DetailNotice";
+import { Suspense } from "react";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/notice" element={<Notice />} />
-        <Route path="/wod" element={<Wod />} />
-        <Route path="/record" element={<Record />} />
-        <Route path="/hold" element={<Hold />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/notice" element={<Notice />} />
+          <Route path="/notice/:id" element={<DetailNotice />} />
+          <Route path="/notice/write" element={<WriteNotice />} />
+          <Route path="/wod" element={<Wod />} />
+          <Route path="/record" element={<Record />} />
+          <Route path="/record/write" element={<WriteRecord />} />
+          <Route path="/hold" element={<Hold />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
+      <Footer />
+    </QueryClientProvider>
   );
 }
 

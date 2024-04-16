@@ -1,0 +1,28 @@
+.write_button {
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 900;
+  margin: 4px 2px;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+  width: 60px;
+  height: 60px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.write_button:hover {
+  background-color: #0056b3;
+}
+
+.write_button:active {
+  background-color: #003a80;
+}
