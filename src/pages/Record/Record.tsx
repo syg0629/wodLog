@@ -1,5 +1,5 @@
 import "./Record.css";
-import "./../Components.css";
+import "../../components/Components.css";
 import ActionButton from "../../components/ActionButton";
 import Table from "../../components/Table";
 import { Database } from "../../api/supabase/supabase";
