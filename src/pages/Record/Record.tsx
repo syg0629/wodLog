@@ -1,12 +1,12 @@
 import "./Record.css";
-import "./Component.css";
-import ActionButton from "../components/ActionButton";
-import Table from "../components/Table";
-import { Database } from "../api/supabase/supabase";
-import { supabase } from "../api/supabase/supabaseClient";
+import "./../Component.css";
+import ActionButton from "../../components/ActionButton";
+import Table from "../../components/Table";
+import { Database } from "../../api/supabase/supabase";
+import { supabase } from "../../api/supabase/supabaseClient";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { handleSupabaseResponse } from "../utils/handleSupabaseResponse";
+import { handleSupabaseResponse } from "../../utils/handleSupabaseResponse";
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 type Record = Database["public"]["Tables"]["record"]["Row"];

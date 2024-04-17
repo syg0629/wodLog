@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./WriteRecord.css";
-import { supabase } from "../api/supabase/supabaseClient";
-import ImageUploader from "../components/ImgUploader";
-import TextRecognizer from "../components/TextRecognizer";
+import { supabase } from "../../api/supabase/supabaseClient";
+import ImageUploader from "../../components/ImgUploader";
+import TextRecognizer from "../../components/TextRecognizer";
 
 const workoutType = [
   { id: 0, type: "Rx’d" },

@@ -1,20 +1,20 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Wod from "./pages/Wod";
-import Record from "./pages/Record";
+import Record from "./pages/Record/Record";
 import Hold from "./pages/Hold";
 import Shop from "./pages/Shop";
-import Notice from "./pages/notice/Notice";
+import Notice from "./pages/Notice/Notice";
 import SignUp from "./pages/SignUp";
 import NotFound from "./pages/NotFound";
 import Header from "./components/Header";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Footer from "./components/Footer";
-import WriteNotice from "./pages/notice/WriteNotice";
-import WriteRecord from "./pages/WriteRecord";
+import WriteNotice from "./pages/Notice/WriteNotice";
+import WriteRecord from "./pages/Record/WriteRecord";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import DetailNotice from "./pages/notice/DetailNotice";
+import DetailNotice from "./pages/Notice/DetailNotice";
 import { Suspense } from "react";
 
 const queryClient = new QueryClient();
