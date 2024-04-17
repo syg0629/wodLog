@@ -5,3 +5,9 @@
   text-decoration: underline;
   margin: 50px;
 }
+
+.line {
+  height: 2px;
+  border-bottom: 1px solid #e8e8e8;
+  margin: 3px 3px 23px 3px;
+}
