@@ -1,0 +1,19 @@
+.home_notice_wrapper {
+  padding: 10px 25px;
+}
+
+.notice_wrapper {
+  padding: 0 320px;
+}
+
+.notice_count {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 50px;
+  font-size: 20px;
+}
+
+div > div > div > div > .line {
+  border-bottom: 3px solid #e8e8e8;
+  margin: 10px 0 20px 0;
+}
