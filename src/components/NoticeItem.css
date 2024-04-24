@@ -1,0 +1,21 @@
+.notice_article {
+  display: flex;
+  cursor: pointer;
+  margin-bottom: 35px;
+  cursor: pointer;
+}
+
+.notice_article_title {
+  font-size: 23px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.notice_article_date,
+.notice_article_content_preview {
+  margin-left: 5px;
+}
+
+.notice_article_content_preview {
+  width: 100vh;
+}
