@@ -10,6 +10,7 @@
   padding: 0px;
   margin-right: 20px;
   background-image: linear-gradient(transparent 60%, #ffdb3d 40%);
+  cursor: pointer;
 }
 
 .header_menu_wrapper {
@@ -22,6 +23,7 @@
 .header_menu_btn {
   margin-left: 90px;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .header_menu_btn_login {
