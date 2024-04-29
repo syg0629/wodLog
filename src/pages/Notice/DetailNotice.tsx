@@ -1,6 +1,5 @@
 import Line from "../../components/Line";
 import dayjs from "dayjs";
-import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import DOMPurify from "dompurify";
 import { useNavigate, useParams } from "react-router-dom";
 import "./DetailNotice.css";
@@ -16,13 +15,6 @@ const DetailNotice = () => {
   if (!detailNoticeData) {
     return <div>Loading...</div>;
   }
-  const deltaToHtmlNoticeData = detailNoticeData.map((post) => {
-    const postContent = post.content;
-    const deltaOps = JSON.parse(postContent).ops;
-    const deltaToHtmlConverter = new QuillDeltaToHtmlConverter(deltaOps, {});
-    const html = deltaToHtmlConverter.convert();
-    return { ...post, content: html };
-  });
 
   const onClickMoveToEdit = (id: number): void => {
     navigate(`/notice/${id}/edit`);
@@ -42,7 +34,7 @@ const DetailNotice = () => {
     <>
       <h1 className="title">Notice</h1>
       <div className="notice_wrapper">
-        {deltaToHtmlNoticeData.map((post) => (
+        {detailNoticeData.map((post) => (
           <div key={post.id}>
             <h1 className="detail_notice_title">{post.title}</h1>
             <div className="detail_notice_head_detail">

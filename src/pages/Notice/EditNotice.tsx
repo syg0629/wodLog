@@ -1,6 +1,5 @@
 import WriteNoticeForm from "../../components/WriteNoticeForm";
 import { useParams } from "react-router-dom";
-import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import { useFetchNoticeDetail } from "../../queries/noticeQueries";
 
 const EditNotice = () => {
@@ -11,14 +10,7 @@ const EditNotice = () => {
   if (!editNoticeData) {
     return <div>Loading...</div>;
   }
-  const deltaToHtmlNoticeData = editNoticeData.map((post) => {
-    const postContent = post.content;
-    const deltaOps = JSON.parse(postContent).ops;
-    const deltaToHtmlConverter = new QuillDeltaToHtmlConverter(deltaOps, {});
-    const html = deltaToHtmlConverter.convert();
-    return { ...post, content: html };
-  });
 
-  return <WriteNoticeForm isEdit={true} data={deltaToHtmlNoticeData} />;
+  return <WriteNoticeForm isEdit={true} data={editNoticeData} />;
 };
 export default EditNotice;

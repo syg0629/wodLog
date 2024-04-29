@@ -4,6 +4,7 @@ import { createQueryKeys } from "@lukemorales/query-key-factory";
 import { Database } from "../api/supabase/supabase";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { handleSupabaseResponse } from "../utils/handleSupabaseResponse";
+import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 
 type Notice = Database["public"]["Tables"]["notice"]["Row"];
 
@@ -36,7 +37,18 @@ export function useFetchNoticeDetail(noticeId: number) {
         .from("notice")
         .select("*")
         .eq("id", noticeId);
-      return await handleSupabaseResponse(data);
+      const noticeData = await handleSupabaseResponse(data);
+      const deltaToHtmlNoticeData = noticeData.map((post) => {
+        const postContent = post.content;
+        const deltaOps = JSON.parse(postContent).ops;
+        const deltaToHtmlConverter = new QuillDeltaToHtmlConverter(
+          deltaOps,
+          {}
+        );
+        const html = deltaToHtmlConverter.convert();
+        return { ...post, content: html };
+      });
+      return deltaToHtmlNoticeData;
     },
   });
 }
