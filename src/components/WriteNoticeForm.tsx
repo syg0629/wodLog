@@ -42,8 +42,7 @@ const WriteNoticeForm = (props: WriteProps) => {
             .insert([{ title, content, writer, createdDate }])
             .select();
 
-      const formattedData = await handleSupabaseResponse(savedNotice);
-      return formattedData[0];
+      return (await handleSupabaseResponse(savedNotice))[0];
     },
     onSuccess: async (savedNotice: Notice): Promise<void> => {
       const savedNoticeId: number = savedNotice.id;

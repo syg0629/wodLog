@@ -11,7 +11,7 @@ import Header from "./components/Header";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Footer from "./components/Footer";
-import WriteNotice from "./pages/Notice/WriteNotice";
+import WriteNoticeForm from "./components/WriteNoticeForm";
 import EditNotice from "./pages/Notice/EditNotice";
 import WriteRecord from "./pages/Record/WriteRecord";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -29,7 +29,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/notice" element={<Notice />} />
           <Route path="/notice/:id" element={<DetailNotice />} />
-          <Route path="/notice/write" element={<WriteNotice />} />
+          <Route
+            path="/notice/write"
+            element={<WriteNoticeForm isEdit={false} />}
+          />
           <Route path="/notice/:id/edit" element={<EditNotice />} />
           <Route path="/wod" element={<Wod />} />
           <Route path="/record" element={<Record />} />
