@@ -1,43 +1,27 @@
 import Line from "../../components/Line";
-import { Database } from "../../api/supabase/supabase";
-import { supabase } from "../../api/supabase/supabaseClient";
 import dayjs from "dayjs";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import DOMPurify from "dompurify";
 import { useNavigate, useParams } from "react-router-dom";
 import "./DetailNotice.css";
-import { useQuery } from "@tanstack/react-query";
-import { handleSupabaseResponse } from "../../utils/handleSupabaseResponse";
-import { PostgrestSingleResponse } from "@supabase/supabase-js";
-
-type Notice = Database["public"]["Tables"]["notice"]["Row"];
+import { useFetchNoticeDetail } from "../../queries/noticeQueries";
+import { supabase } from "../../api/supabase/supabaseClient";
 
 const DetailNotice = () => {
   const params = useParams();
   const noticeId = Number(params.id);
   const navigate = useNavigate();
 
-  const { data: notice } = useQuery<Notice[]>({
-    queryKey: ["detailNotice"],
-    queryFn: async (): Promise<Notice[]> => {
-      const data: PostgrestSingleResponse<Notice[]> = await supabase
-        .from("notice")
-        .select("*")
-        .eq("id", noticeId);
-
-      const detailNoticeData = await handleSupabaseResponse(data);
-      const deltaToHtml = (await detailNoticeData).map((post: Notice) => {
-        const postContent = post.content;
-        const deltaOps = JSON.parse(postContent).ops;
-        const deltaToHtmlConverter = new QuillDeltaToHtmlConverter(
-          deltaOps,
-          {}
-        );
-        const html = deltaToHtmlConverter.convert();
-        return { ...post, content: html };
-      });
-      return deltaToHtml;
-    },
+  const { data: detailNoticeData } = useFetchNoticeDetail(noticeId);
+  if (!detailNoticeData) {
+    return <div>Loading...</div>;
+  }
+  const deltaToHtmlNoticeData = detailNoticeData.map((post) => {
+    const postContent = post.content;
+    const deltaOps = JSON.parse(postContent).ops;
+    const deltaToHtmlConverter = new QuillDeltaToHtmlConverter(deltaOps, {});
+    const html = deltaToHtmlConverter.convert();
+    return { ...post, content: html };
   });
 
   const onClickMoveToEdit = (id: number): void => {
@@ -45,12 +29,12 @@ const DetailNotice = () => {
   };
 
   const onClickDeleteNotice = async () => {
-    if (confirm("삭제하시겠습니까?")) {
+    if (!confirm("삭제하시겠습니까?")) {
+      return;
+    } else {
       await supabase.from("notice").delete().eq("id", noticeId);
       alert("해당 게시물이 삭제되었습니다.");
       navigate("/notice", { replace: true });
-    } else {
-      return;
     }
   };
 
@@ -58,7 +42,7 @@ const DetailNotice = () => {
     <>
       <h1 className="title">Notice</h1>
       <div className="notice_wrapper">
-        {notice?.map((post) => (
+        {deltaToHtmlNoticeData.map((post) => (
           <div key={post.id}>
             <h1 className="detail_notice_title">{post.title}</h1>
             <div className="detail_notice_head_detail">
