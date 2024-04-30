@@ -69,7 +69,7 @@ const WriteNoticeForm = (props: WriteProps) => {
   } = useController({ name: "content", control, rules: { required: true } });
 
   useEffect(() => {
-    onChange(props.data?.[0].content || "");
+    onChange(props.data?.[0].content ?? "");
   }, [props.data, onChange]);
 
   const onChangeContents = (content: string) => {
