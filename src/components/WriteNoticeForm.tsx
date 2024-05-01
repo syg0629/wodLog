@@ -4,16 +4,13 @@ import "react-quill/dist/quill.snow.css";
 import { SubmitHandler, useForm, useController } from "react-hook-form";
 import "./WriteNoticeForm.css";
 import Line from "./Line";
-import { supabase } from "../api/supabase/supabaseClient";
 import dayjs from "dayjs";
 import ReactQuill from "react-quill";
 import { modules } from "./EditorModules";
 import { Database } from "../api/supabase/supabase";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import { handleSupabaseResponse } from "../utils/handleSupabaseResponse";
-import { useMutation } from "@tanstack/react-query";
-import { PostgrestSingleResponse } from "@supabase/supabase-js";
+import { useInsertNotice, useUpdateNotice } from "../queries/noticeQueries";
 
 type Notice = Database["public"]["Tables"]["notice"]["Row"];
 
@@ -28,34 +25,20 @@ const WriteNoticeForm = (props: WriteProps) => {
   const navigate = useNavigate();
   const quillRef = useRef<ReactQuill>(null);
 
-  const saveNotice = useMutation<Notice, Error, Notice>({
-    mutationFn: async (noticeData: Notice): Promise<Notice> => {
-      const { title, content, writer, createdDate } = noticeData;
-      const savedNotice: PostgrestSingleResponse<Notice[]> = props.isEdit
-        ? await supabase
-            .from("notice")
-            .update({ title, content, createdDate })
-            .eq("id", noticeId)
-            .select()
-        : await supabase
-            .from("notice")
-            .insert([{ title, content, writer, createdDate }])
-            .select();
+  const updateNotice = useUpdateNotice(noticeId);
+  const insertNotice = useInsertNotice();
 
-      return (await handleSupabaseResponse(savedNotice))[0];
-    },
-    onSuccess: async (savedNotice: Notice): Promise<void> => {
-      const savedNoticeId: number = savedNotice.id;
-      if (savedNoticeId) {
-        navigate(`/notice/${savedNoticeId}`);
-      }
-    },
-    onError: (error) => {
-      if (error instanceof Error) {
-        console.log("공지사항 등록/수정 시 오류 >> ", error.message);
-      }
-    },
-  });
+  const { data: savedNotice, error } = props.isEdit
+    ? updateNotice
+    : insertNotice;
+
+  if (savedNotice) {
+    navigate(`/notice/${savedNotice.id}`);
+  }
+
+  if (error instanceof Error) {
+    console.log("공지사항 등록/수정 시 오류 >> ", error.message);
+  }
 
   const {
     register,
@@ -92,7 +75,9 @@ const WriteNoticeForm = (props: WriteProps) => {
       : "등록하시겠습니까?";
 
     if (confirm(confirmMessage)) {
-      saveNotice.mutate(formattedData);
+      props.isEdit
+        ? updateNotice.mutate(formattedData)
+        : insertNotice.mutate(formattedData);
     }
   };
 

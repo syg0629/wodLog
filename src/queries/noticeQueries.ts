@@ -2,16 +2,19 @@ import { PostgrestSingleResponse } from "@supabase/supabase-js";
 import { supabase } from "../api/supabase/supabaseClient";
 import { createQueryKeys } from "@lukemorales/query-key-factory";
 import { Database } from "../api/supabase/supabase";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { handleSupabaseResponse } from "../utils/handleSupabaseResponse";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 
 type Notice = Database["public"]["Tables"]["notice"]["Row"];
 
 // Notice/Notice
+// Notice 목록
 const noticeQueryKeys = createQueryKeys("notice", {
   fetchNoticeList: () => ["noticeList"],
   fetchNoticeDetail: (noticeId) => ["fetchNoticeDetail", noticeId],
+  updateNotice: (noticeId) => ["updateNoticeDetail", noticeId],
+  insertNotice: () => ["insertNotice"],
 });
 
 export function useFetchNoticeList() {
@@ -29,6 +32,7 @@ export function useFetchNoticeList() {
 
 // Notice/DetailNotice
 // Notice/EditNotice
+// Notice 상세 페이지 / Notice 수정시 기존 값 조회
 export function useFetchNoticeDetail(noticeId: number) {
   return useQuery({
     queryKey: noticeQueryKeys.fetchNoticeDetail(noticeId).queryKey,
@@ -49,6 +53,37 @@ export function useFetchNoticeDetail(noticeId: number) {
         return { ...post, content: html };
       });
       return deltaToHtmlNoticeData;
+    },
+  });
+}
+
+// Notice/WriteNoticeForm
+// 기존 Notice 수정
+export function useUpdateNotice(noticeId: number) {
+  return useMutation({
+    mutationFn: async (noticeData: Notice): Promise<Notice> => {
+      const { title, content, writer, createdDate } = noticeData;
+      const savedNotice: PostgrestSingleResponse<Notice[]> = await supabase
+        .from("notice")
+        .update({ title, content, writer, createdDate })
+        .eq("id", noticeId)
+        .select();
+      return (await handleSupabaseResponse(savedNotice))[0];
+    },
+  });
+}
+
+// Notice/WriteNoticeForm
+//신규 Notice 등록
+export function useInsertNotice() {
+  return useMutation({
+    mutationFn: async (noticeData: Notice): Promise<Notice> => {
+      const { title, content, writer, createdDate } = noticeData;
+      const savedNotice: PostgrestSingleResponse<Notice[]> = await supabase
+        .from("notice")
+        .insert([{ title, content, writer, createdDate }])
+        .select();
+      return (await handleSupabaseResponse(savedNotice))[0];
     },
   });
 }
