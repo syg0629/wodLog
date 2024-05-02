@@ -61,6 +61,7 @@ export function useFetchNoticeDetail(noticeId: number) {
 // 기존 Notice 수정
 export function useUpdateNotice(noticeId: number) {
   return useMutation({
+    mutationKey: noticeQueryKeys.updateNotice(noticeId).queryKey,
     mutationFn: async (noticeData: Notice): Promise<Notice> => {
       const { title, content, writer, createdDate } = noticeData;
       const savedNotice: PostgrestSingleResponse<Notice[]> = await supabase
@@ -77,6 +78,7 @@ export function useUpdateNotice(noticeId: number) {
 //신규 Notice 등록
 export function useInsertNotice() {
   return useMutation({
+    mutationKey: noticeQueryKeys.insertNotice().queryKey,
     mutationFn: async (noticeData: Notice): Promise<Notice> => {
       const { title, content, writer, createdDate } = noticeData;
       const savedNotice: PostgrestSingleResponse<Notice[]> = await supabase
