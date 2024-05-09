@@ -3,15 +3,19 @@ import dayjs from "dayjs";
 import DOMPurify from "dompurify";
 import { useNavigate, useParams } from "react-router-dom";
 import "./DetailNotice.css";
-import { useFetchNoticeDetail } from "../../queries/noticeQueries";
+import { noticeQueryKeys } from "../../queries/noticeQueries";
 import { supabase } from "../../api/supabase/supabaseClient";
+import { useQuery } from "@tanstack/react-query";
 
 const DetailNotice = () => {
   const params = useParams();
   const noticeId = Number(params.id);
   const navigate = useNavigate();
 
-  const { data: detailNoticeData } = useFetchNoticeDetail(noticeId);
+  const { data: detailNoticeData } = useQuery(
+    noticeQueryKeys.fetchNoticeDetail(noticeId)
+  );
+
   if (!detailNoticeData) {
     return <div>Loading...</div>;
   }

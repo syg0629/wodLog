@@ -2,24 +2,16 @@ import { PostgrestSingleResponse } from "@supabase/supabase-js";
 import { supabase } from "../api/supabase/supabaseClient";
 import { createQueryKeys } from "@lukemorales/query-key-factory";
 import { Database } from "../api/supabase/supabase";
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { handleSupabaseResponse } from "../utils/handleSupabaseResponse";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 
 type Notice = Database["public"]["Tables"]["notice"]["Row"];
 
-const noticeQueryKeys = createQueryKeys("notice", {
-  fetchNoticeList: () => ["noticeList"],
-  fetchNoticeDetail: (noticeId) => ["fetchNoticeDetail", noticeId],
-  updateNotice: (noticeId) => ["updateNoticeDetail", noticeId],
-  insertNotice: () => ["insertNotice"],
-});
-
-// Notice/Notice
-// Notice 목록
-export function useFetchNoticeList() {
-  return useSuspenseQuery({
-    queryKey: noticeQueryKeys.fetchNoticeList().queryKey,
+export const noticeQueryKeys = createQueryKeys("notice", {
+  // Notice/Notice
+  // Notice 목록
+  fetchNoticeList: () => ({
+    queryKey: ["all"],
     queryFn: async () => {
       const data = await supabase
         .from("notice")
@@ -27,15 +19,12 @@ export function useFetchNoticeList() {
         .order("id", { ascending: false });
       return await handleSupabaseResponse(data);
     },
-  });
-}
-
-// Notice/DetailNotice
-// Notice/EditNotice
-// Notice 상세 페이지 / Notice 수정 시 기존 값 조회
-export function useFetchNoticeDetail(noticeId: number) {
-  return useQuery({
-    queryKey: noticeQueryKeys.fetchNoticeDetail(noticeId).queryKey,
+  }),
+  // Notice/DetailNotice
+  // Notice/EditNotice
+  // Notice 상세 페이지 / Notice 수정시 기존 값 조회
+  fetchNoticeDetail: (noticeId: number) => ({
+    queryKey: [noticeId],
     queryFn: async () => {
       const data: PostgrestSingleResponse<Notice[]> = await supabase
         .from("notice")
@@ -54,39 +43,5 @@ export function useFetchNoticeDetail(noticeId: number) {
       });
       return deltaToHtmlNoticeData;
     },
-  });
-}
-
-// 공통 mutation
-const savedNotice = async (
-  noticeData: Notice,
-  noticeId?: number
-): Promise<Notice> => {
-  const { title, content, createdDate } = noticeData;
-  const savedNotice: PostgrestSingleResponse<Notice[]> = noticeId
-    ? await supabase
-        .from("notice")
-        .update({ title, content, createdDate })
-        .eq("id", noticeId)
-        .select()
-    : await supabase.from("notice").insert([noticeData]).select();
-  return (await handleSupabaseResponse(savedNotice))[0];
-};
-
-// Notice/WriteNoticeForm
-// 기존 Notice 수정
-export function useUpdateNotice(noticeId: number) {
-  return useMutation({
-    mutationKey: noticeQueryKeys.updateNotice(noticeId).queryKey,
-    mutationFn: (noticeData: Notice) => savedNotice(noticeData, noticeId),
-  });
-}
-
-// Notice/WriteNoticeForm
-// 신규 Notice 등록
-export function useInsertNotice() {
-  return useMutation({
-    mutationKey: noticeQueryKeys.insertNotice().queryKey,
-    mutationFn: (noticeData: Notice) => savedNotice(noticeData),
-  });
-}
+  }),
+});

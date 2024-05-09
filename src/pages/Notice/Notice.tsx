@@ -5,7 +5,11 @@ import ActionButton from "../../components/ActionButton";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import NoticeItem from "../../components/NoticeItem";
 import Line from "../../components/Line";
-import { useFetchNoticeList } from "../../queries/noticeQueries";
+import { noticeQueryKeys } from "../../queries/noticeQueries";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { Database } from "../../api/supabase/supabase";
+
+type Notice = Database["public"]["Tables"]["notice"]["Row"];
 
 const Notice = () => {
   // 경로에 따라 Notice wrapper CSS를 다르게 설정하기 위한 코드
@@ -13,7 +17,7 @@ const Notice = () => {
   const noticeWrapperClassName =
     pathname === "/" ? "home_notice_wrapper" : "notice_wrapper";
 
-  const { data: notice } = useFetchNoticeList();
+  const { data: notice } = useSuspenseQuery(noticeQueryKeys.fetchNoticeList());
 
   // delta로 저장된 contents를 html로 변환
   const deltaToHtmlData = notice.map((post) => {
