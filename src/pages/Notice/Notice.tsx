@@ -17,7 +17,7 @@ const Notice = () => {
   const noticeWrapperClassName =
     pathname === "/" ? "home_notice_wrapper" : "notice_wrapper";
 
-  const { data: notice } = useSuspenseQuery(noticeQueryKeys.fetchNoticeList());
+  const { data: notice } = useSuspenseQuery(noticeQueryKeys.list());
 
   // delta로 저장된 contents를 html로 변환
   const deltaToHtmlData = notice.map((post) => {

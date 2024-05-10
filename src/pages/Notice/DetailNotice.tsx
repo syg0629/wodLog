@@ -12,9 +12,7 @@ const DetailNotice = () => {
   const noticeId = Number(params.id);
   const navigate = useNavigate();
 
-  const { data: detailNoticeData } = useQuery(
-    noticeQueryKeys.fetchNoticeDetail(noticeId)
-  );
+  const { data: detailNoticeData } = useQuery(noticeQueryKeys.detail(noticeId));
 
   if (!detailNoticeData) {
     return <div>Loading...</div>;
