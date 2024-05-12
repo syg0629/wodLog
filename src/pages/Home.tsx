@@ -8,7 +8,7 @@ import crossfit2 from "../assets/crossfit2.jpg";
 import crossfit3 from "../assets/crossfit3.jpg";
 import "./Home.css";
 import Wod from "./Wod";
-import Notice from "./Notice";
+import Notice from "./Notice/Notice";
 
 const Home = () => {
   return (
