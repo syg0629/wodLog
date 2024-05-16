@@ -4,12 +4,12 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "NotoSerifKR";
-  src: url("/NotoSerifKR-Regular.otf");
+  font-family: "NotoSansKR";
+  src: url("/NotoSansKR-Regular.otf");
 }
 
 body * {
-  font-family: "NotoSerifKR";
+  font-family: "NotoSansKR";
 }
 
 #action_button_root {
