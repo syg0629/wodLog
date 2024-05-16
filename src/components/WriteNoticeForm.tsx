@@ -6,7 +6,7 @@ import "./WriteNoticeForm.css";
 import Line from "./Line";
 import dayjs from "dayjs";
 import ReactQuill from "react-quill";
-import { modules } from "./EditorModules";
+import { modules } from "../utils/EditorModules";
 import { Database } from "../api/supabase/supabase";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef } from "react";
