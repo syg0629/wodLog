@@ -9,7 +9,7 @@
   font-weight: bold;
   padding: 0px;
   margin-right: 20px;
-  background-image: linear-gradient(transparent 60%, #ffdb3d 40%);
+  background-image: linear-gradient(transparent 55%, #ffdb3d 40%);
   cursor: pointer;
 }
 
@@ -33,5 +33,5 @@
 
 .header_menu_btn:hover,
 .header_menu_btn_login:hover {
-  background-image: linear-gradient(transparent 60%, #fdd93a 40%);
+  background-image: linear-gradient(transparent 55%, #fdd93a 40%);
 }
