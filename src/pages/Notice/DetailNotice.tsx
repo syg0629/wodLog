@@ -1,11 +1,11 @@
-import Line from "../../components/Line";
-import dayjs from "dayjs";
+import Line from "../../components/common/Line";
 import DOMPurify from "dompurify";
 import { useNavigate, useParams } from "react-router-dom";
 import "./DetailNotice.css";
 import { noticeQueryKeys } from "../../queries/noticeQueries";
 import { supabase } from "../../api/supabase/supabaseClient";
 import { useQuery } from "@tanstack/react-query";
+import { formatUtcDate } from "../../utils/formattedDate";
 
 const DetailNotice = () => {
   const params = useParams();
@@ -44,9 +44,7 @@ const DetailNotice = () => {
                 <span className="detail_notice_head_detail_left_writer">
                   {post.writer}
                 </span>
-                <span>
-                  {dayjs(post.createdDate).format("YYYY.MM.DD. HH:mm")}
-                </span>
+                <span>{formatUtcDate(post.createdDate)}</span>
               </div>
               <div className="detail_notice_head_detail_right">
                 <button

@@ -1,7 +1,7 @@
 import "./Record.css";
-import "../../components/Components.css";
-import ActionButton from "../../components/ActionButton";
-import Table from "../../components/Table";
+import "../../components/common/Common.css";
+import ActionButton from "../../components/common/ActionButton";
+import Table from "../../components/common/Table";
 import { Database } from "../../api/supabase/supabase";
 import { supabase } from "../../api/supabase/supabaseClient";
 import { useSuspenseQuery } from "@tanstack/react-query";

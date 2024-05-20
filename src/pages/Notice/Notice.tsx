@@ -1,15 +1,12 @@
 import "./Notice.css";
-import "../../components/Components.css";
+import "../../components/common/Common.css";
 import { Link, useLocation } from "react-router-dom";
-import ActionButton from "../../components/ActionButton";
+import ActionButton from "../../components/common/ActionButton";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
-import NoticeItem from "../../components/NoticeItem";
-import Line from "../../components/Line";
+import NoticeItem from "../../pages/Notice/NoticeItem";
+import Line from "../../components/common/Line";
 import { noticeQueryKeys } from "../../queries/noticeQueries";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Database } from "../../api/supabase/supabase";
-
-type Notice = Database["public"]["Tables"]["notice"]["Row"];
 
 const Notice = () => {
   // 경로에 따라 Notice wrapper CSS를 다르게 설정하기 위한 코드
@@ -31,9 +28,9 @@ const Notice = () => {
   return (
     <div className={noticeWrapperClassName}>
       <h1 className="title">Notice</h1>
-      <h4 className="notice_count">총 {notice.length}개의 글이 있습니다🏋🏻‍♀️</h4>
+      {/* <h4 className="notice_count">총 {notice.length}개의 글이 있습니다🏋🏻‍♀️</h4> */}
 
-      <div className="notice_item_wrapper">
+      <div>
         {deltaToHtmlData.map((post) => (
           <div key={post.id}>
             <NoticeItem {...post} />

@@ -1,4 +1,4 @@
-import WriteNoticeForm from "../../components/WriteNoticeForm";
+import WriteNoticeForm from "../../pages/Notice/WriteNoticeForm";
 import { useParams } from "react-router-dom";
 import { noticeQueryKeys } from "../../queries/noticeQueries";
 import { useQuery } from "@tanstack/react-query";

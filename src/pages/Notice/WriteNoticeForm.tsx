@@ -3,17 +3,17 @@
 import "react-quill/dist/quill.snow.css";
 import { SubmitHandler, useForm, useController } from "react-hook-form";
 import "./WriteNoticeForm.css";
-import Line from "./Line";
+import Line from "../../components/common/Line";
 import dayjs from "dayjs";
 import ReactQuill from "react-quill";
-import { modules } from "../utils/EditorModules";
-import { Database } from "../api/supabase/supabase";
+import { modules } from "../../utils/EditorModules";
+import { Database } from "../../api/supabase/supabase";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
-import { handleSupabaseResponse } from "../utils/handleSupabaseResponse";
-import { supabase } from "../api/supabase/supabaseClient";
+import { handleSupabaseResponse } from "../../utils/handleSupabaseResponse";
+import { supabase } from "../../api/supabase/supabaseClient";
 
 type Notice = Database["public"]["Tables"]["notice"]["Row"];
 

@@ -1,9 +1,9 @@
 import "./NoticeItem.css";
-import { Database } from "../api/supabase/supabase";
+import { Database } from "../../api/supabase/supabase";
 import DOMPurify from "dompurify";
 import { useNavigate } from "react-router-dom";
-import Line from "./Line";
-import dayjs from "dayjs";
+import Line from "../../components/common/Line";
+import { formatUtcDate } from "../../utils/formattedDate";
 
 type Notice = Database["public"]["Tables"]["notice"]["Row"];
 
@@ -23,7 +23,7 @@ const NoticeItem = ({ id, title, createdDate, content }: Notice) => {
         <div>
           <div className="notice_article_title">{title}</div>
           <span className="notice_article_date">
-            {dayjs(createdDate).format("YYYY.MM.DD. HH:mm")}
+            {formatUtcDate(createdDate)}
           </span>
           <Line />
           <div

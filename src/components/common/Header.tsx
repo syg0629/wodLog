@@ -20,9 +20,6 @@ const Header = () => {
         <Link to="/hold" className="header_menu_btn">
           HOLD
         </Link>
-        <Link to="/shop" className="header_menu_btn">
-          SHOP
-        </Link>
         <Link to="/login" className="header_menu_btn_login">
           LOGIN
         </Link>
