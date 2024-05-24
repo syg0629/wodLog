@@ -7,10 +7,15 @@
 .header_logo {
   font-size: 45px;
   font-weight: bold;
-  padding: 0px;
-  margin-right: 20px;
-  background-image: linear-gradient(transparent 55%, #ffdb3d 40%);
+  background-image: linear-gradient(transparent 60%, #ffdb3d 40%);
   cursor: pointer;
+  line-height: 1.3;
+}
+
+.weightLiftIcon {
+  width: 50px;
+  vertical-align: -5px;
+  margin-top: 10px;
 }
 
 .header_menu_wrapper {
@@ -33,5 +38,5 @@
 
 .header_menu_btn:hover,
 .header_menu_btn_login:hover {
-  background-image: linear-gradient(transparent 55%, #fdd93a 40%);
+  background-image: linear-gradient(transparent 60%, #ffdb3d 40%);
 }

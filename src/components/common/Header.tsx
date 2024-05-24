@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 import "./Header.css";
+import weightlift from "../../assets/weightlifting.png";
 
 const Header = () => {
   return (
     <header className="header">
       <Link to="/" className="header_logo">
         wodLog
+        <img className="weightLiftIcon" src={weightlift} />
+        &nbsp;&nbsp;
       </Link>
       <div className="header_menu_wrapper">
         <Link to="/notice" className="header_menu_btn">
