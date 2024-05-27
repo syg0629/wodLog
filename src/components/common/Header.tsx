@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./Header.css";
-import weightlift from "../../assets/weightlifting.png";
+import weightlift from "../../assets/weightLifting.svg";
 
 const Header = () => {
   return (
