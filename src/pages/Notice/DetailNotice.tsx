@@ -1,7 +1,7 @@
 import Line from "../../components/common/Line";
 import DOMPurify from "dompurify";
 import { useNavigate, useParams } from "react-router-dom";
-import "./DetailNotice.css";
+import "../../components/common/Common.css";
 import { noticeQueryKeys } from "../../queries/noticeQueries";
 import { supabase } from "../../api/supabase/supabaseClient";
 import { useQuery } from "@tanstack/react-query";
@@ -34,22 +34,22 @@ const DetailNotice = () => {
 
   return (
     <>
-      <h1 className="title">Notice</h1>
-      <div className="notice_wrapper">
+      <div className="wrapper">
+        <h1 className="title">Notice</h1>
         {detailNoticeData.map((post) => (
           <div key={post.id}>
-            <h1 className="detail_notice_title">{post.title}</h1>
-            <div className="detail_notice_head_detail">
-              <div className="detail_notice_head_detail_left">
-                <span className="detail_notice_head_detail_left_writer">
+            <h1 className="detail_title">{post.title}</h1>
+            <div className="detail_head_detail">
+              <div className="detail_head_detail_left">
+                <span className="detail_head_detail_left_writer">
                   {post.writer}
                 </span>
                 <span>{formatUtcDate(post.createdDate)}</span>
               </div>
-              <div className="detail_notice_head_detail_right">
+              <div className="detail_head_detail_right">
                 <button
                   onClick={() => onClickMoveToEdit(post.id)}
-                  className="detail_notice_head_detail_right_editBtn"
+                  className="detail_head_detail_right_editBtn"
                 >
                   수정하기
                 </button>
@@ -57,7 +57,7 @@ const DetailNotice = () => {
               </div>
             </div>
             <Line />
-            <div className="detail_notice_main_content">
+            <div className="detail_main_content">
               <div
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(String(post.content)),

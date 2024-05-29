@@ -82,7 +82,7 @@ const WriteRecord = () => {
   };
 
   return (
-    <div>
+    <div className="wrapper">
       <h1 className="title">Record</h1>
       <div className="write_record_wrapper">
         <div className="write_record_grade_wrapper">

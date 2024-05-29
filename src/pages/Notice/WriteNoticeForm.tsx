@@ -2,7 +2,7 @@
 
 import "react-quill/dist/quill.snow.css";
 import { SubmitHandler, useForm, useController } from "react-hook-form";
-import "./WriteNoticeForm.css";
+import "../../components/common/Common.css";
 import Line from "../../components/common/Line";
 import dayjs from "dayjs";
 import ReactQuill from "react-quill";
@@ -97,7 +97,8 @@ const WriteNoticeForm = (props: WriteProps) => {
   };
 
   return (
-    <div className="write_wrapper">
+    <div className="wrapper">
+      <h1 className="title">Notice</h1>
       <form onSubmit={handleSubmit(onClickSubmit)}>
         <div className="write_btn_wrapper">
           <button>임시저장</button>

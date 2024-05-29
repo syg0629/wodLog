@@ -1,4 +1,3 @@
-import "./Notice.css";
 import "../../components/common/Common.css";
 import { Link, useLocation } from "react-router-dom";
 import ActionButton from "../../components/common/ActionButton";
@@ -15,7 +14,7 @@ const Notice = () => {
   // 경로에 따라 Notice wrapper CSS를 다르게 설정하기 위한 코드
   const { pathname } = useLocation();
   const noticeWrapperClassName =
-    pathname === "/" ? "home_notice_wrapper" : "wrapper";
+    pathname === "/" ? "home_memu_wrapper" : "wrapper";
 
   const { data: notice } = useSuspenseQuery(noticeQueryKeys.list());
 
