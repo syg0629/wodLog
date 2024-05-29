@@ -1,3 +1,8 @@
+import { ImageResize } from "quill-image-resize-module-ts";
+import { Quill } from "react-quill";
+
+Quill.register("modules/ImageResize", ImageResize);
+
 export const modules = {
   toolbar: {
     container: [
@@ -51,5 +56,9 @@ export const modules = {
       ["image", "video"],
       ["clean"],
     ],
+  },
+  ImageResize: {
+    parchment: Quill.import("parchment"),
+    modules: ["Resize", "DisplaySize"],
   },
 };
