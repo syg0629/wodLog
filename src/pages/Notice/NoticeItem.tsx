@@ -2,17 +2,21 @@ import "./NoticeItem.css";
 import { Database } from "../../api/supabase/supabase";
 import DOMPurify from "dompurify";
 import { useNavigate } from "react-router-dom";
-import Line from "../../components/common/Line";
 import { formatUtcDate } from "../../utils/formattedDate";
 
 type Notice = Database["public"]["Tables"]["notice"]["Row"];
 
-const NoticeItem = ({ id, title, createdDate, content }: Notice) => {
+const NoticeItem = ({ id, title, createdDate, content, writer }: Notice) => {
   const navigate = useNavigate();
 
   const onClickMoveToDetail = (id: number) => {
     navigate(`/notice/${id}`);
   };
+
+  // content preview
+  // html코드를 제거하고 공백을 넣어 텍스트만 남기고 그 길이가 길 경우 잘라내고 ...로 보여주는 코드
+  const text = content.replace(/<[^>]+>/g, " ");
+  const textPreview = text.length > 70 ? text.slice(0, 70) + "..." : text;
 
   return (
     <div>
@@ -20,19 +24,21 @@ const NoticeItem = ({ id, title, createdDate, content }: Notice) => {
         className="notice_article"
         onClick={() => onClickMoveToDetail(id)}
       >
-        <div>
+        <div className="notice_article_head">
           <div className="notice_article_title">{title}</div>
-          <span className="notice_article_date">
-            {formatUtcDate(createdDate)}
-          </span>
-          <Line />
-          <div
-            className="notice_article_content_preview"
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(String(content)),
-            }}
-          />
+          <div className="notice_article_write_info">
+            <span className="notice_article_writer">{writer}</span>
+            <span className="notice_article_date">
+              {formatUtcDate(createdDate)}
+            </span>
+          </div>
         </div>
+        <div
+          className="notice_article_content_preview"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(String(textPreview)),
+          }}
+        />
       </article>
     </div>
   );

@@ -1,20 +1,31 @@
 .notice_article {
   display: flex;
+  flex-direction: column;
   cursor: pointer;
-  margin-bottom: 35px;
+  margin: 17px 0;
 }
 
 .notice_article_title {
-  font-size: 23px;
+  font-size: 27px;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-.notice_article_date,
-.notice_article_content_preview {
-  margin-left: 5px;
+.notice_article_date {
+  margin-left: 7px;
 }
 
 .notice_article_content_preview {
-  width: 100vh;
+  height: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 7px;
+  font-weight: 300;
+  margin-bottom: -20px;
+}
+
+.notice_article_write_info {
+  margin-left: 3px;
+  font-weight: 500;
 }
