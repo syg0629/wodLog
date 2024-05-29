@@ -1,12 +1,13 @@
 .write_button {
-  background-color: #007bff;
-  color: white;
+  background-color: white;
+  color: rgba(0, 0, 0, 0.518);
   text-align: center;
   font-size: 30px;
   font-weight: 900;
   margin: 4px 2px;
   padding: 5px;
   border-radius: 50%;
+  border: 1px solid rgba(245, 222, 179, 0.606);
   transition: background-color 0.3s;
   width: 60px;
   height: 60px;
@@ -17,12 +18,15 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
+  align-items: center;
 }
 
 .write_button:hover {
-  background-color: #0056b3;
+  background-color: rgb(249, 225, 181);
+  color: rgba(0, 0, 0, 0.649);
 }
 
 .write_button:active {
-  background-color: #003a80;
+  background-color: rgb(255, 217, 146);
+  color: rgba(0, 0, 0, 0.736);
 }
