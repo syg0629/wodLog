@@ -3,7 +3,7 @@ import { supabase } from "../api/supabase/supabaseClient";
 import { createQueryKeys } from "@lukemorales/query-key-factory";
 import { Database } from "../api/supabase/supabase";
 import { handleSupabaseResponse } from "../utils/handleSupabaseResponse";
-import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
+import { deltaToHtml } from "../utils/deltaToHtml";
 
 type Notice = Database["public"]["Tables"]["notice"]["Row"];
 
@@ -12,12 +12,13 @@ export const noticeQueryKeys = createQueryKeys("notice", {
   // Notice 목록
   list: () => ({
     queryKey: ["all"],
-    queryFn: async () => {
+    queryFn: async (): Promise<Notice[]> => {
       const data = await supabase
         .from("notice")
         .select("*")
         .order("id", { ascending: false });
-      return await handleSupabaseResponse(data);
+      const notice = await handleSupabaseResponse(data);
+      return deltaToHtml(notice);
     },
   }),
   // Notice/DetailNotice
@@ -30,18 +31,8 @@ export const noticeQueryKeys = createQueryKeys("notice", {
         .from("notice")
         .select("*")
         .eq("id", noticeId);
-      const noticeData = await handleSupabaseResponse(data);
-      const deltaToHtmlNoticeData = noticeData.map((post) => {
-        const postContent = post.content;
-        const deltaOps = JSON.parse(postContent).ops;
-        const deltaToHtmlConverter = new QuillDeltaToHtmlConverter(
-          deltaOps,
-          {}
-        );
-        const html = deltaToHtmlConverter.convert();
-        return { ...post, content: html };
-      });
-      return deltaToHtmlNoticeData;
+      const detailNotice = await handleSupabaseResponse(data);
+      return deltaToHtml(detailNotice);
     },
   }),
 });
