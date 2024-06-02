@@ -5,10 +5,7 @@ import NoticeItem from "../../pages/Notice/NoticeItem";
 import Line from "../../components/common/Line";
 import { noticeQueryKeys } from "../../queries/noticeQueries";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Database } from "../../api/supabase/supabase";
 import { FaPencil } from "react-icons/fa6";
-
-type Notice = Database["public"]["Tables"]["notice"]["Row"];
 
 const Notice = () => {
   // 경로에 따라 Notice wrapper CSS를 다르게 설정하기 위한 코드
