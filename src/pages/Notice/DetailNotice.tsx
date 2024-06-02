@@ -15,7 +15,7 @@ const DetailNotice = () => {
   const { data: detailNoticeData } = useQuery(noticeQueryKeys.detail(noticeId));
 
   if (!detailNoticeData) {
-    return <div>Loading...</div>;
+    return <div className="loader"></div>;
   }
 
   const onClickMoveToEdit = (id: number): void => {

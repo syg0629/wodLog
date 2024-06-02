@@ -9,7 +9,7 @@ const EditNotice = () => {
 
   const { data: editNoticeData } = useQuery(noticeQueryKeys.detail(noticeId));
   if (!editNoticeData) {
-    return <div>Loading...</div>;
+    return <div className="loader"></div>;
   }
 
   return <WriteNoticeForm isEdit={true} data={editNoticeData} />;

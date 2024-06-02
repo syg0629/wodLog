@@ -1,0 +1,26 @@
+.loader {
+  width: 200px;
+  height: 22px;
+  border-radius: 20px;
+  color: #ffdb3d;
+  border: 2px solid currentColor;
+  position: relative;
+  margin: 0 auto;
+  margin-top: 300px;
+}
+.loader::before {
+  content: "";
+  position: absolute;
+  margin: 2px;
+  /* 좌측에서 우측으로 애니메이션 시작 */
+  inset: 0 100% 0 0;
+  border-radius: inherit;
+  background: currentColor;
+  animation: l6 2s infinite;
+}
+@keyframes l6 {
+  100% {
+    /* 애니메이션 종료 시 네 방향 모두 0으로 설정 */
+    inset: 0;
+  }
+}

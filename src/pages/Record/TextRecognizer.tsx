@@ -39,7 +39,7 @@ const TextRecognizer = ({
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="loader"></div>;
   }
 
   return <div className="write_record_tesseract">{recognizedText}</div>;
