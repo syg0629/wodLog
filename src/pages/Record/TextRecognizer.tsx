@@ -1,6 +1,7 @@
 import "./TextRecognizer.css";
 import Tesseract from "tesseract.js";
 import { useQuery } from "@tanstack/react-query";
+import Loader from "../../components/common/Loader";
 
 interface TextRecognizerProps {
   imgUrl: string;
@@ -39,7 +40,7 @@ const TextRecognizer = ({
   };
 
   if (isLoading) {
-    return <div className="loader"></div>;
+    return <Loader />;
   }
 
   return <div className="write_record_tesseract">{recognizedText}</div>;

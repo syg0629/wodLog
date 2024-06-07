@@ -6,6 +6,7 @@ import { noticeQueryKeys } from "../../queries/noticeQueries";
 import { supabase } from "../../api/supabase/supabaseClient";
 import { useQuery } from "@tanstack/react-query";
 import { formatUtcDate } from "../../utils/formattedDate";
+import Loader from "../../components/common/Loader";
 
 const DetailNotice = () => {
   const params = useParams();
@@ -15,7 +16,7 @@ const DetailNotice = () => {
   const { data: detailNoticeData } = useQuery(noticeQueryKeys.detail(noticeId));
 
   if (!detailNoticeData) {
-    return <div className="loader"></div>;
+    return <Loader />;
   }
 
   const onClickMoveToEdit = (id: number): void => {
