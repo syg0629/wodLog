@@ -1,12 +1,86 @@
-@import "./reset.css";
-
-@font-face {
-  font-family: "NotoSansKR";
-  src: url("/NotoSansKR-Regular.otf");
+* {
+  box-sizing: border-box;
+  border-width: 0;
 }
 
 body * {
-  font-family: "NotoSansKR";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
+    "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%; /* 모바일에서 텍스트 크기 자동 조정 비활성화 */
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  margin: 0;
+  width: 100%;
+  background-color: rgb(246, 246, 246);
+}
+
+body {
+  margin: 0;
+  line-height: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+table {
+  width: 100%;
+  text-indent: 0;
+  border-color: inherit;
+  border-collapse: collapse;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+  padding: 10px;
+}
+
+td {
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #bfbfbf;
+  position: sticky;
+  top: 0;
+}
+
+thead {
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+tbody tr:hover {
+  background-color: #bfbfbf49;
+  opacity: 0.9;
+}
+
+button {
+  background: inherit;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#root {
+  background-color: white;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 100vh;
+  height: 100%;
+  font-size: 17px;
 }
 
 #action_button_root {

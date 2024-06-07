@@ -1,71 +1,4 @@
-/* 공통 */
-* {
-  box-sizing: border-box;
-  border-width: 0;
-}
-
-html {
-  line-height: 1.5;
-  -webkit-text-size-adjust: 100%; /* 모바일에서 텍스트 크기 자동 조정 비활성화 */
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
-  tab-size: 4;
-}
-
-body {
-  margin: 0;
-  line-height: inherit;
-}
-
-a {
-  color: inherit;
-  text-decoration: inherit;
-}
-
-table {
-  width: 100%;
-  text-indent: 0;
-  border-color: inherit;
-  border-collapse: collapse;
-  border-radius: 5px;
-  text-align: center;
-  box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.1);
-}
-
-th,
-td {
-  padding: 10px;
-}
-
-td {
-  border-bottom: 1px solid #ddd;
-}
-
-th {
-  background-color: #bfbfbf;
-  position: sticky;
-  top: 0;
-}
-
-thead {
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-tbody tr:hover {
-  background-color: #bfbfbf49;
-  opacity: 0.9;
-}
-
-button {
-  background: inherit;
-  border: none;
-  box-shadow: none;
-  border-radius: 0;
-  padding: 0;
-  overflow: visible;
-  cursor: pointer;
-}
-
+/* 공통 클래스 */
 .title {
   font-size: 35px;
   font-weight: 700;
@@ -91,16 +24,15 @@ button {
 
 .errorMessage > svg {
   vertical-align: middle;
-  font-size: 16px;
   margin-bottom: 2px;
 }
 
-/* Noticem, Wod home 페이지 */
+/* 홈 페이지 */
 .home_memu_wrapper {
   padding: 10px 25px;
 }
 
-/* Notice, Wod 상세 페이지 */
+/* 상세 페이지 */
 .detail_title {
   font-size: 27px;
   font-weight: bold;
@@ -118,10 +50,6 @@ button {
   padding-left: 5px;
 }
 
-.detail_head_detail_right > button {
-  font-size: 16px;
-}
-
 .detail_head_detail_left_writer {
   font-weight: 600;
   margin-right: 20px;
@@ -135,7 +63,7 @@ button {
   padding: 0 20px;
 }
 
-/* Notice, Wod 작성 페이지 */
+/* 작성 페이지 */
 .write_wrapper {
   padding: 50px 300px;
 }
@@ -143,10 +71,6 @@ button {
 .write_btn_wrapper {
   display: flex;
   flex-direction: row;
-}
-
-.write_btn_submit {
-  margin-left: 20px;
 }
 
 .write_title {
@@ -170,11 +94,6 @@ button {
 }
 
 /* RecordTable, Hold 페이지 */
-.hold_table_wrapper {
-  padding: 0 150px;
-  width: 100%;
-}
-
 .table_wrapper {
   padding: 0 50px;
   width: 100%;
@@ -185,4 +104,10 @@ button {
   font-weight: 700;
   text-align: center;
   margin: 25px;
+}
+
+.hold_table_wrapper {
+  padding: 0 150px;
+  width: 100%;
+  margin-top: 40px;
 }
