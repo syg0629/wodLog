@@ -8,7 +8,6 @@ interface NoPostProps {
 const NoPost = ({ post }: NoPostProps) => {
   return (
     <div className="no_post">
-      &nbsp;
       <IoIosFitness />
       {post}가 등록되지 않았습니다 !
     </div>
