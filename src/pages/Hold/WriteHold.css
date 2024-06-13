@@ -1,0 +1,25 @@
+.write_hold_wrapper {
+  padding: 0 2em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.calendar_wrapper {
+  width: 400px;
+}
+
+.write_hold_info_wrapper {
+  width: 320px;
+  margin-top: 80px;
+  font-size: 18px;
+  line-height: 30px;
+}
+
+.write_hold_info_wrapper > .errorMessage {
+  margin-bottom: 20px;
+}
+
+.write_btn_wrapper :first-child {
+  margin-right: 20px;
+}
