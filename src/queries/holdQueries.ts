@@ -5,7 +5,7 @@ import { Database } from "../api/supabase/supabase";
 import { handleSupabaseResponse } from "../utils/handleSupabaseResponse";
 import axios from "axios";
 
-export type Hold = Database["public"]["Tables"]["hold"]["Row"];
+export type HoldType = Database["public"]["Tables"]["hold"]["Row"];
 type Holiday = {
   locdate: number;
   seq: number;
@@ -19,7 +19,7 @@ export const holdQueryKeys = createQueryKeys("hold", {
   // Hold 목록
   list: () => ({
     queryKey: ["all"],
-    queryFn: async (): Promise<Hold[]> => {
+    queryFn: async (): Promise<HoldType[]> => {
       const data = await supabase
         .from("hold")
         .select("*")
@@ -32,7 +32,7 @@ export const holdQueryKeys = createQueryKeys("hold", {
   detail: (holdId: number) => ({
     queryKey: [holdId],
     queryFn: async () => {
-      const data: PostgrestSingleResponse<Hold[]> = await supabase
+      const data: PostgrestSingleResponse<HoldType[]> = await supabase
         .from("hold")
         .select("*")
         .eq("id", holdId);
