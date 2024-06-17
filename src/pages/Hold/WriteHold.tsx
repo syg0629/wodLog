@@ -11,7 +11,7 @@ import "react-day-picker/dist/style.css";
 import { supabase } from "../../api/supabase/supabaseClient";
 import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
 import { handleSupabaseResponse } from "../../utils/handleSupabaseResponse";
-import { holdQueryKeys, Hold } from "../../queries/holdQueries";
+import { holdQueryKeys, HoldType } from "../../queries/holdQueries";
 import {
   formatNumberToDate,
   formatDateToString,
@@ -19,24 +19,20 @@ import {
 
 interface WriteProps {
   isEdit: boolean;
-  data?: Hold[];
+  data?: HoldType[];
 }
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
 const currentYear = today.getFullYear();
+const years = [currentYear, currentYear + 1];
 
 export const WriteHold = ({ isEdit, data }: WriteProps) => {
   const params = useParams();
   const holdId = Number(params.id);
   const navigate = useNavigate();
 
-  const [totalHoldDays, setTotalHoldDays] = useState<number>(0);
-  const [initialRemainingDays, setInitialRemainingDays] = useState<number>(0);
-  const [remainingDays, setRemainingDays] = useState<number>(0);
   const [range, setRange] = useState<DateRange | undefined>(undefined);
-
-  const years = useMemo(() => [currentYear, currentYear + 1], []);
 
   // 공휴일 데이터 prefetching
   const queryClient = useQueryClient();
@@ -48,7 +44,7 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
         staleTime: 1000 * 60 * 60 * 24 * 30,
       });
     });
-  }, [years, queryClient]);
+  }, [queryClient]);
 
   // 공휴일 데이터를 가져오기 위한 useQueries
   const holidayQueries = useQueries({
@@ -80,9 +76,7 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
   // 데이터가 있을 경우, 기존 데이터를 state에 저장
   useEffect(() => {
     if (data && data[0]) {
-      const { remainingDays, holdStartDay, holdEndDay } = data[0];
-      setInitialRemainingDays(remainingDays ?? 0);
-      setRemainingDays(remainingDays ?? 0);
+      const { holdStartDay, holdEndDay } = data[0];
       setRange({
         from: new Date(holdStartDay),
         to: new Date(holdEndDay),
@@ -100,23 +94,24 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
     [isHoliday]
   );
 
-  // 총 홀드일, 잔여일 계산
-  useEffect(() => {
+  // 총 홀드일 계산
+  const totalHoldDays = useMemo(() => {
     if (range?.from && range?.to) {
-      setTotalHoldDays(calculateTotalHoldDays(range.from, range.to));
+      return calculateTotalHoldDays(range.from, range.to);
     }
-  }, [range, calculateTotalHoldDays]);
+    return 0;
+  }, [calculateTotalHoldDays, range]);
 
   // 잔여일 계산
-  useEffect(() => {
+  const remainingDays = useMemo(() => {
     if (data && range?.from && range?.to) {
       const initialTotalHoldDays = calculateTotalHoldDays(
         new Date(data[0].holdStartDay),
         new Date(data[0].holdEndDay)
       );
-      const initialRemaining = data[0].remainingDays + initialTotalHoldDays;
-      setRemainingDays(initialRemaining - totalHoldDays);
+      return data[0].remainingDays + initialTotalHoldDays - totalHoldDays;
     }
+    return 0;
   }, [totalHoldDays, calculateTotalHoldDays, data, range]);
 
   // 달력 내 공휴일, 일요일, 지난 날짜를 disabled 처리
@@ -127,8 +122,8 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
     [holidayDates]
   );
 
-  const saveHold = useMutation<Hold, Error, Hold>({
-    mutationFn: async (holdData: Hold): Promise<Hold> => {
+  const saveHold = useMutation<HoldType, Error, HoldType>({
+    mutationFn: async (holdData: HoldType): Promise<HoldType> => {
       const {
         createdDate,
         holdStartDay,
