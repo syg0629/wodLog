@@ -2,9 +2,9 @@ import { Link, useNavigate } from "react-router-dom";
 import ActionButton from "../../components/common/ActionButton";
 import { FaPencil } from "react-icons/fa6";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { holdQueryKeys } from "../../queries/holdQueries";
-import NoPost from "../../components/common/NoPost";
-import Loader from "../../components/common/Loader";
+import { HoldType, holdQueryKeys } from "../../queries/holdQueries";
+import Table from "../../components/common/Table";
+import dayjs from "dayjs";
 
 const Hold = () => {
   const navigate = useNavigate();
@@ -12,11 +12,37 @@ const Hold = () => {
     navigate(`/hold/${id}/edit`);
   };
 
-  const { data: hold } = useSuspenseQuery(holdQueryKeys.list());
+  const { data } = useSuspenseQuery(holdQueryKeys.list());
 
-  if (!hold) {
-    return <Loader />;
-  }
+  // Hold 신청일의 끝 날짜 기준으로 정렬
+  const sortedData = Array.isArray(data)
+    ? data.sort((a, b) =>
+        dayjs(b.holdEndDay).isBefore(dayjs(a.holdEndDay)) ? -1 : 1
+      )
+    : [];
+
+  // Hold table header
+  const columnTitles = ["No.", "이름", "신청기간", "사용 홀드", "잔여일"];
+
+  // Hold table body
+  const renderBody = (
+    sortedData: HoldType[],
+    onClickMoveToDetail: (id: number) => void
+  ) => (
+    <tbody>
+      {sortedData.map((data, index) => (
+        <tr key={data.id} onClick={() => onClickMoveToDetail(data.id)}>
+          <td>{index + 1}</td>
+          <td>{data.writer}</td>
+          <td>
+            {data.holdStartDay} ~ {data.holdEndDay}
+          </td>
+          <td>{data.requestedHoldDate} 일</td>
+          <td>{data.remainingDays} 일</td>
+        </tr>
+      ))}
+    </tbody>
+  );
 
   return (
     <div className="wrapper">
@@ -24,39 +50,13 @@ const Hold = () => {
 
       <div className="hold_wrapper">
         <div className="hold_table_wrapper">
-          {hold.length > 0 ? (
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>No.</th>
-                  <th>이름</th>
-                  <th>신청기간</th>
-                  <th>사용 홀드</th>
-                  <th>잔여일</th>
-                </tr>
-              </thead>
-              <tbody>
-                {hold
-                  .sort((a, b) => b.holdEndDay.localeCompare(a.holdStartDay))
-                  .map((post, index) => (
-                    <tr
-                      key={post.id}
-                      onClick={() => onClickMoveToDetail(post.id)}
-                    >
-                      <td>{index + 1}</td>
-                      <td>{post.writer}</td>
-                      <td>
-                        {post.holdStartDay} ~ {post.holdEndDay}
-                      </td>
-                      <td>{post.requestedHoldDate} 일</td>
-                      <td>{post.remainingDays} 일</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          ) : (
-            <NoPost post="Hold" />
-          )}
+          <Table
+            columnTitles={columnTitles}
+            data={sortedData}
+            renderBody={renderBody}
+            post="hold"
+            onClickMoveToDetail={onClickMoveToDetail}
+          />
         </div>
       </div>
 
