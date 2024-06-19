@@ -11,7 +11,7 @@ import "react-day-picker/dist/style.css";
 import { supabase } from "../../api/supabase/supabaseClient";
 import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
 import { handleSupabaseResponse } from "../../utils/handleSupabaseResponse";
-import { holdQueryKeys, HoldType } from "../../queries/holdQueries";
+import { holdQueryKeys, Hold } from "../../queries/holdQueries";
 import {
   formatNumberToDate,
   formatDateToString,
@@ -19,7 +19,7 @@ import {
 
 interface WriteProps {
   isEdit: boolean;
-  data?: HoldType[];
+  data: Hold[];
 }
 
 const today = new Date();
@@ -122,8 +122,8 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
     [holidayDates]
   );
 
-  const saveHold = useMutation<HoldType, Error, HoldType>({
-    mutationFn: async (holdData: HoldType): Promise<HoldType> => {
+  const saveHold = useMutation<Hold, Error, Hold>({
+    mutationFn: async (holdData: Hold): Promise<Hold> => {
       const {
         createdDate,
         holdStartDay,
