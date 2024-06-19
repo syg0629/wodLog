@@ -7,7 +7,7 @@ import { noticeQueryKeys } from "../../queries/noticeQueries";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { FaPencil } from "react-icons/fa6";
 
-const Notice = () => {
+const NoticeList = () => {
   // 경로에 따라 Notice wrapper CSS를 다르게 설정하기 위한 코드
   const { pathname } = useLocation();
   const noticeWrapperClassName =
@@ -37,4 +37,4 @@ const Notice = () => {
   );
 };
 
-export default Notice;
+export default NoticeList;
