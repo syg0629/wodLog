@@ -1,11 +1,9 @@
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
 import { supabase } from "../api/supabase/supabaseClient";
 import { createQueryKeys } from "@lukemorales/query-key-factory";
-import { Database } from "../api/supabase/supabase";
 import { handleSupabaseResponse } from "../utils/handleSupabaseResponse";
 import { deltaToHtml } from "../utils/deltaToHtml";
-
-type Notice = Database["public"]["Tables"]["notice"]["Row"];
+import { Notice } from "../types/type";
 
 export const noticeQueryKeys = createQueryKeys("notice", {
   // Notice/Notice

@@ -1,10 +1,8 @@
 import "./NoticeItem.css";
-import { Database } from "../../api/supabase/supabase";
 import DOMPurify from "dompurify";
 import { useNavigate } from "react-router-dom";
-import { formatUtcDate } from "../../utils/formattedDate";
-
-type Notice = Database["public"]["Tables"]["notice"]["Row"];
+import { formatUtcDateToString } from "../../utils/formattedDate";
+import { Notice } from "../../queries/noticeQueries";
 
 const NoticeItem = ({ id, title, createdDate, content, writer }: Notice) => {
   const navigate = useNavigate();
@@ -29,7 +27,7 @@ const NoticeItem = ({ id, title, createdDate, content, writer }: Notice) => {
           <div className="notice_article_write_info">
             <span className="notice_article_writer">{writer}</span>
             <span className="notice_article_date">
-              {formatUtcDate(createdDate)}
+              {formatUtcDateToString(createdDate)}
             </span>
           </div>
         </div>

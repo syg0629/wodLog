@@ -1,18 +1,9 @@
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
 import { supabase } from "../api/supabase/supabaseClient";
 import { createQueryKeys } from "@lukemorales/query-key-factory";
-import { Database } from "../api/supabase/supabase";
 import { handleSupabaseResponse } from "../utils/handleSupabaseResponse";
 import axios from "axios";
-
-export type Hold = Database["public"]["Tables"]["hold"]["Row"];
-type Holiday = {
-  locdate: number;
-  seq: number;
-  dateKind: string;
-  isHoliday: string;
-  dateName: string;
-};
+import { Hold, Holiday } from "../types/type";
 
 export const holdQueryKeys = createQueryKeys("hold", {
   // Hold/Hold

@@ -1,5 +1,3 @@
-// TODO: 임시저장 기능
-
 import "react-quill/dist/quill.snow.css";
 import { SubmitHandler, useForm, useController } from "react-hook-form";
 import "../../components/common/Common.css";
@@ -7,15 +5,14 @@ import Line from "../../components/common/Line";
 import dayjs from "dayjs";
 import ReactQuill from "react-quill";
 import { modules } from "../../utils/EditorModules";
-import { Database } from "../../api/supabase/supabase";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
 import { handleSupabaseResponse } from "../../utils/handleSupabaseResponse";
 import { supabase } from "../../api/supabase/supabaseClient";
-
-type Notice = Database["public"]["Tables"]["notice"]["Row"];
+import { FaExclamationCircle } from "react-icons/fa";
+import { Notice } from "../../types/type";
 
 interface WriteProps {
   isEdit: boolean;
@@ -101,7 +98,6 @@ const WriteNoticeForm = (props: WriteProps) => {
       <h1 className="title">Notice</h1>
       <form onSubmit={handleSubmit(onClickSubmit)}>
         <div className="write_btn_wrapper">
-          <button>임시저장</button>
           <button className="write_btn_submit">
             {props.isEdit ? "수정하기" : "등록하기"}
           </button>
@@ -115,10 +111,14 @@ const WriteNoticeForm = (props: WriteProps) => {
           defaultValue={props.data?.[0].title}
         />
         {errors?.title?.type === "required" && (
-          <div className="errorMessage">제목을 입력해주세요.</div>
+          <div className="errorMessage">
+            <FaExclamationCircle /> 제목을 입력해주세요.
+          </div>
         )}
         {errors?.content?.type === "required" && (
-          <div className="errorMessage">본문 내용을 입력해주세요.</div>
+          <div className="errorMessage">
+            <FaExclamationCircle /> 본문 내용을 입력해주세요.
+          </div>
         )}
         <br />
         <ReactQuill
