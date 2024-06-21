@@ -19,7 +19,7 @@ import {
 
 interface WriteProps {
   isEdit: boolean;
-  data: Hold[];
+  data?: Hold[];
 }
 
 const today = new Date();
