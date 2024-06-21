@@ -9,6 +9,36 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      hold: {
+        Row: {
+          createdDate: string;
+          holdEndDay: string;
+          holdStartDay: string;
+          id: number;
+          remainingDays: number;
+          requestedHoldDate: number;
+          writer: string;
+        };
+        Insert: {
+          createdDate: string;
+          holdEndDay: string;
+          holdStartDay: string;
+          id?: number;
+          remainingDays: number;
+          requestedHoldDate: number;
+          writer: string;
+        };
+        Update: {
+          createdDate?: string;
+          holdEndDay?: string;
+          holdStartDay?: string;
+          id?: number;
+          remainingDays?: number;
+          requestedHoldDate?: number;
+          writer?: string;
+        };
+        Relationships: [];
+      };
       notice: {
         Row: {
           content: string;
