@@ -4,20 +4,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import "../../components/common/Common.css";
 import { noticeQueryKeys } from "../../queries/noticeQueries";
 import { supabase } from "../../api/supabase/supabaseClient";
-import { useQuery } from "@tanstack/react-query";
-import { formatUtcDate } from "../../utils/formattedDate";
-import Loader from "../../components/common/Loader";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { formatUtcDateToString } from "../../utils/formattedDate";
 
 const DetailNotice = () => {
   const params = useParams();
   const noticeId = Number(params.id);
   const navigate = useNavigate();
 
-  const { data: detailNoticeData } = useQuery(noticeQueryKeys.detail(noticeId));
-
-  if (!detailNoticeData) {
-    return <Loader />;
-  }
+  const { data: detailNoticeData } = useSuspenseQuery(
+    noticeQueryKeys.detail(noticeId)
+  );
 
   const onClickMoveToEdit = (id: number): void => {
     navigate(`/notice/${id}/edit`);
@@ -45,7 +42,7 @@ const DetailNotice = () => {
                 <span className="detail_head_detail_left_writer">
                   {post.writer}
                 </span>
-                <span>{formatUtcDate(post.createdDate)}</span>
+                <span>{formatUtcDateToString(post.createdDate)}</span>
               </div>
               <div className="detail_head_detail_right">
                 <button
