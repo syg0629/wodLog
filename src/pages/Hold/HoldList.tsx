@@ -17,7 +17,6 @@ const HoldList = () => {
 
   //Hold 신청일의 끝 날짜 기준으로 정렬
   const sortedData = useMemo(() => {
-    if (!hold) return [];
     return hold.sort((a, b) =>
       dayjs(b.holdEndDay).isBefore(dayjs(a.holdEndDay)) ? -1 : 1
     );
