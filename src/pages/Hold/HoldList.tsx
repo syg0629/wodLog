@@ -2,10 +2,11 @@ import { Link, useNavigate } from "react-router-dom";
 import ActionButton from "../../components/common/ActionButton";
 import { FaPencil } from "react-icons/fa6";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Hold, holdQueryKeys } from "../../queries/holdQueries";
+import { holdQueryKeys } from "../../queries/holdQueries";
 import Table from "../../components/common/Table";
 import dayjs from "dayjs";
 import { useMemo } from "react";
+import { Hold } from "../../types/type";
 
 const HoldList = () => {
   const navigate = useNavigate();

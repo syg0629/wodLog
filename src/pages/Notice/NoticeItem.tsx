@@ -2,7 +2,7 @@ import "./NoticeItem.css";
 import DOMPurify from "dompurify";
 import { useNavigate } from "react-router-dom";
 import { formatUtcDateToString } from "../../utils/formattedDate";
-import { Notice } from "../../queries/noticeQueries";
+import { Notice } from "../../types/type";
 
 const NoticeItem = ({ id, title, createdDate, content, writer }: Notice) => {
   const navigate = useNavigate();

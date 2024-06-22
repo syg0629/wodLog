@@ -11,11 +11,12 @@ import "react-day-picker/dist/style.css";
 import { supabase } from "../../api/supabase/supabaseClient";
 import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
 import { handleSupabaseResponse } from "../../utils/handleSupabaseResponse";
-import { holdQueryKeys, Hold } from "../../queries/holdQueries";
+import { holdQueryKeys } from "../../queries/holdQueries";
 import {
   formatNumberToDate,
   formatDateToString,
 } from "../../utils/formattedDate";
+import { Hold } from "../../types/type";
 
 interface WriteProps {
   isEdit: boolean;
