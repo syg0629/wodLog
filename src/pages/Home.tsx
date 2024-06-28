@@ -7,8 +7,8 @@ import crossfit1 from "../assets/crossfit1.jpg";
 import crossfit2 from "../assets/crossfit2.jpg";
 import crossfit3 from "../assets/crossfit3.jpg";
 import "./Home.css";
-import Wod from "./Wod";
-import Notice from "./Notice/Notice";
+import DetailWod from "./Wod/DetailWod";
+import NoticeList from "./Notice/NoticeList";
 
 const Home = () => {
   return (
@@ -41,10 +41,10 @@ const Home = () => {
 
       <div className="home_menu_wrapper">
         <div className="notice">
-          <Notice />
+          <NoticeList />
         </div>
         <div className="wod">
-          <Wod />
+          <DetailWod />
         </div>
       </div>
     </div>
