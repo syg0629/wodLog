@@ -9,7 +9,7 @@ export const modules = {
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
       [{ align: [] }],
       ["bold", "italic", "underline", "strike"],
-      [{ list: "ordered" }, { list: "bullet" }, "link"],
+      [{ list: "ordered" }, { list: "bullet" }],
       [
         {
           color: [
@@ -48,7 +48,6 @@ export const modules = {
             "#003700",
             "#002966",
             "#3d1466",
-            "custom-color",
           ],
         },
         { background: [] },
