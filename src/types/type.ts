@@ -10,3 +10,9 @@ export type Holiday = {
   isHoliday: string;
   dateName: string;
 };
+export type SavedData = {
+  title: string;
+  content: string;
+  writer: string;
+  createdDate: string;
+};
