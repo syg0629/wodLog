@@ -83,7 +83,7 @@ const DetailContent = () => {
                 >
                   수정하기
                 </button>
-                <button onClick={() => onClickDelete()}>삭제하기</button>
+                <button onClick={onClickDelete}>삭제하기</button>
               </div>
             </div>
             <Line />
