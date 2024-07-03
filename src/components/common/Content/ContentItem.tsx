@@ -14,7 +14,7 @@ const ContentItem = ({
 }: ContentWithContentType) => {
   const navigate = useNavigate();
 
-  const onClickMoveToDetail = () => {
+  const viewDetailContent = () => {
     navigate(`/${contentType}/${id}`);
   };
 
@@ -22,7 +22,7 @@ const ContentItem = ({
   const strippedContent = content.replace(/<[^>]+>/g, " ");
 
   return (
-    <article className="article" onClick={onClickMoveToDetail}>
+    <article className="article" onClick={viewDetailContent}>
       <div className="article_head">
         <h1 className="article_title">{title}</h1>
         <div className="article_write_info">

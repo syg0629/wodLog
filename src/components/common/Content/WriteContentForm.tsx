@@ -73,7 +73,7 @@ const WriteContentForm = ({
     onChange(content === "<p><br></p>" ? "" : content);
   };
 
-  const onClickSubmit: SubmitHandler<Content> = (formData: Content) => {
+  const submitContent: SubmitHandler<Content> = (formData: Content) => {
     const quillEditor = quillRef.current?.getEditor();
     const content = quillEditor?.getContents();
 
@@ -93,7 +93,7 @@ const WriteContentForm = ({
   return (
     <div className="wrapper">
       <h1 className="title">{contentType === "notice" ? "Notice" : "WOD"}</h1>
-      <form onSubmit={handleSubmit(onClickSubmit)}>
+      <form onSubmit={handleSubmit(submitContent)}>
         <div className="write_btn_wrapper">
           <button className="write_btn_submit">
             {isEdit ? "수정하기" : "등록하기"}

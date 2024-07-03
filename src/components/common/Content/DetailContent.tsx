@@ -43,11 +43,11 @@ const DetailContent = () => {
     return <Loader />;
   }
 
-  const onClickMoveToEdit = (id: number): void => {
+  const editContent = (id: number): void => {
     navigate(`/${contentType}/${id}/edit`);
   };
 
-  const onClickDelete = async () => {
+  const deleteContent = async () => {
     if (!confirm("삭제하시겠습니까?")) return;
     try {
       await supabase.from(contentType).delete().eq("id", contentId);
@@ -78,12 +78,12 @@ const DetailContent = () => {
 
               <div className="detail_head_right">
                 <button
-                  onClick={() => onClickMoveToEdit(post.id)}
+                  onClick={() => editContent(post.id)}
                   className="detail_head_right_edit_btn"
                 >
                   수정하기
                 </button>
-                <button onClick={onClickDelete}>삭제하기</button>
+                <button onClick={deleteContent}>삭제하기</button>
               </div>
             </div>
             <Line />
