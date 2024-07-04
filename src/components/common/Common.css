@@ -43,11 +43,11 @@
 }
 
 /* 홈 페이지 */
-.home_memu_wrapper {
+.home_menu_wrapper {
   padding: 10px 25px;
 }
 
-.home_memu_wrapper .detail_main_content {
+.home_menu_wrapper .detail_main_content {
   font-size: 25px;
   font-weight: 600;
   line-height: normal;
