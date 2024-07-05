@@ -12,10 +12,12 @@ import { FaExclamationCircle } from "react-icons/fa";
 import { createSaveQueryFn } from "../../../queries/createQueryFns";
 import { Content } from "../../../types/type";
 
+type ContentType = "notice" | "wod";
+
 interface WriteContentFormProps {
   isEdit: boolean;
   data?: Content[];
-  contentType: string;
+  contentType: ContentType;
 }
 
 const WriteContentForm = ({
@@ -50,8 +52,8 @@ const WriteContentForm = ({
     setValue,
   } = useForm<Content>({
     defaultValues: {
-      title: data?.[0].title || "",
-      content: data?.[0].content || "",
+      title: data?.[0].title ?? "",
+      content: data?.[0].content ?? "",
     },
   });
 
