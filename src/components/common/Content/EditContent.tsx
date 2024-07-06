@@ -9,8 +9,10 @@ import {
 } from "@tanstack/react-query";
 import { Notice, Wod } from "../../../types/type";
 
+type ContentType = "notice" | "wod";
+
 interface EditContentProps {
-  contentType: string;
+  contentType: ContentType;
 }
 
 const EditContent = ({ contentType }: EditContentProps) => {
