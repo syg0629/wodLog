@@ -9,33 +9,60 @@ import {
 import { FaPencil } from "react-icons/fa6";
 import { noticeQueryKeys } from "../../../queries/noticeQueries";
 import { wodQueryKeys } from "../../../queries/wodQueries";
-import { Notice, Wod } from "../../../types/type";
 import ContentItem from "./ContentItem";
+import { Notice, Wod } from "../../../types/type";
 
-const ContentList = () => {
+type ContentType = "notice" | "wod";
+
+interface ContentListProps {
+  contentType: ContentType;
+}
+
+interface ContentConfig<T> {
+  title: string;
+  writePath: string;
+  queryKeys: {
+    queryKey: QueryKey;
+    queryFn: QueryFunction<T[]>;
+  };
+}
+
+const contentConfig: Record<ContentType, ContentConfig<Notice | Wod>> = {
+  notice: {
+    title: "Notice",
+    writePath: "/notice/write",
+    queryKeys: {
+      queryKey: noticeQueryKeys.list().queryKey,
+      queryFn: noticeQueryKeys.list().queryFn as QueryFunction<Notice[]>,
+    },
+  },
+  wod: {
+    title: "WOD",
+    writePath: "/wod/write",
+    queryKeys: {
+      queryKey: wodQueryKeys.list().queryKey,
+      queryFn: wodQueryKeys.list().queryFn as QueryFunction<Wod[]>,
+    },
+  },
+};
+
+const ContentList = ({ contentType }: ContentListProps) => {
   // 경로에 따라 wrapper CSS를 다르게 설정하기 위한 코드
   const { pathname } = useLocation();
-  const wrapperClassName = pathname === "/" ? "home_memu_wrapper" : "wrapper";
+  const wrapperClassName =
+    pathname === "/" ? "home_menu_item_wrapper" : "wrapper";
 
-  const isNoticeOrHomePath = pathname === "/notice" || pathname === "/";
-  const title = isNoticeOrHomePath ? "Notice" : "WOD";
-  const contentType = title.toLowerCase();
-  const writePath = isNoticeOrHomePath ? "/notice/write" : "/wod/write";
-  const query = isNoticeOrHomePath
-    ? noticeQueryKeys.list()
-    : wodQueryKeys.list();
+  const config = contentConfig[contentType];
+  const { title, writePath, queryKeys } = config;
 
-  const { data: items } = useSuspenseQuery({
-    queryKey: query.queryKey as QueryKey,
-    queryFn: query.queryFn as QueryFunction<Notice[] | Wod[]>,
-  });
+  const { data: items } = useSuspenseQuery(queryKeys);
 
   return (
     <div className={wrapperClassName}>
       <h1 className="title">{title}</h1>
       <div>
         {items?.map((item) => (
-          <div key={item.id}>
+          <div key={`list-${item.id}`}>
             <ContentItem {...item} contentType={contentType} />
             <Line />
           </div>
