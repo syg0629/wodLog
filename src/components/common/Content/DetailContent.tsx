@@ -13,34 +13,83 @@ import NoPost from "../../../components/common/NoPost";
 import "react-quill/dist/quill.snow.css";
 import Loader from "../../../components/common/Loader";
 
-const DetailContent = () => {
+type ContentType = "notice" | "wod";
+
+interface QueryConfig<T> {
+  queryKey: QueryKey;
+  queryFn: QueryFunction<T[]>;
+}
+
+interface ContentConfig<T> {
+  title: string;
+  getHomeQuery?: () => QueryConfig<T>;
+  getDetailQuery: (contentId: number) => QueryConfig<T>;
+}
+
+const contentConfig: Record<ContentType, ContentConfig<Wod | Notice>> = {
+  notice: {
+    title: "Notice",
+    getDetailQuery: (contentId) => ({
+      queryKey: noticeQueryKeys.detail(contentId).queryKey,
+      queryFn: noticeQueryKeys.detail(contentId).queryFn as QueryFunction<
+        Notice[]
+      >,
+    }),
+  },
+  wod: {
+    title: "Wod",
+    getDetailQuery: (contentId) => ({
+      queryKey: wodQueryKeys.detail(contentId).queryKey,
+      queryFn: wodQueryKeys.detail(contentId).queryFn as QueryFunction<Wod[]>,
+    }),
+    getHomeQuery: () => ({
+      queryKey: wodQueryKeys.detailHome().queryKey,
+      queryFn: wodQueryKeys.detailHome().queryFn as QueryFunction<Wod[]>,
+    }),
+  },
+};
+
+const useContentQuery = (
+  contentType: ContentType,
+  isHome: boolean,
+  contentId?: number
+) => {
+  const config = contentConfig[contentType];
+  const query =
+    isHome && config.getHomeQuery
+      ? config.getHomeQuery()
+      : contentId !== undefined
+      ? config.getDetailQuery(contentId)
+      : null;
+
+  if (!query) {
+    throw new Error("유효하지 않은 쿼리");
+  }
+
+  return useQuery({ ...query, enabled: isHome || !!contentId });
+};
+
+const DetailContent = ({ contentType }: { contentType: ContentType }) => {
   const params = useParams();
   const contentId = Number(params.id);
   const navigate = useNavigate();
   const { pathname } = useLocation();
-
   const isHome = pathname === "/";
-  const isWodOrHomePath = pathname.includes("wod") || isHome;
+  const wrapperClassName = isHome ? "home_menu_item_wrapper" : "wrapper";
+  const { title } = contentConfig[contentType];
 
-  const title = isWodOrHomePath ? "WOD" : "Notice";
-  const contentType = title.toLowerCase();
-  // 경로에 따라 wrapper CSS를 다르게 설정하기 위한 코드
-  const wrapperClassName = isHome ? "home_memu_wrapper" : "wrapper";
-
-  // wodQueryKeys.detailHome(): 홈에서 wod 조회 시 오늘 날짜의 wod만 보여주기 위한 코드
-  const query = isWodOrHomePath
-    ? isHome
-      ? wodQueryKeys.detailHome()
-      : wodQueryKeys.detail(contentId)
-    : noticeQueryKeys.detail(contentId);
-  const { data: queryResult, isLoading } = useQuery({
-    queryKey: query.queryKey as QueryKey,
-    queryFn: query.queryFn as QueryFunction<Wod[] | Notice[]>,
-    enabled: isHome || !!contentId,
-  });
+  const {
+    data: queryResult,
+    isLoading,
+    error,
+  } = useContentQuery(contentType, isHome, contentId);
 
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (error) {
+    return <div>게시물 조회 중 오류가 발생했습니다.</div>;
   }
 
   const editContent = (id: number): void => {
@@ -65,7 +114,7 @@ const DetailContent = () => {
     }
 
     return queryResult.map((post) => (
-      <div key={`post-${post.id}`}>
+      <div key={`detail-${post.id}`}>
         {/* 홈 페이지 경우 제목, 작성자, 작성일, 수정, 삭제버튼 안보이게 */}
         {!isHome && (
           <>
@@ -94,6 +143,7 @@ const DetailContent = () => {
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(post.content),
             }}
+            key={`content-${post.id}`}
           />
         </div>
       </div>
