@@ -4,27 +4,29 @@ import { deltaToHtml } from "../utils/deltaToHtml";
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
 import { Content } from "../types/type";
 
+type Tables = "notice" | "wod";
+
 export const createListQueryFn =
-  <T>(table: string) =>
+  <T extends Content>(table: Tables) =>
   async (): Promise<T[]> => {
     const data = await supabase
       .from(table)
       .select("*")
       .order("id", { ascending: false });
     const response = await handleSupabaseResponse(data);
-    return deltaToHtml(response);
+    return deltaToHtml(response) as T[];
   };
 
 export const createDetailQueryFn =
-  <T>(table: string) =>
+  <T>(table: Tables) =>
   async (id: number): Promise<T[]> => {
     const data = await supabase.from(table).select("*").eq("id", id);
     const response = await handleSupabaseResponse(data);
-    return deltaToHtml(response);
+    return deltaToHtml(response) as T[];
   };
 
 export const createSaveQueryFn =
-  <T extends Content>(table: string, isEdit: boolean, contentId: number) =>
+  <T extends Content>(table: Tables, isEdit: boolean, contentId: number) =>
   async (data: T): Promise<T> => {
     const { title, content, writer, createdDate } = data;
     const savedData: PostgrestSingleResponse<T[]> = isEdit
