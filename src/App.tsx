@@ -31,8 +31,14 @@ function App() {
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/notice" element={<ContentList />} />
-          <Route path="/notice/:id" element={<DetailContent />} />
+          <Route
+            path="/notice"
+            element={<ContentList contentType="notice" />}
+          />
+          <Route
+            path="/notice/:id"
+            element={<DetailContent contentType="notice" />}
+          />
           <Route
             path="/notice/:id/edit"
             element={<EditContent contentType="notice" />}
@@ -41,8 +47,11 @@ function App() {
             path="/notice/write"
             element={<WriteContentForm isEdit={false} contentType="notice" />}
           />
-          <Route path="/wod" element={<ContentList />} />
-          <Route path="/wod/:id" element={<DetailContent />} />
+          <Route path="/wod" element={<ContentList contentType="wod" />} />
+          <Route
+            path="/wod/:id"
+            element={<DetailContent contentType="wod" />}
+          />
           <Route
             path="/wod/:id/edit"
             element={<EditContent contentType="wod" />}

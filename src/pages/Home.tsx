@@ -41,10 +41,10 @@ const Home = () => {
 
       <div className="home_menu_wrapper">
         <div className="notice">
-          <ContentList />
+          <ContentList contentType="notice" />
         </div>
         <div className="wod">
-          <DetailContent />
+          <DetailContent contentType="wod" />
         </div>
       </div>
     </div>
