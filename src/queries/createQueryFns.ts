@@ -7,22 +7,21 @@ import { Content } from "../types/type";
 type Tables = "notice" | "wod";
 
 export const createListQueryFn =
-  <T extends Content>(table: Tables) =>
-  async (): Promise<T[]> => {
+  (table: Tables) => async (): Promise<Content[]> => {
     const data = await supabase
       .from(table)
       .select("*")
       .order("id", { ascending: false });
     const response = await handleSupabaseResponse(data);
-    return deltaToHtml(response) as T[];
+    return deltaToHtml(response);
   };
 
 export const createDetailQueryFn =
-  <T>(table: Tables) =>
-  async (id: number): Promise<T[]> => {
+  (table: Tables) =>
+  async (id: number): Promise<Content> => {
     const data = await supabase.from(table).select("*").eq("id", id);
     const response = await handleSupabaseResponse(data);
-    return deltaToHtml(response) as T[];
+    return deltaToHtml(response)[0];
   };
 
 export const createSaveQueryFn =
