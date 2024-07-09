@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "../../../components/common/Common.css";
 import { noticeQueryKeys } from "../../../queries/noticeQueries";
 import { wodQueryKeys } from "../../../queries/wodQueries";
-import { Notice, Wod } from "../../../types/type";
+import { Content } from "../../../types/type";
 import { supabase } from "../../../api/supabase/supabaseClient";
 import { useLocation } from "react-router-dom";
 import { QueryKey, QueryFunction, useQuery } from "@tanstack/react-query";
@@ -15,36 +15,35 @@ import Loader from "../../../components/common/Loader";
 
 type ContentType = "notice" | "wod";
 
-interface QueryConfig<T> {
+interface QueryConfig {
   queryKey: QueryKey;
-  queryFn: QueryFunction<T[]>;
+  queryFn: QueryFunction<Content>;
 }
 
-interface ContentConfig<T> {
+interface ContentConfig {
   title: string;
-  getHomeQuery?: () => QueryConfig<T>;
-  getDetailQuery: (contentId: number) => QueryConfig<T>;
+  getHomeQuery?: () => QueryConfig;
+  getDetailQuery: (contentId: number) => QueryConfig;
 }
 
-const contentConfig: Record<ContentType, ContentConfig<Wod | Notice>> = {
+const contentConfig: Record<ContentType, ContentConfig> = {
   notice: {
     title: "Notice",
     getDetailQuery: (contentId) => ({
       queryKey: noticeQueryKeys.detail(contentId).queryKey,
-      queryFn: noticeQueryKeys.detail(contentId).queryFn as QueryFunction<
-        Notice[]
-      >,
+      queryFn: noticeQueryKeys.detail(contentId)
+        .queryFn as QueryFunction<Content>,
     }),
   },
   wod: {
     title: "Wod",
     getDetailQuery: (contentId) => ({
       queryKey: wodQueryKeys.detail(contentId).queryKey,
-      queryFn: wodQueryKeys.detail(contentId).queryFn as QueryFunction<Wod[]>,
+      queryFn: wodQueryKeys.detail(contentId).queryFn as QueryFunction<Content>,
     }),
     getHomeQuery: () => ({
       queryKey: wodQueryKeys.detailHome().queryKey,
-      queryFn: wodQueryKeys.detailHome().queryFn as QueryFunction<Wod[]>,
+      queryFn: wodQueryKeys.detailHome().queryFn as QueryFunction<Content>,
     }),
   },
 };
@@ -78,18 +77,14 @@ const DetailContent = ({ contentType }: { contentType: ContentType }) => {
   const wrapperClassName = isHome ? "home_menu_item_wrapper" : "wrapper";
   const { title } = contentConfig[contentType];
 
-  const {
-    data: queryResult,
-    isLoading,
-    error,
-  } = useContentQuery(contentType, isHome, contentId);
+  const { data: queryResult, isLoading } = useContentQuery(
+    contentType,
+    isHome,
+    contentId
+  );
 
   if (isLoading) {
     return <Loader />;
-  }
-
-  if (error) {
-    return <div>게시물 조회 중 오류가 발생했습니다.</div>;
   }
 
   const editContent = (id: number): void => {
@@ -109,25 +104,27 @@ const DetailContent = ({ contentType }: { contentType: ContentType }) => {
   };
 
   const renderContent = () => {
-    if (!queryResult || queryResult.length === 0) {
+    if (!queryResult) {
       return isHome && <NoPost post={title} />;
     }
 
-    return queryResult.map((post) => (
-      <div key={`detail-${post.id}`}>
+    return (
+      <div>
         {/* 홈 페이지 경우 제목, 작성자, 작성일, 수정, 삭제버튼 안보이게 */}
         {!isHome && (
           <>
-            <h1 className="detail_title">{post.title}</h1>
+            <h1 className="detail_title">{queryResult.title}</h1>
             <div className="detail_head">
               <div className="detail_head_left">
-                <span className="detail_head_left_writer">{post.writer}</span>
-                <span>{formatUtcDateToString(post.createdDate)}</span>
+                <span className="detail_head_left_writer">
+                  {queryResult.writer}
+                </span>
+                <span>{formatUtcDateToString(queryResult.createdDate)}</span>
               </div>
 
               <div className="detail_head_right">
                 <button
-                  onClick={() => editContent(post.id)}
+                  onClick={() => editContent(queryResult.id)}
                   className="detail_head_right_edit_btn"
                 >
                   수정하기
@@ -141,13 +138,12 @@ const DetailContent = ({ contentType }: { contentType: ContentType }) => {
         <div className="detail_main_content">
           <div
             dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(post.content),
+              __html: DOMPurify.sanitize(queryResult.content),
             }}
-            key={`content-${post.id}`}
           />
         </div>
       </div>
-    ));
+    );
   };
 
   return (
