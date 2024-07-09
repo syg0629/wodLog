@@ -1,5 +1,4 @@
 import { createQueryKeys } from "@lukemorales/query-key-factory";
-import { Notice } from "../types/type";
 import { createDetailQueryFn, createListQueryFn } from "./createQueryFns";
 
 export const noticeQueryKeys = createQueryKeys("notice", {
@@ -7,12 +6,12 @@ export const noticeQueryKeys = createQueryKeys("notice", {
   // Notice 목록
   list: () => ({
     queryKey: ["all"],
-    queryFn: createListQueryFn<Notice>("notice"),
+    queryFn: createListQueryFn("notice"),
   }),
   // DetailContent, EditContent
   // Notice 상세 페이지 / Notice 수정 시 기존 값 조회
   detail: (noticeId: number) => ({
     queryKey: [noticeId],
-    queryFn: () => createDetailQueryFn<Notice>("notice")(noticeId),
+    queryFn: () => createDetailQueryFn("notice")(noticeId),
   }),
 });

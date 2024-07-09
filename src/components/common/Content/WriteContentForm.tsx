@@ -16,7 +16,7 @@ type ContentType = "notice" | "wod";
 
 interface WriteContentFormProps {
   isEdit: boolean;
-  data?: Content[];
+  data?: Content;
   contentType: ContentType;
 }
 
@@ -52,8 +52,8 @@ const WriteContentForm = ({
     setValue,
   } = useForm<Content>({
     defaultValues: {
-      title: data?.[0].title ?? "",
-      content: data?.[0].content ?? "",
+      title: data?.title ?? "",
+      content: data?.content ?? "",
     },
   });
 
@@ -66,8 +66,8 @@ const WriteContentForm = ({
   });
 
   useEffect(() => {
-    if (data?.[0].content) {
-      setValue("content", data[0].content);
+    if (data?.content) {
+      setValue("content", data.content);
     }
   }, [data, setValue]);
 

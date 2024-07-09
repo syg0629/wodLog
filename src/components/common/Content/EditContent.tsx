@@ -25,7 +25,7 @@ const EditContent = ({ contentType }: EditContentProps) => {
       : wodQueryKeys.detail(contentId);
   const { data: editData } = useSuspenseQuery({
     queryKey: query.queryKey as QueryKey,
-    queryFn: query.queryFn as QueryFunction<Notice[] | Wod[]>,
+    queryFn: query.queryFn as QueryFunction<Notice | Wod>,
   });
 
   return (

@@ -3,7 +3,6 @@ import { createQueryKeys } from "@lukemorales/query-key-factory";
 import { handleSupabaseResponse } from "../utils/handleSupabaseResponse";
 import dayjs from "dayjs";
 import { deltaToHtml } from "../utils/deltaToHtml";
-import { Wod } from "../types/type";
 import { createDetailQueryFn, createListQueryFn } from "./createQueryFns";
 
 // home에서 오늘 WOD 조회
@@ -14,13 +13,13 @@ export const wodQueryKeys = createQueryKeys("wod", {
   // WOD 목록
   list: () => ({
     queryKey: ["all"],
-    queryFn: createListQueryFn<Wod>("wod"),
+    queryFn: createListQueryFn("wod"),
   }),
   // DetailContent, EditContent
   // WOD 상세 페이지 / WOD 수정 시 기존 값 조회
   detail: (wodId: number) => ({
     queryKey: ["wodId"],
-    queryFn: () => createDetailQueryFn<Wod>("wod")(wodId),
+    queryFn: () => createDetailQueryFn("wod")(wodId),
   }),
   // Home
   // 홈에서 오늘 WOD 조회
@@ -32,7 +31,7 @@ export const wodQueryKeys = createQueryKeys("wod", {
         .select("content")
         .like("title", `%${today}%`);
       const detailWodHome = await handleSupabaseResponse(data);
-      return deltaToHtml(detailWodHome);
+      return deltaToHtml(detailWodHome)[0];
     },
   }),
 });
