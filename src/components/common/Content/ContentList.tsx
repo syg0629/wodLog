@@ -62,7 +62,7 @@ const ContentList = ({ contentType }: ContentListProps) => {
       <h1 className="title">{title}</h1>
       <div>
         {items?.map((item) => (
-          <div key={`list-${item.id}`}>
+          <div key={item.id}>
             <ContentItem {...item} contentType={contentType} />
             <Line />
           </div>
