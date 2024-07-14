@@ -90,6 +90,30 @@ export type Database = {
         };
         Relationships: [];
       };
+      wod: {
+        Row: {
+          content: string;
+          createdDate: string;
+          id: number;
+          title: string;
+          writer: string;
+        };
+        Insert: {
+          content: string;
+          createdDate: string;
+          id?: number;
+          title: string;
+          writer: string;
+        };
+        Update: {
+          content?: string;
+          createdDate?: string;
+          id?: number;
+          title?: string;
+          writer?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;

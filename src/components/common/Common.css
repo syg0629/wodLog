@@ -43,8 +43,14 @@
 }
 
 /* 홈 페이지 */
-.home_memu_wrapper {
+.home_menu_item_wrapper {
   padding: 10px 25px;
+}
+
+.home_menu_item_wrapper .detail_main_content {
+  font-size: 25px;
+  font-weight: 600;
+  line-height: normal;
 }
 
 /* 상세 페이지 */
@@ -54,23 +60,23 @@
   margin-bottom: 15px;
 }
 
-.detail_head_detail {
+.detail_head {
   margin-top: 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.detail_head_detail_left {
+.detail_head_left {
   padding-left: 5px;
 }
 
-.detail_head_detail_left_writer {
+.detail_head_left_writer {
   font-weight: 600;
   margin-right: 20px;
 }
 
-.detail_head_detail_right_editBtn {
+.detail_head_right_edit_btn {
   margin-right: 15px;
 }
 
@@ -108,6 +114,51 @@
   height: 500px;
 }
 
+/* Notice, Wod 페이지 목록 각각의 item */
+.article {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  margin: 17px 0;
+}
+
+.article_title {
+  font-size: 27px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  height: 40px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.article_head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+}
+
+.article_write_info {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.article_date {
+  margin-left: 15px;
+}
+
+.article_content_preview {
+  height: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 7px;
+  font-weight: 400;
+  margin-bottom: -20px;
+}
+
 /* RecordTable, Hold 페이지 */
 .table_wrapper {
   padding: 0 50px;
@@ -125,4 +176,57 @@
   padding: 0 150px;
   width: 100%;
   margin-top: 40px;
+}
+
+/* radio */
+input[type="radio"] {
+  display: none;
+}
+
+.radio_label_box {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 12px 0;
+}
+
+.radio_label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.radio_label .icon {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #ffd0ae;
+  position: relative;
+}
+
+.radio_label input[type="radio"]:checked + .icon:after {
+  content: "✔";
+  opacity: 1;
+  transition: all 0.2s;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.radio-label .icon:after {
+  content: "✔";
+  opacity: 0;
+  transition: all 0.2s;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.icon {
+  margin-right: 7px;
 }
