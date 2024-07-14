@@ -56,7 +56,7 @@ const HoldList = () => {
             columnTitles={columnTitles}
             data={sortedData}
             renderBody={renderBody}
-            post="hold"
+            post="Hold"
             onClickMoveToDetail={onClickMoveToDetail}
           />
         </div>

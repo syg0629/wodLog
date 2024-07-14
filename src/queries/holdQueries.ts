@@ -6,7 +6,7 @@ import axios from "axios";
 import { Hold, Holiday } from "../types/type";
 
 export const holdQueryKeys = createQueryKeys("hold", {
-  // Hold/Hold
+  // Hold/HoldList
   // Hold 목록
   list: () => ({
     queryKey: ["all"],
