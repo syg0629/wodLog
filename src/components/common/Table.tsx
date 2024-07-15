@@ -8,7 +8,7 @@ interface TableProps<T> {
     data: T[],
     onClickMoveToDetail: (id: number) => void
   ) => JSX.Element;
-  onClickMoveToDetail: (id: number) => void;
+  onClickMoveToDetail?: (id: number) => void;
   post: string;
 }
 
@@ -17,7 +17,7 @@ const Table = <T,>({
   data,
   renderBody,
   post,
-  onClickMoveToDetail,
+  onClickMoveToDetail = () => {},
 }: TableProps<T>) => {
   return (
     <div>
