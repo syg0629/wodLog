@@ -39,8 +39,8 @@ const HoldList = () => {
           <td>
             {holdData.holdStartDay} ~ {holdData.holdEndDay}
           </td>
-          <td>{holdData.requestedHoldDate} 일</td>
-          <td>{holdData.remainingDays} 일</td>
+          <td>{holdData.requestedHoldDays} 일</td>
+          <td>{holdData.remainingHoldDays} 일</td>
         </tr>
       ))}
     </tbody>

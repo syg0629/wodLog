@@ -15,8 +15,8 @@ export type Database = {
           holdEndDay: string;
           holdStartDay: string;
           id: number;
-          remainingDays: number;
-          requestedHoldDate: number;
+          remainingHoldDays: number;
+          requestedHoldDays: number;
           writer: string;
         };
         Insert: {
@@ -24,8 +24,8 @@ export type Database = {
           holdEndDay: string;
           holdStartDay: string;
           id?: number;
-          remainingDays: number;
-          requestedHoldDate: number;
+          remainingHoldDays: number;
+          requestedHoldDays: number;
           writer: string;
         };
         Update: {
@@ -33,8 +33,8 @@ export type Database = {
           holdEndDay?: string;
           holdStartDay?: string;
           id?: number;
-          remainingDays?: number;
-          requestedHoldDate?: number;
+          remainingHoldDays?: number;
+          requestedHoldDays?: number;
           writer?: string;
         };
         Relationships: [];

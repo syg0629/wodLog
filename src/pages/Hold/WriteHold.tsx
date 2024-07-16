@@ -104,13 +104,13 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
   }, [calculateTotalHoldDays, range]);
 
   // 잔여일 계산
-  const remainingDays = useMemo(() => {
+  const remainingHoldDays = useMemo(() => {
     if (data && range?.from && range?.to) {
       const initialTotalHoldDays = calculateTotalHoldDays(
         new Date(data[0].holdStartDay),
         new Date(data[0].holdEndDay)
       );
-      return data[0].remainingDays + initialTotalHoldDays - totalHoldDays;
+      return data[0].remainingHoldDays + initialTotalHoldDays - totalHoldDays;
     }
     return 0;
   }, [totalHoldDays, calculateTotalHoldDays, data, range]);
@@ -129,8 +129,8 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
         createdDate,
         holdStartDay,
         holdEndDay,
-        remainingDays,
-        requestedHoldDate,
+        remainingHoldDays,
+        requestedHoldDays,
         writer,
       } = holdData;
       const savedHold = isEdit
@@ -140,8 +140,8 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
               createdDate,
               holdStartDay,
               holdEndDay,
-              remainingDays,
-              requestedHoldDate,
+              remainingHoldDays,
+              requestedHoldDays,
             })
             .eq("id", holdId)
             .select()
@@ -152,8 +152,8 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
                 createdDate,
                 holdStartDay,
                 holdEndDay,
-                remainingDays,
-                requestedHoldDate,
+                remainingHoldDays,
+                requestedHoldDays,
                 writer,
               },
             ])
@@ -179,7 +179,7 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
       return;
     }
 
-    if (remainingDays <= 0) {
+    if (remainingHoldDays <= 0) {
       alert("잔여일이 신청하신 총 홀드일보다 부족합니다.");
       return;
     }
@@ -189,8 +189,8 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
       id: holdId,
       holdStartDay: formatDateToString(range?.from ?? new Date()),
       holdEndDay: formatDateToString(range?.to ?? new Date()),
-      remainingDays,
-      requestedHoldDate: totalHoldDays,
+      remainingHoldDays,
+      requestedHoldDays: totalHoldDays,
       createdDate: dayjs().format("YYYY.MM.DD HH:mm:ss"),
       writer: "작성자",
     };
@@ -252,8 +252,8 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
               {totalHoldDays} 일
             </div>
             <strong>◦ 잔여일 : </strong>
-            {remainingDays >= 0 ? (
-              <span>{remainingDays} 일</span>
+            {remainingHoldDays >= 0 ? (
+              <span>{remainingHoldDays} 일</span>
             ) : (
               <span className="errorMessage">
                 잔여일이 신청하신 총 홀드일보다 부족합니다.
