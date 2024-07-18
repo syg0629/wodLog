@@ -15,29 +15,34 @@ export type Database = {
           holdEndDay: string;
           holdStartDay: string;
           id: number;
-          remainingHoldDays: number;
           requestedHoldDays: number;
-          writer: string;
+          writerUuid: string;
         };
         Insert: {
           createdDate: string;
           holdEndDay: string;
           holdStartDay: string;
           id?: number;
-          remainingHoldDays: number;
           requestedHoldDays: number;
-          writer: string;
+          writerUuid?: string;
         };
         Update: {
           createdDate?: string;
           holdEndDay?: string;
           holdStartDay?: string;
           id?: number;
-          remainingHoldDays?: number;
           requestedHoldDays?: number;
-          writer?: string;
+          writerUuid?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "hold_writerUuid_fkey";
+            columns: ["writerUuid"];
+            isOneToOne: false;
+            referencedRelation: "userInfo";
+            referencedColumns: ["id"];
+          }
+        ];
       };
       notice: {
         Row: {
@@ -45,50 +50,101 @@ export type Database = {
           createdDate: string;
           id: number;
           title: string;
-          writer: string;
+          writerUuid: string;
         };
         Insert: {
           content: string;
           createdDate?: string;
           id?: number;
           title: string;
-          writer: string;
+          writerUuid: string;
         };
         Update: {
           content?: string;
           createdDate?: string;
           id?: number;
           title?: string;
-          writer?: string;
+          writerUuid?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "notice_writerUuid_fkey";
+            columns: ["writerUuid"];
+            isOneToOne: false;
+            referencedRelation: "userInfo";
+            referencedColumns: ["id"];
+          }
+        ];
       };
       record: {
         Row: {
           createdDate: string;
           id: number;
           name: string;
-          rank: number | null;
-          record: number | null;
+          rank: number;
+          record: number;
           workoutType: string;
+          writerUuid: string;
         };
         Insert: {
           createdDate?: string;
           id?: number;
           name: string;
-          rank?: number | null;
-          record?: number | null;
+          rank: number;
+          record: number;
           workoutType: string;
+          writerUuid: string;
         };
         Update: {
           createdDate?: string;
           id?: number;
           name?: string;
-          rank?: number | null;
-          record?: number | null;
+          rank?: number;
+          record?: number;
           workoutType?: string;
+          writerUuid?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "record_writerUuid_fkey";
+            columns: ["writerUuid"];
+            isOneToOne: false;
+            referencedRelation: "userInfo";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      userInfo: {
+        Row: {
+          auth: string;
+          email: string;
+          id: string;
+          remainingHoldDays: number;
+          userName: string;
+        };
+        Insert: {
+          auth?: string;
+          email: string;
+          id?: string;
+          remainingHoldDays: number;
+          userName: string;
+        };
+        Update: {
+          auth?: string;
+          email?: string;
+          id?: string;
+          remainingHoldDays?: number;
+          userName?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "userInfo_id_fkey";
+            columns: ["id"];
+            isOneToOne: true;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
       };
       wod: {
         Row: {
@@ -96,23 +152,31 @@ export type Database = {
           createdDate: string;
           id: number;
           title: string;
-          writer: string;
+          writerUuid: string;
         };
         Insert: {
           content: string;
           createdDate: string;
           id?: number;
           title: string;
-          writer: string;
+          writerUuid: string;
         };
         Update: {
           content?: string;
           createdDate?: string;
           id?: number;
           title?: string;
-          writer?: string;
+          writerUuid?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "wod_writerUuid_fkey";
+            columns: ["writerUuid"];
+            isOneToOne: false;
+            referencedRelation: "userInfo";
+            referencedColumns: ["id"];
+          }
+        ];
       };
     };
     Views: {
