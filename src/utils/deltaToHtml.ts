@@ -11,10 +11,10 @@ const parseDeltaContent = (content: string) => {
     if (parsedContent && Array.isArray(parsedContent.ops)) {
       return parsedContent.ops;
     } else {
-      console.log("유효하지 않은 delta fomat >> ", content);
+      console.error("유효하지 않은 delta fomat >> ", content);
     }
   } catch (error) {
-    console.log("JSON 파싱 시 오류 >> ", content, error);
+    console.error("JSON 파싱 시 오류 >> ", content, error);
   }
   return null;
 };
