@@ -52,7 +52,7 @@ export const modules = {
         },
         { background: [] },
       ],
-      ["image", "video"],
+      ["image"],
       ["clean"],
     ],
   },
