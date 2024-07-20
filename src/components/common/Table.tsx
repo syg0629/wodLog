@@ -6,9 +6,9 @@ interface TableProps<T> {
   data: T[];
   renderBody: (
     data: T[],
-    onClickMoveToDetail: (id: number) => void
+    handleMoveToDetail: (id: number) => void
   ) => JSX.Element;
-  onClickMoveToDetail?: (id: number) => void;
+  handleMoveToDetail?: (id: number) => void;
   post: string;
 }
 
@@ -17,14 +17,14 @@ const Table = <T,>({
   data,
   renderBody,
   post,
-  onClickMoveToDetail = () => {},
+  handleMoveToDetail = () => {},
 }: TableProps<T>) => {
   return (
     <div>
       {data.length > 0 ? (
         <table className="table">
           <TableHeader columnTitles={columnTitles} />
-          {renderBody(data, onClickMoveToDetail)}
+          {renderBody(data, handleMoveToDetail)}
         </table>
       ) : (
         <NoPost post={post} />
