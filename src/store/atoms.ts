@@ -16,6 +16,36 @@ export const userInfoAtom = atom<UserInfo>({
   auth: "",
 });
 
+//세션 확인 및 유저 정보 설정
+export const userAuthAtom = atom(null, async (_, set) => {
+  try {
+    const { data, error } = await supabase.auth.getSession();
+    if (error) throw error;
+
+    if (data.session?.access_token) {
+      set(accessTokenAtom, data.session.access_token);
+
+      const { data: userInfoData, error: userInfoError } = await supabase
+        .from("userInfo")
+        .select("userName, auth")
+        .eq("id", data.session?.user.id)
+        .single();
+
+      if (userInfoError) throw userInfoError;
+
+      set(userInfoAtom, {
+        userName: userInfoData.userName,
+        writerUuid: data.session.user.id,
+        auth: userInfoData.auth,
+      });
+    }
+  } catch (error) {
+    console.error("로그인 세션 에러 >> ", error);
+    set(accessTokenAtom, null);
+    set(userInfoAtom, { userName: "", writerUuid: "", auth: "" });
+  }
+});
+
 //로그인 상태 확인 및 로그아웃
 export const loginLogoutAtom = atom(
   //로그인 상태 확인
