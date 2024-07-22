@@ -1,18 +1,11 @@
 import { Link } from "react-router-dom";
 import "./Header.css";
 import weightlift from "../../assets/weightLifting.svg";
-import { isLoggedAtom, logoutAtom } from "../../store/atoms";
+import { loginLogoutAtom } from "../../store/atoms";
 import { useAtom } from "jotai";
 
 const Header = () => {
-  const [isLogged] = useAtom(isLoggedAtom);
-  const [, logout] = useAtom(logoutAtom);
-
-  const handleLogout = async () => {
-    if (isLogged) {
-      await logout();
-    }
-  };
+  const [isLogged, logout] = useAtom(loginLogoutAtom);
 
   return (
     <header className="header">
@@ -41,11 +34,7 @@ const Header = () => {
           </Link>
         )}
         {isLogged ? (
-          <Link
-            to="/login"
-            className="header_menu_btn_login"
-            onClick={handleLogout}
-          >
+          <Link to="/login" className="header_menu_btn_login" onClick={logout}>
             LOGOUT
           </Link>
         ) : (

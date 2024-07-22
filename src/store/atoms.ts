@@ -9,9 +9,6 @@ export const accessTokenAtom = atomWithStorage<string | null>(
   null
 );
 
-//로그인 여부 확인
-export const isLoggedAtom = atom<boolean>((get) => !!get(accessTokenAtom));
-
 //로그인 시 받아오는 유저 정보
 export const userInfoAtom = atom<UserInfo>({
   userName: "",
@@ -19,13 +16,18 @@ export const userInfoAtom = atom<UserInfo>({
   auth: "",
 });
 
-//로그아웃
-export const logoutAtom = atom(null, async (_, set) => {
-  try {
-    await supabase.auth.signOut();
-    set(accessTokenAtom, null);
-    set(userInfoAtom, { userName: "", writerUuid: "", auth: "" });
-  } catch (error) {
-    console.error("로그아웃 중 에러 발생 >> ", error);
+//로그인 상태 확인 및 로그아웃
+export const loginLogoutAtom = atom(
+  //로그인 상태 확인
+  (get) => !!get(accessTokenAtom),
+  //로그아웃
+  async (_, set) => {
+    try {
+      await supabase.auth.signOut();
+      set(accessTokenAtom, null);
+      set(userInfoAtom, { userName: "", writerUuid: "", auth: "" });
+    } catch (error) {
+      console.error("로그아웃 중 에러 발생 >> ", error);
+    }
   }
-});
+);
