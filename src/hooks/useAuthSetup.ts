@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useAtom } from "jotai";
-import { userAuthAtom } from "../store/atoms";
+import { baseUserAuthAtom } from "../store/atoms";
 
 export const useAuthSetup = () => {
-  const [, authenticatedUser] = useAtom(userAuthAtom);
+  const [, authenticatedUser] = useAtom(baseUserAuthAtom);
 
   useEffect(() => {
     authenticatedUser();
-  }, [authenticatedUser]);
+  }, []);
 };
