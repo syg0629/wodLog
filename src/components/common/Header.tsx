@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import "./Header.css";
 import weightlift from "../../assets/weightLifting.svg";
-import { loginLogoutAtom } from "../../store/atoms";
+import { userAuthAtom } from "../../store/atoms";
 import { useAtom } from "jotai";
 
 const Header = () => {
-  const [isLogged, logout] = useAtom(loginLogoutAtom);
+  const [accessToken, logout] = useAtom(userAuthAtom);
+  const isLogged = !!accessToken;
 
   return (
     <header className="header">
