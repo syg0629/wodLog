@@ -1,0 +1,138 @@
+.login_wrapper {
+  position: relative;
+  margin: 50px auto;
+  padding: 0 20px;
+  text-align: center;
+  max-width: 100%;
+  width: 400px;
+}
+
+.login_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login_box {
+  margin-top: 50px;
+}
+
+.login_box_id,
+.login_box_pw {
+  border: 1.5px solid #edededc6;
+  width: 350px;
+  height: 60px;
+  font-size: 20px;
+  font-weight: 900;
+  padding: 15px;
+  border-radius: 13px;
+  margin: 5px 0;
+  align-items: center;
+  display: flex;
+}
+
+.login_input_id,
+.login_input_pw {
+  margin-left: 15px;
+  width: 280px;
+}
+
+.login_box_id:focus-within,
+.login_box_pw:focus-within {
+  border: 1.5px solid #333333;
+}
+
+.login_input_id,
+.login_input_pw:focus {
+  outline: 0;
+}
+
+.login_btn {
+  margin: 10px 0;
+  line-height: 30px;
+  background-color: #636363;
+  color: white;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 15px;
+  border-radius: 13px;
+  width: 350px;
+  height: 60px;
+  transition: background-color 0.3s;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  display: flex;
+  justify-content: center;
+}
+
+.login_btn:hover {
+  background-color: #4e4e4e;
+}
+
+.login_btn:active {
+  background-color: #333333;
+}
+
+.easy_login {
+  position: relative;
+  text-align: center;
+  margin: 13px;
+}
+
+.easy_login hr {
+  position: relative;
+  bottom: -15px;
+  display: block;
+  margin: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #989898;
+  border: none;
+}
+
+.easy_login span {
+  position: relative;
+  padding: 0 8px;
+  letter-spacing: -0.3px;
+  background-color: #ffffff;
+  font-size: 14px;
+  color: #989898;
+  z-index: 1;
+}
+
+.easy_login_button {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.kakao_login,
+.google_login {
+  margin: 10px;
+  width: 60px;
+  height: 60px;
+  border-radius: 17%;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.kakao_login {
+  background-color: #fee500;
+}
+.kakao_login > img {
+  width: 50px;
+  height: 50px;
+}
+
+.google_login {
+  background-color: #ffffff;
+}
+
+.google_login > img {
+  width: 30px;
+  height: 30px;
+}
