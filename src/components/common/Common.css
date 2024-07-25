@@ -16,15 +16,26 @@
   margin: 10px 0 20px 0;
 }
 
-.errorMessage {
+.error_message {
   color: #be2e22;
   font-size: 16px;
   font-weight: 500;
 }
 
-.errorMessage > svg {
+.error_message > svg {
   vertical-align: middle;
   margin-bottom: 2px;
+}
+
+.message {
+  font-size: 17px;
+  font-weight: 700;
+  text-align: center;
+  background-color: #333333;
+  color: white;
+  border-radius: 15px;
+  width: 120px;
+  padding: 10px;
 }
 
 .no_post {
@@ -176,57 +187,4 @@
   padding: 0 150px;
   width: 100%;
   margin-top: 40px;
-}
-
-/* radio */
-input[type="radio"] {
-  display: none;
-}
-
-.radio_label_box {
-  display: flex;
-  justify-content: space-evenly;
-  margin: 12px 0;
-}
-
-.radio_label {
-  position: relative;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.radio_label .icon {
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: #ffd0ae;
-  position: relative;
-}
-
-.radio_label input[type="radio"]:checked + .icon:after {
-  content: "✔";
-  opacity: 1;
-  transition: all 0.2s;
-  color: #fff;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.radio-label .icon:after {
-  content: "✔";
-  opacity: 0;
-  transition: all 0.2s;
-  color: #fff;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.icon {
-  margin-right: 7px;
 }
