@@ -109,12 +109,12 @@ const Login = () => {
             />
           </div>
           {errors?.userId?.type === "required" && (
-            <div className="errorMessage">
+            <div className="error_message">
               <FaExclamationCircle /> 아이디를 입력해주세요.
             </div>
           )}
           {errors?.userPw?.type === "required" && (
-            <div className="errorMessage">
+            <div className="error_message">
               <FaExclamationCircle /> 비밀번호를 입력해주세요.
             </div>
           )}
