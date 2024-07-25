@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "../../../components/common/Common.css";
 import { noticeQueryKeys } from "../../../queries/noticeQueries";
 import { wodQueryKeys } from "../../../queries/wodQueries";
-import { Content } from "../../../types/type";
+import { ContentWithUserInfo } from "../../../types/type";
 import { supabase } from "../../../api/supabase/supabaseClient";
 import { useLocation } from "react-router-dom";
 import { QueryKey, QueryFunction, useQuery } from "@tanstack/react-query";
@@ -12,12 +12,14 @@ import { formatUtcDateToString } from "../../../utils/formattedDate";
 import NoPost from "../../../components/common/NoPost";
 import "react-quill/dist/quill.snow.css";
 import Loader from "../../../components/common/Loader";
+import { useAtom } from "jotai";
+import { userInfoAtom } from "../../../store/atoms";
 
 type ContentType = "notice" | "wod";
 
 interface QueryConfig {
   queryKey: QueryKey;
-  queryFn: QueryFunction<Content>;
+  queryFn: QueryFunction<ContentWithUserInfo>;
 }
 
 interface ContentConfig {
@@ -32,18 +34,20 @@ const contentConfig: Record<ContentType, ContentConfig> = {
     getDetailQuery: (contentId) => ({
       queryKey: noticeQueryKeys.detail(contentId).queryKey,
       queryFn: noticeQueryKeys.detail(contentId)
-        .queryFn as QueryFunction<Content>,
+        .queryFn as QueryFunction<ContentWithUserInfo>,
     }),
   },
   wod: {
     title: "Wod",
     getDetailQuery: (contentId) => ({
       queryKey: wodQueryKeys.detail(contentId).queryKey,
-      queryFn: wodQueryKeys.detail(contentId).queryFn as QueryFunction<Content>,
+      queryFn: wodQueryKeys.detail(contentId)
+        .queryFn as QueryFunction<ContentWithUserInfo>,
     }),
     getHomeQuery: () => ({
       queryKey: wodQueryKeys.detailHome().queryKey,
-      queryFn: wodQueryKeys.detailHome().queryFn as QueryFunction<Content>,
+      queryFn: wodQueryKeys.detailHome()
+        .queryFn as QueryFunction<ContentWithUserInfo>,
     }),
   },
 };
@@ -76,6 +80,7 @@ const DetailContent = ({ contentType }: { contentType: ContentType }) => {
   const isHome = pathname === "/";
   const wrapperClassName = isHome ? "home_menu_item_wrapper" : "wrapper";
   const { title } = contentConfig[contentType];
+  const [userInfo] = useAtom(userInfoAtom);
 
   const { data: queryResult, isLoading } = useContentQuery(
     contentType,
@@ -87,18 +92,18 @@ const DetailContent = ({ contentType }: { contentType: ContentType }) => {
     return <Loader />;
   }
 
-  const editContent = (id: number): void => {
+  const handleMoveToEdit = (id: number): void => {
     navigate(`/${contentType}/${id}/edit`);
   };
 
-  const deleteContent = async () => {
+  const handleDeleteContent = async () => {
     if (!confirm("삭제하시겠습니까?")) return;
     try {
       await supabase.from(contentType).delete().eq("id", contentId);
       alert("해당 게시물이 삭제되었습니다.");
       navigate(`/${contentType}`, { replace: true });
     } catch (error) {
-      console.error("삭제 중 오류 발생:", error);
+      console.error("삭제 중 오류 발생 >> ", error);
       alert("게시물 삭제 중 오류가 발생했습니다.");
     }
   };
@@ -117,19 +122,25 @@ const DetailContent = ({ contentType }: { contentType: ContentType }) => {
             <div className="detail_head">
               <div className="detail_head_left">
                 <span className="detail_head_left_writer">
-                  {queryResult.writer}
+                  {queryResult.userInfo.userName}
                 </span>
                 <span>{formatUtcDateToString(queryResult.createdDate)}</span>
               </div>
 
               <div className="detail_head_right">
-                <button
-                  onClick={() => editContent(queryResult.id)}
-                  className="detail_head_right_edit_btn"
-                >
-                  수정하기
-                </button>
-                <button onClick={deleteContent}>삭제하기</button>
+                {userInfo?.writerUuid === queryResult.writerUuid ? (
+                  <>
+                    <button
+                      onClick={() => handleMoveToEdit(queryResult.id)}
+                      className="detail_head_right_edit_btn"
+                    >
+                      수정하기
+                    </button>
+                    <button onClick={handleDeleteContent}>삭제하기</button>
+                  </>
+                ) : userInfo?.auth === "admin" ? (
+                  <button onClick={handleDeleteContent}>삭제하기</button>
+                ) : null}
               </div>
             </div>
             <Line />

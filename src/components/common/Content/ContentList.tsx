@@ -10,7 +10,9 @@ import { FaPencil } from "react-icons/fa6";
 import { noticeQueryKeys } from "../../../queries/noticeQueries";
 import { wodQueryKeys } from "../../../queries/wodQueries";
 import ContentItem from "./ContentItem";
-import { Notice, Wod } from "../../../types/type";
+import { ContentWithUserInfo } from "../../../types/type";
+import { userInfoAtom } from "../../../store/atoms";
+import { useAtom } from "jotai";
 
 type ContentType = "notice" | "wod";
 
@@ -18,22 +20,24 @@ interface ContentListProps {
   contentType: ContentType;
 }
 
-interface ContentConfig<T> {
+interface ContentConfig<ContentWithUserInfo> {
   title: string;
   writePath: string;
   queryKeys: {
     queryKey: QueryKey;
-    queryFn: QueryFunction<T[]>;
+    queryFn: QueryFunction<ContentWithUserInfo[]>;
   };
 }
 
-const contentConfig: Record<ContentType, ContentConfig<Notice | Wod>> = {
+const contentConfig: Record<ContentType, ContentConfig<ContentWithUserInfo>> = {
   notice: {
     title: "Notice",
     writePath: "/notice/write",
     queryKeys: {
       queryKey: noticeQueryKeys.list().queryKey,
-      queryFn: noticeQueryKeys.list().queryFn as QueryFunction<Notice[]>,
+      queryFn: noticeQueryKeys.list().queryFn as QueryFunction<
+        ContentWithUserInfo[]
+      >,
     },
   },
   wod: {
@@ -41,12 +45,15 @@ const contentConfig: Record<ContentType, ContentConfig<Notice | Wod>> = {
     writePath: "/wod/write",
     queryKeys: {
       queryKey: wodQueryKeys.list().queryKey,
-      queryFn: wodQueryKeys.list().queryFn as QueryFunction<Wod[]>,
+      queryFn: wodQueryKeys.list().queryFn as QueryFunction<
+        ContentWithUserInfo[]
+      >,
     },
   },
 };
 
 const ContentList = ({ contentType }: ContentListProps) => {
+  const [userInfo] = useAtom(userInfoAtom);
   // 경로에 따라 wrapper CSS를 다르게 설정하기 위한 코드
   const { pathname } = useLocation();
   const wrapperClassName =
@@ -69,11 +76,13 @@ const ContentList = ({ contentType }: ContentListProps) => {
         ))}
       </div>
 
-      <ActionButton>
-        <Link to={writePath} className="write_button">
-          <FaPencil />
-        </Link>
-      </ActionButton>
+      {userInfo?.auth === "admin" && (
+        <ActionButton>
+          <Link to={writePath} className="write_button">
+            <FaPencil />
+          </Link>
+        </ActionButton>
+      )}
     </div>
   );
 };
