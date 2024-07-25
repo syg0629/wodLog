@@ -1,5 +1,7 @@
 import { ChangeEvent, useState } from "react";
-import "./ImgUploader.css";
+import "./Record.css";
+import { FaImage } from "react-icons/fa";
+import { IoDocumentText } from "react-icons/io5";
 
 interface ImageUploaderProps {
   onImgChange: (imgUrl: string, id: number, type: string) => void;
@@ -27,12 +29,11 @@ const ImageUploader = ({ onImgChange, id, type }: ImageUploaderProps) => {
   };
 
   return (
-    <div>
-      <div>{type}</div>
-      {uploadImgUrl[id] === undefined ? (
-        <label htmlFor={`fileTag-${id}`}>등록하기</label>
-      ) : (
-        ""
+    <>
+      {uploadImgUrl[id] === undefined && (
+        <label className="record_registration_btn" htmlFor={`fileTag-${id}`}>
+          {type}&nbsp;기록 등록
+        </label>
       )}
       <input
         type="file"
@@ -42,9 +43,23 @@ const ImageUploader = ({ onImgChange, id, type }: ImageUploaderProps) => {
         hidden={true}
       />
       {uploadImgUrl[id] && (
-        <img className="write_record_preview" src={uploadImgUrl} />
+        <>
+          <span className="message">
+            <FaImage />
+            &nbsp;&nbsp;이미지
+            <br />
+            등록 완료
+          </span>
+          <img className="write_record_preview" src={uploadImgUrl} />
+          <span className="message">
+            <IoDocumentText />
+            &nbsp;&nbsp; 텍스트
+            <br />
+            변환 완료
+          </span>
+        </>
       )}
-    </div>
+    </>
   );
 };
 export default ImageUploader;
