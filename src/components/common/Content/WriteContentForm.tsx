@@ -6,17 +6,18 @@ import dayjs from "dayjs";
 import ReactQuill from "react-quill";
 import { modules } from "../../../utils/EditorModules";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { FaExclamationCircle } from "react-icons/fa";
 import { createSaveQueryFn } from "../../../queries/createQueryFns";
-import { Content } from "../../../types/type";
+import { ContentWithUserInfo } from "../../../types/type";
+import { useAuthenticatedUserInfo } from "../../../hooks/useAuthenticatedUserInfo";
 
 type ContentType = "notice" | "wod";
 
 interface WriteContentFormProps {
   isEdit: boolean;
-  data?: Content;
+  data?: ContentWithUserInfo;
   contentType: ContentType;
 }
 
@@ -29,31 +30,21 @@ const WriteContentForm = ({
   const contentId = Number(params.id);
   const navigate = useNavigate();
   const quillRef = useRef<ReactQuill>(null);
-
-  const saveData = useMutation<Content, Error, Content>({
-    mutationFn: createSaveQueryFn<Content>(contentType, isEdit, contentId),
-    onSuccess: (savedData: Content) => {
-      navigate(`/${contentType}/${savedData.id}`);
-    },
-    onError: (error) => {
-      console.log(
-        `${isEdit ? "수정" : "등록"} 중 오류 발생 >> `,
-        error.message
-      );
-      alert(`${isEdit ? "수정" : "등록"} 중 오류가 발생했습니다.`);
-    },
-  });
+  const userInfo = useAuthenticatedUserInfo();
 
   const {
     register,
     formState: { errors },
     handleSubmit,
     control,
-    setValue,
-  } = useForm<Content>({
+  } = useForm<ContentWithUserInfo>({
     defaultValues: {
       title: data?.title ?? "",
       content: data?.content ?? "",
+      userInfo: {
+        userName: data?.userInfo.userName,
+        writerUuid: data?.userInfo.writerUuid,
+      },
     },
   });
 
@@ -65,17 +56,33 @@ const WriteContentForm = ({
     rules: { required: true },
   });
 
-  useEffect(() => {
-    if (data?.content) {
-      setValue("content", data.content);
+  const saveData = useMutation<ContentWithUserInfo, Error, ContentWithUserInfo>(
+    {
+      mutationFn: createSaveQueryFn<ContentWithUserInfo>(
+        contentType,
+        isEdit,
+        contentId
+      ),
+      onSuccess: (savedData: ContentWithUserInfo) => {
+        navigate(`/${contentType}/${savedData.id}`);
+      },
+      onError: (error) => {
+        console.error(
+          `${isEdit ? "수정" : "등록"} 중 오류 발생 >> `,
+          error.message
+        );
+        alert(`${isEdit ? "수정" : "등록"} 중 오류가 발생했습니다.`);
+      },
     }
-  }, [data, setValue]);
+  );
 
   const onChangeContents = (content: string) => {
     onChange(content === "<p><br></p>" ? "" : content);
   };
 
-  const submitContent: SubmitHandler<Content> = (formData: Content) => {
+  const submitContent: SubmitHandler<ContentWithUserInfo> = (
+    formData: ContentWithUserInfo
+  ) => {
     const quillEditor = quillRef.current?.getEditor();
     const content = quillEditor?.getContents();
 
@@ -83,7 +90,11 @@ const WriteContentForm = ({
       ...formData,
       content: JSON.stringify(content),
       createdDate: dayjs().format("YYYY.MM.DD HH:mm:ss"),
-      writer: "작성자",
+      userInfo: {
+        userName: userInfo.userName,
+        writerUuid: userInfo.writerUuid,
+        auth: userInfo.auth,
+      },
     };
 
     const confirmMessage = isEdit ? "수정하시겠습니까?" : "등록하시겠습니까?";
@@ -109,12 +120,12 @@ const WriteContentForm = ({
           {...register("title", { required: true })}
         />
         {errors.title && (
-          <div className="errorMessage">
+          <div className="error_message">
             <FaExclamationCircle /> 제목을 입력해주세요.
           </div>
         )}
         {errors.content && (
-          <div className="errorMessage">
+          <div className="error_message">
             <FaExclamationCircle /> 본문 내용을 입력해주세요.
           </div>
         )}
