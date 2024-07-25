@@ -29,13 +29,13 @@ const Home = () => {
         className="mySwiper"
       >
         <SwiperSlide>
-          <img src={crossfit1} />
+          <img src={crossfit1} alt="박스 점프를 하는 사람" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src={crossfit2} />
+          <img src={crossfit2} alt="데드리프트를 하는 사람" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src={crossfit3} />
+          <img src={crossfit3} alt="백스쿼트를 하는 사람" />
         </SwiperSlide>
       </Swiper>
 
