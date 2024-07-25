@@ -14,7 +14,7 @@ const Header = () => {
       <Link to="/" className="header_logo">
         wodLog
         <img
-          className="weightLiftIcon"
+          className="weight_lift_icon"
           src={weightlift}
           alt="Weightlifting Icon"
         />
