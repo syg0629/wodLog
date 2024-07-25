@@ -1,7 +1,5 @@
 import { Database } from "../api/supabase/supabase";
 
-export type Notice = Database["public"]["Tables"]["notice"]["Row"];
-export type Wod = Database["public"]["Tables"]["wod"]["Row"];
 export type Hold = Database["public"]["Tables"]["hold"]["Row"];
 export type Record = Database["public"]["Tables"]["record"]["Row"];
 
@@ -17,8 +15,21 @@ export type Content = {
   id: number;
   title: string;
   content: string;
-  writer: string;
   createdDate: string;
+  writerUuid: string;
 };
 
-export type ContentWithContentType = Content & { contentType: string };
+export type UserInfo = {
+  userName: string;
+  writerUuid: string;
+  auth: string;
+};
+
+export type ContentWithUserInfo = Content & { userInfo: UserInfo };
+
+export type HoldWithUserInfo = Hold & {
+  userInfo: {
+    userName?: string;
+    remainingHoldDays: number;
+  };
+};
