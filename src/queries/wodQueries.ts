@@ -31,6 +31,9 @@ export const wodQueryKeys = createQueryKeys("wod", {
         .select("content")
         .like("title", `%${today}%`);
       const detailWodHome = await handleSupabaseResponse(data);
+      if (detailWodHome.length === 0) {
+        return null;
+      }
       return deltaToHtml(detailWodHome)[0];
     },
   }),
