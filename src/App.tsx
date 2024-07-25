@@ -13,7 +13,6 @@ import HoldList from "./pages/Hold/HoldList";
 import EditHold from "./pages/Hold/EditHold";
 import WriteHold from "./pages/Hold/WriteHold";
 import Login from "./pages/Login/Login";
-import SignUp from "./pages/SignUp/SignUp";
 import ContentList from "./components/common/Content/ContentList";
 import WriteContentForm from "./components/common/Content/WriteContentForm";
 import DetailContent from "./components/common/Content/DetailContent";
@@ -67,7 +66,6 @@ const App = () => {
           <Route path="/hold/write" element={<WriteHold isEdit={false} />} />
           <Route path="/hold/:id/edit" element={<EditHold />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
