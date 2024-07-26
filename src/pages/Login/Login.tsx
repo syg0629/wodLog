@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../api/supabase/supabaseClient";
 import { FaExclamationCircle } from "react-icons/fa";
-import { useAtom } from "jotai";
+import { useSetAtom } from "jotai";
 import { accessTokenAtom, userInfoAtom } from "../../store/atoms";
 import kakaoLoginBtn from "../../assets/btnKakao.svg";
 import googleLoginBtn from "../../assets/btnGoogle.svg";
@@ -16,8 +16,8 @@ interface LoginFormData {
 
 const Login = () => {
   const navigate = useNavigate();
-  const [, setAccessToken] = useAtom(accessTokenAtom);
-  const [, setUserInfo] = useAtom(userInfoAtom);
+  const setAccessToken = useSetAtom(accessTokenAtom);
+  const setUserInfo = useSetAtom(userInfoAtom);
 
   const {
     register,

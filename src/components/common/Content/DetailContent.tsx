@@ -12,7 +12,7 @@ import { formatUtcDateToString } from "../../../utils/formattedDate";
 import NoPost from "../../../components/common/NoPost";
 import "react-quill/dist/quill.snow.css";
 import Loader from "../../../components/common/Loader";
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import { userInfoAtom } from "../../../store/atoms";
 
 type ContentType = "notice" | "wod";
@@ -80,7 +80,7 @@ const DetailContent = ({ contentType }: { contentType: ContentType }) => {
   const isHome = pathname === "/";
   const wrapperClassName = isHome ? "home_menu_item_wrapper" : "wrapper";
   const { title } = contentConfig[contentType];
-  const [userInfo] = useAtom(userInfoAtom);
+  const userInfo = useAtomValue(userInfoAtom);
 
   const { data: queryResult, isLoading } = useContentQuery(
     contentType,

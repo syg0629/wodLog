@@ -12,7 +12,7 @@ import { wodQueryKeys } from "../../../queries/wodQueries";
 import ContentItem from "./ContentItem";
 import { ContentWithUserInfo } from "../../../types/type";
 import { userInfoAtom } from "../../../store/atoms";
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
 
 type ContentType = "notice" | "wod";
 
@@ -53,7 +53,7 @@ const contentConfig: Record<ContentType, ContentConfig<ContentWithUserInfo>> = {
 };
 
 const ContentList = ({ contentType }: ContentListProps) => {
-  const [userInfo] = useAtom(userInfoAtom);
+  const userInfo = useAtomValue(userInfoAtom);
   // 경로에 따라 wrapper CSS를 다르게 설정하기 위한 코드
   const { pathname } = useLocation();
   const wrapperClassName =

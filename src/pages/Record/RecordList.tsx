@@ -8,11 +8,11 @@ import { FaPencil } from "react-icons/fa6";
 import NoPost from "../../components/common/NoPost";
 import { Record } from "../../types/type";
 import { userInfoAtom } from "../../store/atoms";
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import { recordQueryKeys } from "../../queries/recordQueries";
 
 const RecordList = () => {
-  const [userInfo] = useAtom(userInfoAtom);
+  const userInfo = useAtomValue(userInfoAtom);
   const { data: records } = useSuspenseQuery(recordQueryKeys.list());
 
   const groupedRecords = records?.reduce((acc, record) => {
