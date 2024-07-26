@@ -48,7 +48,7 @@ const ImageUploader = ({ onImgChange, id, type }: ImageUploaderProps) => {
             <FaImage />
             &nbsp;&nbsp;이미지
             <br />
-            등록 완료
+            확인 완료
           </span>
           <img className="write_record_preview" src={uploadImgUrl} />
           <span className="message">
