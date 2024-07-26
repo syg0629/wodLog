@@ -38,7 +38,7 @@ export const holdQueryKeys = createQueryKeys("hold", {
     userInfo: { writerUuid?: string; auth?: string }
   ) => ({
     queryKey: [holdId, userInfo],
-    queryFn: async (): Promise<HoldWithUserInfo[]> => {
+    queryFn: async (): Promise<HoldWithUserInfo> => {
       let query = supabase
         .from("hold")
         .select("*, userInfo(remainingHoldDays)")
@@ -48,17 +48,13 @@ export const holdQueryKeys = createQueryKeys("hold", {
         query = query.eq("writerUuid", userInfo.writerUuid);
       }
 
-      const response = await query;
+      const response = await query.single();
       const data = await handleSupabaseResponse(response);
 
-      const holdWithUserInfo: HoldWithUserInfo[] = data.map((item) => {
-        if (!item.userInfo) {
-          throw new Error("ID가 존재하지 않습니다.");
-        }
-        return { ...item, userInfo: item.userInfo };
-      });
-
-      return holdWithUserInfo;
+      if (!data.userInfo) {
+        throw new Error("ID가 존재하지 않습니다.");
+      }
+      return { ...data, userInfo: data.userInfo };
     },
   }),
   // Hold/WriteHold

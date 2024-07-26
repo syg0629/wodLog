@@ -26,7 +26,7 @@ import { useAuthenticatedUserInfo } from "../../hooks/useAuthenticatedUserInfo";
 
 interface WriteProps {
   isEdit: boolean;
-  data?: Hold[];
+  data?: Hold;
 }
 
 const today = new Date();
@@ -81,8 +81,8 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
 
   // 데이터가 있을 경우, 기존 데이터를 state에 저장
   useEffect(() => {
-    if (data?.[0]) {
-      const { holdStartDay, holdEndDay } = data[0];
+    if (data) {
+      const { holdStartDay, holdEndDay } = data;
       setRange({
         from: new Date(holdStartDay),
         to: new Date(holdEndDay),
@@ -109,10 +109,10 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
   }, [calculateTotalHoldDays, range]);
 
   const initialHoldDays = useMemo(() => {
-    if (isEdit && data?.[0]) {
+    if (isEdit && data) {
       return calculateTotalHoldDays(
-        new Date(data[0].holdStartDay),
-        new Date(data[0].holdEndDay)
+        new Date(data.holdStartDay),
+        new Date(data.holdEndDay)
       );
     }
     return 0;
