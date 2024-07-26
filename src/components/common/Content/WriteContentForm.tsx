@@ -41,10 +41,6 @@ const WriteContentForm = ({
     defaultValues: {
       title: data?.title ?? "",
       content: data?.content ?? "",
-      userInfo: {
-        userName: data?.userInfo.userName,
-        writerUuid: data?.userInfo.writerUuid,
-      },
     },
   });
 
