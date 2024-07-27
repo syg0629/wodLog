@@ -29,7 +29,11 @@ const EditContent = ({ contentType }: EditContentProps) => {
   });
 
   return (
-    <WriteContentForm isEdit={true} data={editData} contentType={contentType} />
+    <WriteContentForm
+      isEdit={true}
+      editData={editData}
+      contentType={contentType}
+    />
   );
 };
 

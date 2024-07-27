@@ -17,13 +17,13 @@ type ContentType = "notice" | "wod";
 
 interface WriteContentFormProps {
   isEdit: boolean;
-  data?: ContentWithUserInfo;
+  editData?: ContentWithUserInfo;
   contentType: ContentType;
 }
 
 const WriteContentForm = ({
   isEdit,
-  data,
+  editData,
   contentType,
 }: WriteContentFormProps) => {
   const params = useParams();
@@ -39,8 +39,8 @@ const WriteContentForm = ({
     control,
   } = useForm<ContentWithUserInfo>({
     defaultValues: {
-      title: data?.title ?? "",
-      content: data?.content ?? "",
+      title: editData?.title ?? "",
+      content: editData?.content ?? "",
     },
   });
 

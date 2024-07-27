@@ -13,6 +13,6 @@ const EditHold = () => {
     holdQueryKeys.detail(holdId, userInfo)
   );
 
-  return <WriteHold isEdit={true} data={editHoldData} />;
+  return <WriteHold isEdit={true} editData={editHoldData} />;
 };
 export default EditHold;

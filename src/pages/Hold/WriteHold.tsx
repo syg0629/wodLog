@@ -26,7 +26,7 @@ import { useAuthenticatedUserInfo } from "../../hooks/useAuthenticatedUserInfo";
 
 interface WriteProps {
   isEdit: boolean;
-  data?: Hold;
+  editData?: Hold;
 }
 
 const today = new Date();
@@ -34,7 +34,7 @@ today.setHours(0, 0, 0, 0);
 const currentYear = today.getFullYear();
 const years = [currentYear, currentYear + 1];
 
-export const WriteHold = ({ isEdit, data }: WriteProps) => {
+export const WriteHold = ({ isEdit, editData }: WriteProps) => {
   const params = useParams();
   const holdId = Number(params.id);
   const navigate = useNavigate();
@@ -81,14 +81,14 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
 
   // 데이터가 있을 경우, 기존 데이터를 state에 저장
   useEffect(() => {
-    if (data) {
-      const { holdStartDay, holdEndDay } = data;
+    if (editData) {
+      const { holdStartDay, holdEndDay } = editData;
       setRange({
         from: new Date(holdStartDay),
         to: new Date(holdEndDay),
       });
     }
-  }, [data]);
+  }, [editData]);
 
   // 총 홀드일 계산(일요일, 공휴일 제외)
   const calculateTotalHoldDays = useCallback(
@@ -109,14 +109,14 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
   }, [calculateTotalHoldDays, range]);
 
   const initialHoldDays = useMemo(() => {
-    if (isEdit && data) {
+    if (isEdit && editData) {
       return calculateTotalHoldDays(
-        new Date(data.holdStartDay),
-        new Date(data.holdEndDay)
+        new Date(editData.holdStartDay),
+        new Date(editData.holdEndDay)
       );
     }
     return 0;
-  }, [isEdit, data, calculateTotalHoldDays]);
+  }, [isEdit, editData, calculateTotalHoldDays]);
 
   // 잔여일 계산
   const remainingHoldDays = useMemo(() => {
