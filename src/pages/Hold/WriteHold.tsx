@@ -81,13 +81,13 @@ export const WriteHold = ({ isEdit, editData }: WriteProps) => {
 
   // 데이터가 있을 경우, 기존 데이터를 state에 저장
   useEffect(() => {
-    if (editData) {
-      const { holdStartDay, holdEndDay } = editData;
-      setRange({
-        from: new Date(holdStartDay),
-        to: new Date(holdEndDay),
-      });
-    }
+    if (!editData) return;
+
+    const { holdStartDay, holdEndDay } = editData;
+    setRange({
+      from: new Date(holdStartDay),
+      to: new Date(holdEndDay),
+    });
   }, [editData]);
 
   // 총 홀드일 계산(일요일, 공휴일 제외)
