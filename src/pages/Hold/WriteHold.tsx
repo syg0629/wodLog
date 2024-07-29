@@ -1,4 +1,5 @@
 import "./Hold.css";
+import "../../components/common/dayPicker.css";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { eachDayOfInterval } from "date-fns";
 import { DayPicker, DateRange } from "react-day-picker";
@@ -250,6 +251,7 @@ export const WriteHold = ({ isEdit, editData }: WriteProps) => {
               modifiers={modifiers}
               selected={range}
               onSelect={setRange}
+              className="day_picker"
             />
           </div>
           <div className="write_hold_info_wrapper">
