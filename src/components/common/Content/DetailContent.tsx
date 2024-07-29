@@ -128,7 +128,7 @@ const DetailContent = ({ contentType }: { contentType: ContentType }) => {
               </div>
 
               <div className="detail_head_right">
-                {userInfo?.writerUuid === queryResult.writerUuid ? (
+                {userInfo?.writerUuid === queryResult.writerUuid && (
                   <>
                     <button
                       onClick={() => handleMoveToEdit(queryResult.id)}
@@ -138,9 +138,7 @@ const DetailContent = ({ contentType }: { contentType: ContentType }) => {
                     </button>
                     <button onClick={handleDeleteContent}>삭제하기</button>
                   </>
-                ) : userInfo?.auth === "admin" ? (
-                  <button onClick={handleDeleteContent}>삭제하기</button>
-                ) : null}
+                )}
               </div>
             </div>
             <Line />
