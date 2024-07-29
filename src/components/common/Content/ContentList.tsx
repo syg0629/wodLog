@@ -13,6 +13,7 @@ import ContentItem from "./ContentItem";
 import { ContentWithUserInfo } from "../../../types/type";
 import { userInfoAtom } from "../../../store/atoms";
 import { useAtomValue } from "jotai";
+import NoPost from "../../../components/common/NoPost";
 
 type ContentType = "notice" | "wod";
 
@@ -68,12 +69,16 @@ const ContentList = ({ contentType }: ContentListProps) => {
     <div className={wrapperClassName}>
       <h1 className="title">{title}</h1>
       <div>
-        {items?.map((item) => (
-          <div key={item.id}>
-            <ContentItem {...item} contentType={contentType} />
-            <Line />
-          </div>
-        ))}
+        {items.length > 0 ? (
+          items.map((item) => (
+            <div key={item.id}>
+              <ContentItem {...item} contentType={contentType} />
+              <Line />
+            </div>
+          ))
+        ) : (
+          <NoPost post={title} />
+        )}
       </div>
 
       {userInfo?.auth === "admin" && (
