@@ -26,7 +26,7 @@ const Login = () => {
   } = useForm<LoginFormData>({
     defaultValues: {
       userId: "test@example.com",
-      userPw: "testtest",
+      userPw: "testP@ssw0rd",
     },
   });
 
