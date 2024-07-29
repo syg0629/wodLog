@@ -27,7 +27,7 @@ const RecordTable = ({
             <td>{record.name}</td>
             <td>
               {record.record && !Number.isInteger(record.record)
-                ? record.record.toString().replace(".", "R ")
+                ? record.record.toString().replace(".", "R + ")
                 : record.record}
             </td>
             <td>{record.workoutType}</td>

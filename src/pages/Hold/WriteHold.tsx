@@ -1,4 +1,4 @@
-import "./WriteHold.css";
+import "./Hold.css";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { eachDayOfInterval } from "date-fns";
 import { DayPicker, DateRange } from "react-day-picker";
@@ -9,7 +9,12 @@ import { FaExclamationCircle } from "react-icons/fa";
 import { ko } from "date-fns/locale";
 import "react-day-picker/dist/style.css";
 import { supabase } from "../../api/supabase/supabaseClient";
-import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueries,
+  useSuspenseQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { handleSupabaseResponse } from "../../utils/handleSupabaseResponse";
 import { holdQueryKeys } from "../../queries/holdQueries";
 import {
@@ -17,10 +22,11 @@ import {
   formatDateToString,
 } from "../../utils/formattedDate";
 import { Hold } from "../../types/type";
+import { useAuthenticatedUserInfo } from "../../hooks/useAuthenticatedUserInfo";
 
 interface WriteProps {
   isEdit: boolean;
-  data?: Hold[];
+  editData?: Hold;
 }
 
 const today = new Date();
@@ -28,35 +34,34 @@ today.setHours(0, 0, 0, 0);
 const currentYear = today.getFullYear();
 const years = [currentYear, currentYear + 1];
 
-export const WriteHold = ({ isEdit, data }: WriteProps) => {
+export const WriteHold = ({ isEdit, editData }: WriteProps) => {
   const params = useParams();
   const holdId = Number(params.id);
   const navigate = useNavigate();
+  const userInfo = useAuthenticatedUserInfo();
 
   const [range, setRange] = useState<DateRange | undefined>(undefined);
+  const { data: userRemainingHoldDays } = useSuspenseQuery(
+    holdQueryKeys.new(userInfo.writerUuid)
+  );
 
   // 공휴일 데이터 prefetching
   const queryClient = useQueryClient();
   useEffect(() => {
     years.forEach((year) => {
-      queryClient.prefetchQuery({
-        queryKey: holdQueryKeys.holidays(year).queryKey,
-        queryFn: holdQueryKeys.holidays(year).queryFn,
-        staleTime: 1000 * 60 * 60 * 24 * 30,
-      });
+      queryClient.prefetchQuery(holdQueryKeys.holidays(year));
     });
   }, [queryClient]);
 
   // 공휴일 데이터를 가져오기 위한 useQueries
   const holidayQueries = useQueries({
-    queries: years.map((year) => ({
-      queryKey: holdQueryKeys.holidays(year).queryKey,
-      queryFn: holdQueryKeys.holidays(year).queryFn,
-      staleTime: 1000 * 60 * 60 * 24 * 30,
-    })),
+    queries: years.map((year) => holdQueryKeys.holidays(year)),
   });
 
-  const holidays = holidayQueries.flatMap((query) => query.data ?? []);
+  const holidays = useMemo(
+    () => holidayQueries.flatMap((query) => query.data ?? []),
+    [holidayQueries]
+  );
 
   // 공휴일 데이터를 Date 객체로 변환 후 유효한 데이터만 필터링
   const holidayDates = useMemo(
@@ -76,14 +81,14 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
 
   // 데이터가 있을 경우, 기존 데이터를 state에 저장
   useEffect(() => {
-    if (data && data[0]) {
-      const { holdStartDay, holdEndDay } = data[0];
-      setRange({
-        from: new Date(holdStartDay),
-        to: new Date(holdEndDay),
-      });
-    }
-  }, [data]);
+    if (!editData) return;
+
+    const { holdStartDay, holdEndDay } = editData;
+    setRange({
+      from: new Date(holdStartDay),
+      to: new Date(holdEndDay),
+    });
+  }, [editData]);
 
   // 총 홀드일 계산(일요일, 공휴일 제외)
   const calculateTotalHoldDays = useCallback(
@@ -103,17 +108,21 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
     return 0;
   }, [calculateTotalHoldDays, range]);
 
-  // 잔여일 계산
-  const remainingHoldDays = useMemo(() => {
-    if (data && range?.from && range?.to) {
-      const initialTotalHoldDays = calculateTotalHoldDays(
-        new Date(data[0].holdStartDay),
-        new Date(data[0].holdEndDay)
+  const initialHoldDays = useMemo(() => {
+    if (isEdit && editData) {
+      return calculateTotalHoldDays(
+        new Date(editData.holdStartDay),
+        new Date(editData.holdEndDay)
       );
-      return data[0].remainingHoldDays + initialTotalHoldDays - totalHoldDays;
     }
     return 0;
-  }, [totalHoldDays, calculateTotalHoldDays, data, range]);
+  }, [isEdit, editData, calculateTotalHoldDays]);
+
+  // 잔여일 계산
+  const remainingHoldDays = useMemo(() => {
+    const remainingDays = userRemainingHoldDays?.remainingHoldDays ?? 0;
+    return remainingDays + initialHoldDays - totalHoldDays;
+  }, [userRemainingHoldDays, initialHoldDays, totalHoldDays]);
 
   // 달력 내 공휴일, 일요일, 지난 날짜를 disabled 처리
   const modifiers = useMemo(
@@ -129,37 +138,45 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
         createdDate,
         holdStartDay,
         holdEndDay,
-        remainingHoldDays,
         requestedHoldDays,
-        writer,
+        writerUuid,
       } = holdData;
-      const savedHold = isEdit
-        ? await supabase
+
+      const holdQuery = isEdit
+        ? supabase
             .from("hold")
             .update({
               createdDate,
               holdStartDay,
               holdEndDay,
-              remainingHoldDays,
               requestedHoldDays,
             })
             .eq("id", holdId)
-            .select()
-        : await supabase
-            .from("hold")
-            .insert([
-              {
-                createdDate,
-                holdStartDay,
-                holdEndDay,
-                remainingHoldDays,
-                requestedHoldDays,
-                writer,
-              },
-            ])
-            .select();
+        : supabase.from("hold").insert([
+            {
+              createdDate,
+              holdStartDay,
+              holdEndDay,
+              requestedHoldDays,
+              writerUuid,
+            },
+          ]);
 
-      return (await handleSupabaseResponse(savedHold))[0];
+      const [holdResult, userInfoResult] = await Promise.all([
+        holdQuery.select().single(),
+        supabase
+          .from("userInfo")
+          .update({
+            remainingHoldDays,
+          })
+          .eq("id", userInfo.writerUuid)
+          .select(),
+      ]);
+
+      const validatedHold = await handleSupabaseResponse(holdResult);
+      await handleSupabaseResponse(userInfoResult);
+
+      return validatedHold;
     },
     onSuccess: () => {
       navigate("/hold");
@@ -169,7 +186,7 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
     },
   });
 
-  const onClickSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (totalHoldDays === 0) {
@@ -179,7 +196,7 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
       return;
     }
 
-    if (remainingHoldDays <= 0) {
+    if (remainingHoldDays < 0) {
       alert("잔여일이 신청하신 총 홀드일보다 부족합니다.");
       return;
     }
@@ -189,33 +206,37 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
       id: holdId,
       holdStartDay: formatDateToString(range?.from ?? new Date()),
       holdEndDay: formatDateToString(range?.to ?? new Date()),
-      remainingHoldDays,
       requestedHoldDays: totalHoldDays,
       createdDate: dayjs().format("YYYY.MM.DD HH:mm:ss"),
-      writer: "작성자",
+      writerUuid: userInfo.writerUuid,
     };
 
-    if (confirm(confirmMessage)) {
+    if (window.confirm(confirmMessage)) {
       saveHold.mutate(formattedData);
     }
   };
 
-  const onClickDelete = async () => {
+  const handleDeleteContent = async () => {
     if (confirm("삭제하시겠습니까?")) {
-      await supabase.from("hold").delete().eq("id", holdId);
-      alert("해당 Hold가 삭제되었습니다.");
-      navigate("/hold", { replace: true });
+      try {
+        await supabase.from("hold").delete().eq("id", holdId);
+        alert("해당 Hold가 삭제되었습니다.");
+        navigate("/hold", { replace: true });
+      } catch (error) {
+        console.error("Hold 삭제 중 오류 발생:", error);
+        alert("Hold 삭제 중 오류가 발생했습니다.");
+      }
     }
   };
 
   return (
     <div className="wrapper">
       <h1 className="title">Hold</h1>
-      <form onSubmit={onClickSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="write_btn_wrapper">
           <button type="submit">{isEdit ? "수정하기" : "등록하기"}</button>
           {isEdit && (
-            <button type="button" onClick={onClickDelete}>
+            <button type="button" onClick={handleDeleteContent}>
               삭제하기
             </button>
           )}
@@ -232,7 +253,7 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
             />
           </div>
           <div className="write_hold_info_wrapper">
-            <div className="errorMessage">
+            <div className="error_message">
               <FaExclamationCircle /> 이전 날짜는 선택할 수 없습니다.
               <br />
               <FaExclamationCircle /> 일요일과 공휴일은 제외됩니다.
@@ -245,7 +266,7 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
             ) : range?.from ? (
               <span>{`${formatDateToString(range.from)} ~ `}</span>
             ) : (
-              <span className="errorMessage"> 날짜를 선택해주세요!</span>
+              <span className="error_message"> 날짜를 선택해주세요!</span>
             )}
             <div>
               <strong>◦ 총 홀드일 : </strong>
@@ -255,7 +276,7 @@ export const WriteHold = ({ isEdit, data }: WriteProps) => {
             {remainingHoldDays >= 0 ? (
               <span>{remainingHoldDays} 일</span>
             ) : (
-              <span className="errorMessage">
+              <span className="error_message">
                 잔여일이 신청하신 총 홀드일보다 부족합니다.
               </span>
             )}

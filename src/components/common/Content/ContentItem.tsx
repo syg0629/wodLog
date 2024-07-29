@@ -2,7 +2,7 @@ import "../../../components/common/Common.css";
 import DOMPurify from "dompurify";
 import { useNavigate } from "react-router-dom";
 import { formatUtcDateToString } from "../../../utils/formattedDate";
-import { ContentWithContentType } from "../../../types/type";
+import { ContentWithUserInfo } from "../../../types/type";
 
 const ContentItem = ({
   contentType,
@@ -10,11 +10,11 @@ const ContentItem = ({
   title,
   createdDate,
   content,
-  writer,
-}: ContentWithContentType) => {
+  userInfo: { userName },
+}: ContentWithUserInfo & { contentType: string }) => {
   const navigate = useNavigate();
 
-  const viewDetailContent = () => {
+  const handleMoveToDetail = () => {
     navigate(`/${contentType}/${id}`);
   };
 
@@ -22,11 +22,11 @@ const ContentItem = ({
   const strippedContent = content.replace(/<[^>]+>/g, " ");
 
   return (
-    <article className="article" onClick={viewDetailContent}>
+    <article className="article" onClick={handleMoveToDetail}>
       <div className="article_head">
         <h1 className="article_title">{title}</h1>
         <div className="article_write_info">
-          <span className="article_writer">{writer}</span>
+          <span className="article_writer">{userName}</span>
           <span className="article_date">
             {formatUtcDateToString(createdDate)}
           </span>

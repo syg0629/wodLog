@@ -1,32 +1,72 @@
-import { PostgrestSingleResponse } from "@supabase/supabase-js";
 import { supabase } from "../api/supabase/supabaseClient";
 import { createQueryKeys } from "@lukemorales/query-key-factory";
 import { handleSupabaseResponse } from "../utils/handleSupabaseResponse";
 import axios from "axios";
-import { Hold, Holiday } from "../types/type";
+import { HoldWithUserInfo, Holiday } from "../types/type";
 
 export const holdQueryKeys = createQueryKeys("hold", {
   // Hold/HoldList
   // Hold 목록
-  list: () => ({
-    queryKey: ["all"],
-    queryFn: async (): Promise<Hold[]> => {
-      const data = await supabase
+  list: (userInfo: { writerUuid?: string; auth?: string }) => ({
+    queryKey: ["all", userInfo],
+    queryFn: async (): Promise<HoldWithUserInfo[]> => {
+      let query = supabase
         .from("hold")
-        .select("*")
+        .select("*, userInfo(userName, remainingHoldDays)")
         .order("id", { ascending: false });
-      return await handleSupabaseResponse(data);
+
+      if (userInfo.writerUuid && userInfo.auth !== "admin") {
+        query = query.eq("writerUuid", userInfo.writerUuid);
+      }
+
+      const response = await query;
+      const data = await handleSupabaseResponse(response);
+      const holdWithUserInfo: HoldWithUserInfo[] = data.map((item) => {
+        if (!item.userInfo) {
+          throw new Error("ID가 존재하지 않습니다.");
+        }
+        return { ...item, userInfo: item.userInfo };
+      });
+
+      return holdWithUserInfo;
     },
   }),
   // Hold/EditHold
   // Hold 수정 시 기존 값 조회
-  detail: (holdId: number) => ({
-    queryKey: [holdId],
-    queryFn: async () => {
-      const data: PostgrestSingleResponse<Hold[]> = await supabase
+  detail: (
+    holdId: number,
+    userInfo: { writerUuid?: string; auth?: string }
+  ) => ({
+    queryKey: [holdId, userInfo],
+    queryFn: async (): Promise<HoldWithUserInfo> => {
+      let query = supabase
         .from("hold")
-        .select("*")
+        .select("*, userInfo(remainingHoldDays)")
         .eq("id", holdId);
+
+      if (userInfo.writerUuid) {
+        query = query.eq("writerUuid", userInfo.writerUuid);
+      }
+
+      const response = await query.single();
+      const data = await handleSupabaseResponse(response);
+
+      if (!data.userInfo) {
+        throw new Error("ID가 존재하지 않습니다.");
+      }
+      return { ...data, userInfo: data.userInfo };
+    },
+  }),
+  // Hold/WriteHold
+  // Hold 등록 시 잔여 홀드일 조회
+  new: (writerUuid: string) => ({
+    queryKey: [writerUuid],
+    queryFn: async () => {
+      const data = await supabase
+        .from("userInfo")
+        .select("remainingHoldDays")
+        .eq("id", writerUuid)
+        .single();
       return await handleSupabaseResponse(data);
     },
   }),

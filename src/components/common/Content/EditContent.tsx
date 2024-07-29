@@ -7,7 +7,7 @@ import {
   QueryKey,
   useSuspenseQuery,
 } from "@tanstack/react-query";
-import { Notice, Wod } from "../../../types/type";
+import { ContentWithUserInfo } from "../../../types/type";
 
 type ContentType = "notice" | "wod";
 
@@ -25,11 +25,15 @@ const EditContent = ({ contentType }: EditContentProps) => {
       : wodQueryKeys.detail(contentId);
   const { data: editData } = useSuspenseQuery({
     queryKey: query.queryKey as QueryKey,
-    queryFn: query.queryFn as QueryFunction<Notice | Wod>,
+    queryFn: query.queryFn as QueryFunction<ContentWithUserInfo>,
   });
 
   return (
-    <WriteContentForm isEdit={true} data={editData} contentType={contentType} />
+    <WriteContentForm
+      isEdit={true}
+      editData={editData}
+      contentType={contentType}
+    />
   );
 };
 
