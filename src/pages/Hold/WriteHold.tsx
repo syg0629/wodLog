@@ -251,7 +251,6 @@ export const WriteHold = ({ isEdit, editData }: WriteProps) => {
               modifiers={modifiers}
               selected={range}
               onSelect={setRange}
-              className="day_picker"
             />
           </div>
           <div className="write_hold_info_wrapper">
