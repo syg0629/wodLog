@@ -172,7 +172,7 @@
 
 /* RecordTable, Hold 페이지 */
 .table_wrapper {
-  padding: 0 50px;
+  padding: 0 15px;
   width: 100%;
 }
 
@@ -184,7 +184,7 @@
 }
 
 .hold_table_wrapper {
-  padding: 0 150px;
+  padding: 0 15px;
   width: 100%;
   margin-top: 40px;
 }

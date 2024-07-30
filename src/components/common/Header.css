@@ -32,12 +32,6 @@
   cursor: pointer;
 }
 
-.header_menu_btn_login {
-  margin-left: 210px;
-  font-size: 20px;
-}
-
-.header_menu_btn:hover,
-.header_menu_btn_login:hover {
+.header_menu_btn:hover:hover {
   background-image: linear-gradient(transparent 60%, #ffdb3d 40%);
 }
