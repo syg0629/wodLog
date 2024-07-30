@@ -1,13 +1,15 @@
 import { PiUser, PiLock } from "react-icons/pi";
 import "./Login.css";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../../api/supabase/supabaseClient";
 import { FaExclamationCircle } from "react-icons/fa";
 import { useSetAtom } from "jotai";
 import { accessTokenAtom, userInfoAtom } from "../../store/atoms";
 import kakaoLoginBtn from "../../assets/btnKakao.svg";
 import googleLoginBtn from "../../assets/btnGoogle.svg";
+import { useEffect } from "react";
+import { useAuthSetup } from "../../hooks/useAuthSetup";
 
 interface LoginFormData {
   userId: string;
@@ -18,6 +20,18 @@ const Login = () => {
   const navigate = useNavigate();
   const setAccessToken = useSetAtom(accessTokenAtom);
   const setUserInfo = useSetAtom(userInfoAtom);
+  const location = useLocation();
+  const { isLogged, isChecking } = useAuthSetup();
+
+  useEffect(() => {
+    if (
+      location.state?.from.pathname.startsWith("/hold") &&
+      !isLogged &&
+      !isChecking // 인증 상태 확인 완료
+    ) {
+      alert("로그인 후 이용 가능한 페이지입니다.");
+    }
+  }, [location, isLogged, isChecking]);
 
   const {
     register,
@@ -58,7 +72,9 @@ const Login = () => {
           auth: userInfoData.auth,
         });
         alert(`${userName}님 안녕하세요~🏋🏻`);
-        navigate("/", { replace: true });
+
+        const from = location.state?.from?.pathname ?? "/";
+        navigate(from, { replace: true });
       }
     } catch (error) {
       console.error("로그인 중 오류 발생 >> ", error);
