@@ -61,16 +61,14 @@ const HoldList = () => {
     <div className="wrapper">
       <h1 className="title">Hold</h1>
 
-      <div className="hold_wrapper">
-        <div className="hold_table_wrapper">
-          <Table
-            columnTitles={columnTitles}
-            data={sortedData}
-            renderBody={renderBody}
-            post="Hold"
-            handleMoveToDetail={handleMoveToDetail}
-          />
-        </div>
+      <div className="hold_table_wrapper">
+        <Table
+          columnTitles={columnTitles}
+          data={sortedData}
+          renderBody={renderBody}
+          post="Hold"
+          handleMoveToDetail={handleMoveToDetail}
+        />
       </div>
 
       <ActionButton>
