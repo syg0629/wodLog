@@ -17,11 +17,16 @@ import WriteContentForm from "./components/common/Content/WriteContentForm";
 import DetailContent from "./components/common/Content/DetailContent";
 import EditContent from "./components/common/Content/EditContent";
 import { useAuthSetup } from "./hooks/useAuthSetup";
+import { ProtectedRoute } from "../src/components/common/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  useAuthSetup();
+  const { isChecking } = useAuthSetup();
+
+  if (isChecking) {
+    return <Loader />;
+  }
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -60,9 +65,11 @@ const App = () => {
           />
           <Route path="/record" element={<RecordList />} />
           <Route path="/record/write" element={<WriteRecord />} />
-          <Route path="/hold" element={<HoldList />} />
-          <Route path="/hold/write" element={<WriteHold isEdit={false} />} />
-          <Route path="/hold/:id/edit" element={<EditHold />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/hold" element={<HoldList />} />
+            <Route path="/hold/write" element={<WriteHold isEdit={false} />} />
+            <Route path="/hold/:id/edit" element={<EditHold />} />
+          </Route>
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

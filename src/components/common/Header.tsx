@@ -6,7 +6,7 @@ import { useSetAtom } from "jotai";
 import { useAuthSetup } from "../../hooks/useAuthSetup";
 
 const Header = () => {
-  const isLogged = useAuthSetup();
+  const { isLogged } = useAuthSetup();
   const logout = useSetAtom(logoutAtom);
 
   return (
@@ -36,11 +36,11 @@ const Header = () => {
           </Link>
         )}
         {isLogged ? (
-          <Link to="/login" className="header_menu_btn_login" onClick={logout}>
+          <Link to="/login" className="header_menu_btn" onClick={logout}>
             LOGOUT
           </Link>
         ) : (
-          <Link to="/login" className="header_menu_btn_login">
+          <Link to="/login" className="header_menu_btn">
             LOGIN
           </Link>
         )}
