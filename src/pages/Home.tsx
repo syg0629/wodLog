@@ -40,11 +40,11 @@ const Home = () => {
       </Swiper>
 
       <div className="home_menu_wrapper">
-        <div className="notice">
-          <ContentList contentType="notice" />
-        </div>
         <div className="wod">
           <DetailContent contentType="wod" />
+        </div>
+        <div className="notice">
+          <ContentList contentType="notice" />
         </div>
       </div>
     </div>
