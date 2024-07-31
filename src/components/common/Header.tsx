@@ -36,11 +36,11 @@ const Header = () => {
           </Link>
         )}
         {isLogged ? (
-          <Link to="/login" className="header_menu_btn_login" onClick={logout}>
+          <Link to="/login" className="header_menu_btn" onClick={logout}>
             LOGOUT
           </Link>
         ) : (
-          <Link to="/login" className="header_menu_btn_login">
+          <Link to="/login" className="header_menu_btn">
             LOGIN
           </Link>
         )}
