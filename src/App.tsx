@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Suspense } from "react";
+import { useEffect, Suspense } from "react";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Loader from "./components/common/Loader";
@@ -16,17 +16,18 @@ import ContentList from "./components/common/Content/ContentList";
 import WriteContentForm from "./components/common/Content/WriteContentForm";
 import DetailContent from "./components/common/Content/DetailContent";
 import EditContent from "./components/common/Content/EditContent";
-import { useAuthSetup } from "./hooks/useAuthSetup";
 import { ProtectedRoute } from "../src/components/common/ProtectedRoute";
+import { useSetAtom } from "jotai";
+import { userAuthAtom } from "./store/atoms";
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  const { isChecking } = useAuthSetup();
+  const initAuth = useSetAtom(userAuthAtom);
 
-  if (isChecking) {
-    return <Loader />;
-  }
+  useEffect(() => {
+    initAuth();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -46,10 +47,6 @@ const App = () => {
             path="/notice/:id/edit"
             element={<EditContent contentType="notice" />}
           />
-          <Route
-            path="/notice/write"
-            element={<WriteContentForm isEdit={false} contentType="notice" />}
-          />
           <Route path="/wod" element={<ContentList contentType="wod" />} />
           <Route
             path="/wod/:id"
@@ -59,13 +56,17 @@ const App = () => {
             path="/wod/:id/edit"
             element={<EditContent contentType="wod" />}
           />
-          <Route
-            path="/wod/write"
-            element={<WriteContentForm isEdit={false} contentType="wod" />}
-          />
           <Route path="/record" element={<RecordList />} />
           <Route path="/record/write" element={<WriteRecord />} />
           <Route element={<ProtectedRoute />}>
+            <Route
+              path="/notice/write"
+              element={<WriteContentForm isEdit={false} contentType="notice" />}
+            />
+            <Route
+              path="/wod/write"
+              element={<WriteContentForm isEdit={false} contentType="wod" />}
+            />
             <Route path="/hold" element={<HoldList />} />
             <Route path="/hold/write" element={<WriteHold isEdit={false} />} />
             <Route path="/hold/:id/edit" element={<EditHold />} />
