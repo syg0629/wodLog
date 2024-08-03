@@ -4,12 +4,15 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "../../api/supabase/supabaseClient";
 import { FaExclamationCircle } from "react-icons/fa";
-import { useSetAtom } from "jotai";
-import { accessTokenAtom, userInfoAtom } from "../../store/atoms";
+import { useSetAtom, useAtomValue } from "jotai";
+import {
+  accessTokenAtom,
+  isAuthenticatedAtom,
+  userInfoAtom,
+} from "../../store/atoms";
 import kakaoLoginBtn from "../../assets/btnKakao.svg";
 import googleLoginBtn from "../../assets/btnGoogle.svg";
-import { useEffect } from "react";
-import { useAuthSetup } from "../../hooks/useAuthSetup";
+import { useEffect, useRef } from "react";
 
 interface LoginFormData {
   userId: string;
@@ -20,18 +23,19 @@ const Login = () => {
   const navigate = useNavigate();
   const setAccessToken = useSetAtom(accessTokenAtom);
   const setUserInfo = useSetAtom(userInfoAtom);
+  const isAuthenticated = useAtomValue(isAuthenticatedAtom);
   const location = useLocation();
-  const { isLogged, isChecking } = useAuthSetup();
+  const alertShown = useRef(false);
 
   useEffect(() => {
-    if (
-      location.state?.from.pathname.startsWith("/hold") &&
-      !isLogged &&
-      !isChecking // 인증 상태 확인 완료
-    ) {
+    if (location.state?.from && !isAuthenticated && !alertShown.current) {
       alert("로그인 후 이용 가능한 페이지입니다.");
+      alertShown.current = true;
+    } else if (isAuthenticated) {
+      const from = location.state?.from?.pathname ?? "/";
+      navigate(from, { replace: true });
     }
-  }, [location, isLogged, isChecking]);
+  }, [location, isAuthenticated, navigate]);
 
   const {
     register,
@@ -65,7 +69,7 @@ const Login = () => {
       const userName = userInfoData.userName;
 
       if (authData.session.access_token) {
-        setAccessToken(authData?.session?.access_token);
+        setAccessToken(authData.session.access_token);
         setUserInfo({
           userName,
           writerUuid: authData.user.id,
@@ -88,7 +92,6 @@ const Login = () => {
         provider,
         options: {
           queryParams: {
-            redirect: "http://localhost:5173",
             access_type: "offline",
             prompt: "consent",
           },
