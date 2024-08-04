@@ -16,13 +16,11 @@ import ContentList from "./components/common/Content/ContentList";
 import WriteContentForm from "./components/common/Content/WriteContentForm";
 import DetailContent from "./components/common/Content/DetailContent";
 import EditContent from "./components/common/Content/EditContent";
-import { useAuthSetup } from "./hooks/useAuthSetup";
+import { ProtectedRoute } from "../src/components/common/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  useAuthSetup();
-
   return (
     <QueryClientProvider client={queryClient}>
       <Header />
@@ -41,10 +39,6 @@ const App = () => {
             path="/notice/:id/edit"
             element={<EditContent contentType="notice" />}
           />
-          <Route
-            path="/notice/write"
-            element={<WriteContentForm isEdit={false} contentType="notice" />}
-          />
           <Route path="/wod" element={<ContentList contentType="wod" />} />
           <Route
             path="/wod/:id"
@@ -54,15 +48,21 @@ const App = () => {
             path="/wod/:id/edit"
             element={<EditContent contentType="wod" />}
           />
-          <Route
-            path="/wod/write"
-            element={<WriteContentForm isEdit={false} contentType="wod" />}
-          />
           <Route path="/record" element={<RecordList />} />
           <Route path="/record/write" element={<WriteRecord />} />
-          <Route path="/hold" element={<HoldList />} />
-          <Route path="/hold/write" element={<WriteHold isEdit={false} />} />
-          <Route path="/hold/:id/edit" element={<EditHold />} />
+          <Route element={<ProtectedRoute />}>
+            <Route
+              path="/notice/write"
+              element={<WriteContentForm isEdit={false} contentType="notice" />}
+            />
+            <Route
+              path="/wod/write"
+              element={<WriteContentForm isEdit={false} contentType="wod" />}
+            />
+            <Route path="/hold" element={<HoldList />} />
+            <Route path="/hold/write" element={<WriteHold isEdit={false} />} />
+            <Route path="/hold/:id/edit" element={<EditHold />} />
+          </Route>
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
