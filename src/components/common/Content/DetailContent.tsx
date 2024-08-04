@@ -38,7 +38,7 @@ const contentConfig: Record<ContentType, ContentConfig> = {
     }),
   },
   wod: {
-    title: "Wod",
+    title: "WOD",
     getDetailQuery: (contentId) => ({
       queryKey: wodQueryKeys.detail(contentId).queryKey,
       queryFn: wodQueryKeys.detail(contentId)
