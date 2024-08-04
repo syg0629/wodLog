@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect, Suspense } from "react";
+import { Suspense } from "react";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Loader from "./components/common/Loader";
@@ -17,18 +17,10 @@ import WriteContentForm from "./components/common/Content/WriteContentForm";
 import DetailContent from "./components/common/Content/DetailContent";
 import EditContent from "./components/common/Content/EditContent";
 import { ProtectedRoute } from "../src/components/common/ProtectedRoute";
-import { useSetAtom } from "jotai";
-import { userAuthAtom } from "./store/atoms";
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  const initAuth = useSetAtom(userAuthAtom);
-
-  useEffect(() => {
-    initAuth();
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <Header />
