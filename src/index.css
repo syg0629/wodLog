@@ -10,13 +10,9 @@ body * {
 
 html {
   line-height: 1.5;
-  -webkit-text-size-adjust: 100%; /* 모바일에서 텍스트 크기 자동 조정 비활성화 */
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
   tab-size: 4;
   margin: 0;
   width: 100%;
-  background-color: rgb(246, 246, 246);
 }
 
 body {
@@ -89,7 +85,108 @@ button {
   padding: 0 20px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 494px) {
+  /* Header */
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .header_logo {
+    font-size: 40px;
+    margin-bottom: 17px;
+  }
+  .weight_lift_icon {
+    width: 53px;
+  }
+  .header_menu_wrapper {
+    display: flex;
+    width: 100%;
+  }
+  .header_menu_btn {
+    margin: 0 6px;
+    font-size: 18px;
+  }
+
+  /* Home */
+  .home_menu_wrapper {
+    display: block;
+    padding: 7px;
+  }
+  .home_menu_item_wrapper {
+    padding: 0;
+  }
+
+  /* 공통 */
+  .wrapper {
+    padding: 50px 7px;
+  }
+  .title {
+    margin-bottom: 20px;
+  }
+
+  /* NoPost */
+  .no_post {
+    margin-top: 20px;
+  }
+
+  /* ContentList */
+  .article_head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+  }
+  .article_title {
+    width: 100%;
+  }
+  .article_write_info {
+    font-size: 19px;
+    font-weight: 600;
+  }
+
+  /* ContentWrite */
+  .detail_title {
+    width: 100%;
+  }
+
+  /* Hold */
+  .hold_table_wrapper {
+    padding: 0;
+  }
+
+  /* WriteHold */
+  .rdp-table {
+    width: 200px;
+  }
+  .write_hold_wrapper {
+    display: block;
+    padding: 0;
+  }
+  .calendar_wrapper,
+  .write_hold_info_wrapper {
+    margin: 0 auto;
+  }
+
+  /* Record */
+  .record_grade_1,
+  .record_grade_2 {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* WriteRecord */
+  .write_record_grade_wrapper {
+    flex-direction: column;
+  }
+  .write_record_img_uploader,
+  .write_record_text_recognizer {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 495px) and (max-width: 600px) {
   /* Header */
   .header_logo {
     font-size: 27px;
@@ -101,11 +198,12 @@ button {
     margin-left: 14px;
     font-size: 15px;
   }
-  /* Home */
 
+  /* Home */
   .home_menu_wrapper {
     display: block;
   }
+
   /* 공통 */
   .wrapper {
     padding: 50px 7px;
@@ -113,10 +211,12 @@ button {
   .title {
     margin-bottom: 20px;
   }
+
   /* NoPost */
   .no_post {
     margin-top: 20px;
   }
+
   /* WriteHold */
   .write_hold_wrapper {
     display: block;
@@ -126,6 +226,7 @@ button {
   .write_hold_info_wrapper {
     margin: 0 auto;
   }
+
   /* WriteRecord */
   .write_record_grade_wrapper {
     flex-direction: column;
@@ -136,7 +237,7 @@ button {
   }
 }
 
-@media (min-width: 600px) and (max-width: 856px) {
+@media (min-width: 601px) and (max-width: 855px) {
   /* Header */
   .header_logo {
     font-size: 33px;
@@ -148,11 +249,12 @@ button {
     margin-left: 18px;
     font-size: 17px;
   }
-  /* Home */
 
+  /* Home */
   .home_menu_wrapper {
     display: block;
   }
+
   /* 공통 */
   .wrapper {
     padding: 50px 20px;
@@ -160,10 +262,12 @@ button {
   .title {
     margin-bottom: 20px;
   }
+
   /* NoPost */
   .no_post {
     margin-top: 30px;
   }
+
   /* WriteHold */
   .write_hold_wrapper {
     display: block;
@@ -173,11 +277,11 @@ button {
   .write_hold_info_wrapper {
     margin: 0 auto;
   }
+
   /* WriteRecord */
   .write_record_grade_wrapper {
     flex-direction: column;
   }
-
   .write_record_img_uploader,
   .write_record_text_recognizer {
     flex-direction: column;
@@ -188,10 +292,12 @@ button {
   .header_menu_btn {
     margin-left: 50px;
   }
+
   /* Home */
   .home_menu_wrapper {
     display: block;
   }
+
   /* 공통 */
   .wrapper {
     padding: 50px;
