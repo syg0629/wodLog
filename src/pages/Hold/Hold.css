@@ -21,6 +21,6 @@
   margin-bottom: 20px;
 }
 
-.write_btn_wrapper :first-child {
+.write_btn_wrapper :first-of-type {
   margin-right: 20px;
 }
