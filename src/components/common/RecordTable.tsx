@@ -10,29 +10,22 @@ const RecordTable = ({
   records: Record[];
 }) => {
   // Record table header
-  const columnTitles = ["순위", "이름", "기록", "Rx’d/Scaled"];
+  const columnTitles = ["순위", "이름", "기록"];
 
   // Record table body
   const renderBody = (records: Record[]) => (
     <tbody>
-      {records
-        .sort((a, b) => {
-          const aRecord = a.record ?? 0;
-          const bRecord = b.record ?? 0;
-          return bRecord - aRecord;
-        })
-        .map((record, index) => (
-          <tr key={record.id}>
-            <td>{index + 1}</td>
-            <td>{record.name}</td>
-            <td>
-              {record.record && !Number.isInteger(record.record)
-                ? record.record.toString().replace(".", "R + ")
-                : record.record}
-            </td>
-            <td>{record.workoutType}</td>
-          </tr>
-        ))}
+      {records.map((record, index) => (
+        <tr key={record.id}>
+          <td>{index + 1}</td>
+          <td>{record.name}</td>
+          <td>
+            {record.recordType === "unrecognizable"
+              ? `기록 추출 시도 실패: ${record.record}`
+              : record.record}
+          </td>
+        </tr>
+      ))}
     </tbody>
   );
 
