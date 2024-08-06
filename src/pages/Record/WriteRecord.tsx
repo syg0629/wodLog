@@ -11,6 +11,16 @@ const workoutType = [
   { id: 2, type: "B" },
   { id: 3, type: "C" },
 ];
+type RecordType = "number" | "round" | "time" | "unrecognizable";
+
+interface ExtractedRecord {
+  name: string;
+  recordType: RecordType;
+  sortableRecord: number;
+  record: string;
+  workoutType: string;
+  writerUuid: string;
+}
 
 const WriteRecord = () => {
   const userInfo = useAuthenticatedUserInfo();
@@ -34,56 +44,83 @@ const WriteRecord = () => {
 
   // 텍스트로 추출된 문자열을 정규식으로 이름, 기록으로 각각 추출
   const handleExtract = (result: string, type: string) => {
-    const regExp = /(\p{L}+)\s+(\d+)(?:\s*R\s*\+\s*(\d+))?|\p{L}+\s+\d+/gu;
-    const extractedRecords = [];
+    // 이름 패턴: (\p{L}+), 공백 문지: \s, 값 패턴: ([\d:]+R?(?:\s*\+\s*\d+)?) 숫자, 콜론, R 문자 및 +숫자 패턴 캡처
+    const regExp = /(\p{L}+)\s+([\d:]+R?(?:\s*\+\s*\d+)?)/gu;
+
+    const extractedRecords: ExtractedRecord[] = [];
     let match;
     // regExp.exec(): 정규 표현식에 해당하는 문자열을 검색. 패턴이 존재하면 문자열의 배열 반환, 일치하는 패턴이 없으면 null반환
     while ((match = regExp.exec(result)) !== null) {
-      const name = match[1];
-      let record: number;
+      const [, name, record] = match;
 
-      // 이름 뒤에 숫자만 있는 경우, "R"과 함께 record를 만듬
-      if (!match[3]) {
-        record = parseFloat(match[2]);
-      } else {
-        // supabase 저장될 때는 R를 .으로 바꿔서 소수로 저장
-        record = parseFloat(`${match[2]}.${match[3]}`);
+      try {
+        const recordType = getRecordType(record);
+        extractedRecords.push({
+          name,
+          record,
+          recordType,
+          sortableRecord: getSortValue(record, recordType),
+          workoutType: type,
+          writerUuid: userInfo.writerUuid,
+        });
+      } catch (error) {
+        console.error(`기록 처리 중 오류 발생 >> ${name}: ${error}`);
+        alert(
+          `기록 처리 중 오류가 발생했습니다. 오류 발생 기록 : ${name}: ${error}`
+        );
       }
-      const workoutType = type;
-      extractedRecords.push({
-        name,
-        record,
-        workoutType,
-        writerUuid: userInfo.writerUuid,
-      });
     }
-    tesseractTosupabase(extractedRecords);
+    saveToSupabase(extractedRecords);
+  };
+
+  // 기록 타입 판단
+  const getRecordType = (record: string): RecordType => {
+    if (Number(record)) return "number";
+    if (record.includes(":")) return "time";
+    if (record.includes("R")) return "round";
+    return "unrecognizable";
+  };
+
+  // 기록 타입 정렬을 위한 값 계산
+  const getSortValue = (record: string, type: RecordType): number => {
+    switch (type) {
+      case "number":
+        return Number(record);
+      case "round": {
+        // 라운드의 경우, "R" 기준으로 분리하여 계산
+        const [rounds, reps] = record.split("R");
+        // R에 1000을 곱힘, "+"가 있다면 더함
+        const additionNum = reps
+          ? reps.startsWith("+")
+            ? reps.slice(1)
+            : reps
+          : 0;
+        return Number(rounds) * 1000 + Number(additionNum);
+      }
+      case "time": {
+        // 시간일 경우, minutes에 60을 곱함
+        const [minutes, seconds] = record.split(":").map(Number);
+        return minutes * 60 + seconds;
+      }
+      case "unrecognizable":
+        console.warn("인식 불가 기록 >> ", record);
+        return 0;
+    }
   };
 
   //추출된 이름과 기록을 supabase에 insert
-  const tesseractTosupabase = async (
-    extractedRecords: {
-      name: string;
-      record: number;
-      workoutType: string;
-      writerUuid: string;
-    }[]
-  ) => {
+  const saveToSupabase = async (extractedRecords: ExtractedRecord[]) => {
     try {
       const { data, error } = await supabase
         .from("record")
         .insert(extractedRecords)
         .select();
 
-      if (error) {
-        throw error;
-      } else {
-        const newId: number = data[0].id;
-        if (newId) {
-          alert(
-            "이미지에서 텍스트 추출이 완료되어 새로운 기록이 등록되었습니다."
-          );
-        }
+      if (error) throw error;
+      if (data.length > 0) {
+        alert(
+          "이미지에서 텍스트 추출이 완료되어 새로운 기록이 등록되었습니다."
+        );
       }
     } catch (error) {
       if (error instanceof Error) {
