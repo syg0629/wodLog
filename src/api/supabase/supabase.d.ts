@@ -81,7 +81,9 @@ export type Database = {
           createdDate: string;
           id: number;
           name: string;
-          record: number;
+          record: string;
+          recordType: string;
+          sortableRecord: number;
           workoutType: string;
           writerUuid: string;
         };
@@ -89,7 +91,9 @@ export type Database = {
           createdDate?: string;
           id?: number;
           name: string;
-          record: number;
+          record: string;
+          recordType: string;
+          sortableRecord: number;
           workoutType: string;
           writerUuid: string;
         };
@@ -97,7 +101,9 @@ export type Database = {
           createdDate?: string;
           id?: number;
           name?: string;
-          record?: number;
+          record?: string;
+          recordType?: string;
+          sortableRecord?: number;
           workoutType?: string;
           writerUuid?: string;
         };
