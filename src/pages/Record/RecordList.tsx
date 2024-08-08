@@ -23,16 +23,13 @@ const RecordList = () => {
 
   const groupedAndSortedRecords = useMemo(() => {
     // workoutType 별로 records 그룹화
-    const groupedRecords = records.reduce((acc: GroupedRecords, record) => {
-      if (!acc[record.workoutType]) {
-        acc[record.workoutType] = [];
-      }
-      acc[record.workoutType].push(record);
-      return acc;
-    }, {});
+    const groupedRecords = Object.groupBy(
+      records,
+      ({ workoutType }) => workoutType
+    ) as GroupedRecords;
 
-    // workoutType 내에서 records를 정렬
-    Object.keys(groupedRecords).forEach((workoutType) => {
+    // 각 workoutType 그룹 내에서 records를 정렬
+    for (const workoutType in groupedRecords) {
       groupedRecords[workoutType].sort((a, b) => {
         // recordType 순서 비교
         const typeComparison =
@@ -46,7 +43,7 @@ const RecordList = () => {
           ? a.sortableRecord - b.sortableRecord
           : b.sortableRecord - a.sortableRecord;
       });
-    });
+    }
     return groupedRecords;
   }, [records]);
 
