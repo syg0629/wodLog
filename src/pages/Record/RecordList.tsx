@@ -11,8 +11,7 @@ import { userInfoAtom } from "../../store/atoms";
 import { useAtomValue } from "jotai";
 import { recordQueryKeys } from "../../queries/recordQueries";
 import { useMemo } from "react";
-
-type GroupedRecords = { [key: string]: Record[] };
+import groupBy from "lodash/groupBy";
 
 const workoutTypeOrder = ["Rx’d", "A", "B", "C"];
 const recordTypeOrder = ["time", "round", "number", "unrecognizable"];
@@ -23,10 +22,7 @@ const RecordList = () => {
 
   const groupedAndSortedRecords = useMemo(() => {
     // workoutType 별로 records 그룹화
-    const groupedRecords = Object.groupBy(
-      records,
-      ({ workoutType }) => workoutType
-    ) as GroupedRecords;
+    const groupedRecords = groupBy(records, "workoutType");
 
     // 각 workoutType 그룹 내에서 records를 정렬
     for (const workoutType in groupedRecords) {
