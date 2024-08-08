@@ -25,7 +25,7 @@ const RecordList = () => {
     const groupedRecords = groupBy(records, "workoutType");
 
     // 각 workoutType 그룹 내에서 records를 정렬
-    for (const workoutType in groupedRecords) {
+    Object.keys(groupedRecords).forEach((workoutType) =>
       groupedRecords[workoutType].sort((a, b) => {
         // recordType 순서 비교
         const typeComparison =
@@ -38,8 +38,8 @@ const RecordList = () => {
         return a.recordType === "time"
           ? a.sortableRecord - b.sortableRecord
           : b.sortableRecord - a.sortableRecord;
-      });
-    }
+      })
+    );
     return groupedRecords;
   }, [records]);
 
