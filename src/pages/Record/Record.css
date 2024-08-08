@@ -5,7 +5,7 @@
 }
 
 .record_grade_1,
-.record_grade_2 {
+.record_grade_3 {
   display: flex;
   flex-direction: row;
 }
