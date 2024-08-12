@@ -17,6 +17,7 @@ import WriteContentForm from "./components/common/Content/WriteContentForm";
 import DetailContent from "./components/common/Content/DetailContent";
 import EditContent from "./components/common/Content/EditContent";
 import { ProtectedRoute } from "../src/components/common/ProtectedRoute";
+import { AuthHandler } from "./pages/Login/AuthHandler";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => {
       <Header />
       <Suspense fallback={<Loader />}>
         <Routes>
+          <Route path="/auth/callback" element={<AuthHandler />} />
           <Route path="/" element={<Home />} />
           <Route
             path="/notice"

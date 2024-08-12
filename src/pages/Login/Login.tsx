@@ -1,7 +1,7 @@
 import { PiUser, PiLock } from "react-icons/pi";
 import "./Login.css";
 import { useForm } from "react-hook-form";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { supabase } from "../../api/supabase/supabaseClient";
 import { FaExclamationCircle } from "react-icons/fa";
 import { useSetAtom, useAtomValue } from "jotai";
@@ -13,6 +13,7 @@ import {
 import kakaoLoginBtn from "../../assets/btnKakao.svg";
 import googleLoginBtn from "../../assets/btnGoogle.svg";
 import { useEffect, useRef } from "react";
+import { KAKAO_AUTH_URI, GOOGLE_AUTH_URI } from "../../utils/oAuth";
 
 interface LoginFormData {
   userId: string;
@@ -144,18 +145,22 @@ const Login = () => {
         <hr />
         <span className="easy_login_title">간편 로그인</span>
         <div className="easy_login_button">
-          <div
-            className="kakao_login"
-            onClick={() => handleOAuthLogin("kakao")}
-          >
-            <img src={kakaoLoginBtn} alt="카카오 로그인" />
-          </div>
-          <div
-            className="google_login"
-            onClick={() => handleOAuthLogin("google")}
-          >
-            <img src={googleLoginBtn} alt="구글 로그인" />
-          </div>
+          <Link to={KAKAO_AUTH_URI}>
+            <div
+              className="kakao_login"
+              onClick={() => handleOAuthLogin("kakao")}
+            >
+              <img src={kakaoLoginBtn} alt="카카오 로그인" />
+            </div>
+          </Link>
+          <Link to={GOOGLE_AUTH_URI}>
+            <div
+              className="google_login"
+              onClick={() => handleOAuthLogin("google")}
+            >
+              <img src={googleLoginBtn} alt="구글 로그인" />
+            </div>
+          </Link>
         </div>
       </div>
     </div>
