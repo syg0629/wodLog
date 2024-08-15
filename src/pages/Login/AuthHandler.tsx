@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useSetAtom } from "jotai";
 import { accessTokenAtom, userInfoAtom } from "../../store/atoms";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { supabase } from "../../api/supabase/supabaseClient";
+import { supabase } from "../../config/supabaseClient";
 import { getGoogleUserInfo, getGoogleToken } from "../../api/auth/googleAuth";
 import { getKakaoUserInfo, getKakaoToken } from "../../api/auth/kakaoAuth";
 

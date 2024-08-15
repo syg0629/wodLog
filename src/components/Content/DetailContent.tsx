@@ -1,19 +1,19 @@
-import Line from "../../../components/common/Line";
+import Line from "../../components/common/Line";
 import DOMPurify from "dompurify";
 import { useNavigate, useParams } from "react-router-dom";
-import "../../../components/common/Common.css";
-import { noticeQueryKeys } from "../../../queries/noticeQueries";
-import { wodQueryKeys } from "../../../queries/wodQueries";
-import { ContentWithUserInfo } from "../../../types/type";
-import { supabase } from "../../../api/supabase/supabaseClient";
+import "../../styles/DetailContent.css";
+import { noticeQueryKeys } from "../../queries/noticeQueries";
+import { wodQueryKeys } from "../../queries/wodQueries";
+import { ContentWithUserInfo } from "../../types/type";
+import { supabase } from "../../config/supabaseClient";
 import { useLocation } from "react-router-dom";
 import { QueryKey, QueryFunction, useQuery } from "@tanstack/react-query";
-import { formatUtcDateToString } from "../../../utils/formattedDate";
-import NoPost from "../../../components/common/NoPost";
+import { formatUtcDateToString } from "../../utils/formattedDate";
+import NoPost from "../../components/common/NoPost";
 import "react-quill/dist/quill.snow.css";
-import Loader from "../../../components/common/Loader";
+import Loader from "../../components/common/Loader";
 import { useAtomValue } from "jotai";
-import { userInfoAtom } from "../../../store/atoms";
+import { userInfoAtom } from "../../store/atoms";
 
 type ContentType = "notice" | "wod";
 

@@ -1,5 +1,5 @@
 import { TiWarningOutline } from "react-icons/ti";
-import "./NotFound.css";
+import "../../styles/NotFound.css";
 
 const NotFound = () => {
   const handleGoBack = () => {

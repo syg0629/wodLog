@@ -1,4 +1,4 @@
-import { supabase } from "../api/supabase/supabaseClient";
+import { supabase } from "../config/supabaseClient";
 import { createQueryKeys } from "@lukemorales/query-key-factory";
 import { handleSupabaseResponse } from "../utils/handleSupabaseResponse";
 import axios from "axios";

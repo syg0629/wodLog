@@ -1,6 +1,6 @@
-import "./Hold.css";
+import "../../styles/Hold.css";
 import "react-day-picker/dist/style.css";
-import "../../components/common/dayPicker.css";
+import "../../styles/DayPicker.css";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { eachDayOfInterval } from "date-fns";
 import { DayPicker, DateRange } from "react-day-picker";
@@ -9,7 +9,7 @@ import Line from "../../components/common/Line";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaExclamationCircle } from "react-icons/fa";
 import { ko } from "date-fns/locale";
-import { supabase } from "../../api/supabase/supabaseClient";
+import { supabase } from "../../config/supabaseClient";
 import {
   useMutation,
   useQueries,

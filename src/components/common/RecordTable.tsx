@@ -1,4 +1,4 @@
-import "../common/Common.css";
+import "../../styles/Common.css";
 import { Record } from "../../types/type";
 import Table from "../../components/common/Table";
 

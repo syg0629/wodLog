@@ -24,3 +24,10 @@
 .write_btn_wrapper :first-of-type {
   margin-right: 20px;
 }
+
+/* HoldList */
+.hold_table_wrapper {
+  padding: 0 15px;
+  width: 100%;
+  margin-top: 40px;
+}

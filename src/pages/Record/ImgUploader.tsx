@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import "./Record.css";
+import "../../styles/Record.css";
 import { FaImage } from "react-icons/fa";
 import { IoDocumentText } from "react-icons/io5";
 

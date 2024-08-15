@@ -1,8 +1,8 @@
-import "../../../components/common/Common.css";
+import "../../styles/ContentItem.css";
 import DOMPurify from "dompurify";
 import { useNavigate } from "react-router-dom";
-import { formatUtcDateToString } from "../../../utils/formattedDate";
-import { ContentWithUserInfo } from "../../../types/type";
+import { formatUtcDateToString } from "../../utils/formattedDate";
+import { ContentWithUserInfo } from "../../types/type";
 
 const ContentItem = ({
   contentType,

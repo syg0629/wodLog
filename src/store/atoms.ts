@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import { supabase } from "../api/supabase/supabaseClient";
+import { supabase } from "../config/supabaseClient";
 import { UserInfo } from "../types/type";
 
 // accessToken 저장 atom

@@ -1,5 +1,5 @@
 import { IoIosFitness } from "react-icons/io";
-import "../../components/common/Common.css";
+import "../../styles/Common.css";
 
 interface NoPostProps {
   post: string;

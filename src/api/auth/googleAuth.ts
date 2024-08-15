@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GOOGLE_CLIENT_ID, REDIRECT_URI } from "../../utils/oAuth";
+import { GOOGLE_CLIENT_ID, REDIRECT_URI } from "../../config/oAuth";
 
 interface GoogleTokenResponse {
   access_token: string;

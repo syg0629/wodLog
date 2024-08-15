@@ -1,6 +1,6 @@
 import { useState } from "react";
-import "./Record.css";
-import { supabase } from "../../api/supabase/supabaseClient";
+import "../../styles/Record.css";
+import { supabase } from "../../config/supabaseClient";
 import ImageUploader from "../Record/ImgUploader";
 import TextRecognizer from "../Record/TextRecognizer";
 import { useAuthenticatedUserInfo } from "../../hooks/useAuthenticatedUserInfo";

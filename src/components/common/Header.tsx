@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import "./Header.css";
-import weightlift from "../../assets/weightLifting.svg";
+import "../../styles/Header.css";
+import weightlift from "../../assets/svg/weightLifting.svg";
 import { logoutAtom } from "../../store/atoms";
 import { useSetAtom, useAtomValue } from "jotai";
 import { isAuthenticatedAtom } from "../../store/atoms";

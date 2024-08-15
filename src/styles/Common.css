@@ -1,0 +1,67 @@
+/* 공통 */
+.title {
+  font-size: 35px;
+  font-weight: 700;
+  margin-bottom: 50px;
+  background: linear-gradient(220deg, rgba(255, 255, 255, 0) 50%, #ffd0ae 50%);
+  display: inline-block;
+}
+
+.wrapper {
+  padding: 50px 300px;
+}
+
+.line {
+  border-bottom: 1.2px solid #e8e8e8;
+  margin: 10px 0 20px 0;
+}
+
+.error_message {
+  color: #be2e22;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.error_message > svg {
+  vertical-align: middle;
+  margin-bottom: 2px;
+}
+
+.message {
+  font-size: 17px;
+  font-weight: 700;
+  text-align: center;
+  background-color: #333333;
+  color: white;
+  border-radius: 15px;
+  width: 120px;
+  padding: 10px;
+}
+
+.no_post {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 90px;
+  font-size: 22px;
+}
+
+.no_post > svg {
+  font-size: 50px;
+  transform: rotate(135deg);
+  margin-bottom: 37px;
+  margin-right: -10px;
+}
+
+/* RecordTable, HoldList */
+.table_wrapper {
+  padding: 0 15px;
+  width: 100%;
+}
+
+.table_title {
+  font-size: 35px;
+  font-weight: 700;
+  text-align: center;
+  margin: 25px;
+}

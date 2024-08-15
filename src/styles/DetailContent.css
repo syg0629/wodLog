@@ -1,0 +1,31 @@
+.detail_title {
+  font-size: 27px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+.detail_head {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.detail_head_left {
+  padding-left: 5px;
+}
+
+.detail_head_left_writer {
+  font-weight: 600;
+  margin-right: 20px;
+}
+
+.detail_head_right_edit_btn {
+  margin-right: 15px;
+}
+
+.detail_main_content {
+  padding: 0 20px;
+}

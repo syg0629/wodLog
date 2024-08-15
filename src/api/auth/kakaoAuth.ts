@@ -1,5 +1,5 @@
 import axios from "axios";
-import { KAKAO_CLIENT_ID, REDIRECT_URI } from "../../utils/oAuth";
+import { KAKAO_CLIENT_ID, REDIRECT_URI } from "../../config/oAuth";
 
 interface KakaoTokenResponse {
   access_token: string;

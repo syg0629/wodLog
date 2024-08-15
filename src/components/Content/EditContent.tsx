@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
-import { noticeQueryKeys } from "../../../queries/noticeQueries";
-import { wodQueryKeys } from "../../../queries/wodQueries";
-import WriteContentForm from "../../../components/common/Content/WriteContentForm";
+import { noticeQueryKeys } from "../../queries/noticeQueries";
+import { wodQueryKeys } from "../../queries/wodQueries";
+import WriteContentForm from "./WriteContentForm";
 import {
   QueryFunction,
   QueryKey,
   useSuspenseQuery,
 } from "@tanstack/react-query";
-import { ContentWithUserInfo } from "../../../types/type";
+import { ContentWithUserInfo } from "../../types/type";
 
 type ContentType = "notice" | "wod";
 

@@ -1,5 +1,5 @@
-import "./Record.css";
-import "../../components/common/Common.css";
+import "../../styles/Record.css";
+import "../../styles/Common.css";
 import ActionButton from "../../components/common/ActionButton";
 import RecordTable from "../../components/common/RecordTable";
 import { useSuspenseQuery } from "@tanstack/react-query";

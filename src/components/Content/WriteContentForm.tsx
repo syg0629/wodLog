@@ -1,17 +1,17 @@
 import "react-quill/dist/quill.snow.css";
 import { SubmitHandler, useController, useForm } from "react-hook-form";
-import "../../../components/common/Common.css";
-import Line from "../../../components/common/Line";
+import "../../styles/WriteContentForm.css";
+import Line from "../../components/common/Line";
 import dayjs from "dayjs";
 import ReactQuill from "react-quill";
-import { modules } from "../../../utils/EditorModules";
+import { modules } from "../../utils/EditorModules";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { FaExclamationCircle } from "react-icons/fa";
-import { createSaveQueryFn } from "../../../queries/createQueryFns";
-import { ContentWithUserInfo } from "../../../types/type";
-import { useAuthenticatedUserInfo } from "../../../hooks/useAuthenticatedUserInfo";
+import { createSaveQueryFn } from "../../queries/createQueryFns";
+import { ContentWithUserInfo } from "../../types/type";
+import { useAuthenticatedUserInfo } from "../../hooks/useAuthenticatedUserInfo";
 
 type ContentType = "notice" | "wod";
 

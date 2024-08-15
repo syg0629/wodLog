@@ -42,3 +42,13 @@
 .wod {
   flex-basis: 45%;
 }
+
+.home_menu_item_wrapper {
+  padding: 10px 25px;
+}
+
+.home_menu_item_wrapper .detail_main_content {
+  font-size: 25px;
+  font-weight: 600;
+  line-height: normal;
+}

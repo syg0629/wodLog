@@ -1,5 +1,5 @@
 import { createQueryKeys } from "@lukemorales/query-key-factory";
-import { supabase } from "../api/supabase/supabaseClient";
+import { supabase } from "../config/supabaseClient";
 import { handleSupabaseResponse } from "../utils/handleSupabaseResponse";
 import Tesseract from "tesseract.js";
 

@@ -1,19 +1,19 @@
 import { Link, useLocation } from "react-router-dom";
-import ActionButton from "../../../components/common/ActionButton";
-import Line from "../../../components/common/Line";
+import ActionButton from "../../components/common/ActionButton";
+import Line from "../../components/common/Line";
 import {
   useSuspenseQuery,
   QueryKey,
   QueryFunction,
 } from "@tanstack/react-query";
 import { FaPencil } from "react-icons/fa6";
-import { noticeQueryKeys } from "../../../queries/noticeQueries";
-import { wodQueryKeys } from "../../../queries/wodQueries";
+import { noticeQueryKeys } from "../../queries/noticeQueries";
+import { wodQueryKeys } from "../../queries/wodQueries";
 import ContentItem from "./ContentItem";
-import { ContentWithUserInfo } from "../../../types/type";
-import { userInfoAtom } from "../../../store/atoms";
+import { ContentWithUserInfo } from "../../types/type";
+import { userInfoAtom } from "../../store/atoms";
 import { useAtomValue } from "jotai";
-import NoPost from "../../../components/common/NoPost";
+import NoPost from "../../components/common/NoPost";
 
 type ContentType = "notice" | "wod";
 

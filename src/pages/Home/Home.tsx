@@ -3,12 +3,12 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import crossfit1 from "../assets/crossfit1.jpg";
-import crossfit2 from "../assets/crossfit2.jpg";
-import crossfit3 from "../assets/crossfit3.jpg";
-import "./Home.css";
-import ContentList from "../components/common/Content/ContentList";
-import DetailContent from "../components/common/Content/DetailContent";
+import crossfit1 from "../../assets/images/crossfit1.jpg";
+import crossfit2 from "../../assets/images/crossfit2.jpg";
+import crossfit3 from "../../assets/images/crossfit3.jpg";
+import "../../styles/Home.css";
+import ContentList from "../../components/Content/ContentList";
+import DetailContent from "../../components/Content/DetailContent";
 
 const Home = () => {
   return (

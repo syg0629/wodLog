@@ -1,8 +1,8 @@
 import { PiUser, PiLock } from "react-icons/pi";
-import "./Login.css";
+import "../../styles/Login.css";
 import { useForm } from "react-hook-form";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { supabase } from "../../api/supabase/supabaseClient";
+import { supabase } from "../../config/supabaseClient";
 import { FaExclamationCircle } from "react-icons/fa";
 import { useSetAtom, useAtomValue } from "jotai";
 import {
@@ -10,10 +10,10 @@ import {
   isAuthenticatedAtom,
   userInfoAtom,
 } from "../../store/atoms";
-import kakaoLoginBtn from "../../assets/btnKakao.svg";
-import googleLoginBtn from "../../assets/btnGoogle.svg";
+import kakaoLoginBtn from "../../assets/svg/btnKakao.svg";
+import googleLoginBtn from "../../assets/svg/btnGoogle.svg";
 import { useEffect, useRef } from "react";
-import { KAKAO_AUTH_URI, GOOGLE_AUTH_URI } from "../../utils/oAuth";
+import { KAKAO_AUTH_URI, GOOGLE_AUTH_URI } from "../../config/oAuth";
 
 interface LoginFormData {
   userId: string;

@@ -1,4 +1,4 @@
-import { Database } from "../api/supabase/supabase";
+import { Database } from "./supabase";
 
 export type Hold = Database["public"]["Tables"]["hold"]["Row"];
 export type Record = Database["public"]["Tables"]["record"]["Row"];

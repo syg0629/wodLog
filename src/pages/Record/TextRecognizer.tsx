@@ -1,4 +1,4 @@
-import "./Record.css";
+import "../../styles/Record.css";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { recordQueryKeys } from "../../queries/recordQueries";
 import { useEffect, useState } from "react";

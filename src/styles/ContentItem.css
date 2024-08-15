@@ -1,0 +1,43 @@
+.article {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  margin: 17px 0;
+}
+
+.article_title {
+  font-size: 27px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  height: 40px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.article_head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+}
+
+.article_write_info {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.article_date {
+  margin-left: 15px;
+}
+
+.article_content_preview {
+  height: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 7px;
+  font-weight: 400;
+  margin-bottom: -20px;
+}
