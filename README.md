@@ -3,12 +3,12 @@
 #### `test@example.com`으로 로그인하시면 회원 전용 메뉴인 Hold 페이지와 다른 메뉴들의 CRUD 기능을 사용하실 수 있습니다.
 <hr>
 
-# wodLog
+# wodLog.
 
 크로스핏 박스 전용 웹 사이트
 
 -   **사용 기술.** React, TypeScript, Tanstack Query, Jotai, Supabase
--   **작업기간.** 2024.03 ~
+-   **작업기간.** 2024.03.20 ~ 2024.08.12
 -   **배포 링크.** [https://wodlog.vercel.app/](https://wodlog.vercel.app/)
 <br/>
 
