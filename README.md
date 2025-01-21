@@ -79,18 +79,26 @@
 <table>
   <tr>
     <td>
+      <h3 align="center">메인화면</h3>
+    </td>
+    <td>
+      <h3 align="center">Notice</h3>
+    </td>
+  </tr>
+  <tr>
+    <td>
       <img src="https://github.com/user-attachments/assets/f1db6fab-4a7d-4e6a-8cc7-2b72d5abc5ac" style="width:470px;"/>
     </td>
     <td>
       <img src="https://github.com/user-attachments/assets/11c26c62-2031-47fb-815f-608aa5dba263" style="width:470px;"/>
     </td>
   </tr>
-  <tr>
+    <tr>
     <td>
-      <h3>메인화면</h3>
+      <h3 align="center">WOD</h3>
     </td>
     <td>
-      <h3>Notice</h3>
+      <h3 align="center">Record</h3>
     </td>
   </tr>
   <tr>
@@ -101,12 +109,12 @@
       <img src="https://github.com/user-attachments/assets/f781d243-3e38-4130-b89f-d853d4aa7078" style="width:470px;"/>
     </td>
   </tr>
-  <tr>
+    <tr>
     <td>
-      <h3>WOD</h3>
+      <h3 align="center">Hold(회원권 일시정지) 등록</h3>
     </td>
     <td>
-      <h3>Record</h3>
+      <h3 align="center">로그인</h3>
     </td>
   </tr>
   <tr>
@@ -115,14 +123,6 @@
     </td>
     <td>
       <img src="https://github.com/user-attachments/assets/4088677a-33d0-4ba6-a501-65ec237b2a19" style="width:470px;"/>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <h3>Hold(회원권 일시정지) 등록</h3>
-    </td>
-    <td>
-      <h3>로그인</h3>
     </td>
   </tr>
 </table>
