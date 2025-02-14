@@ -1,23 +1,27 @@
 import { Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
+
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Loader from "./components/common/Loader";
-import Home from "./pages/Home/Home";
-import NotFound from "./pages/NotFound/NotFound";
-import RecordList from "./pages/Record/RecordList";
-import WriteRecord from "./pages/Record/WriteRecord";
-import HoldList from "./pages/Hold/HoldList";
-import EditHold from "./pages/Hold/EditHold";
-import WriteHold from "./pages/Hold/WriteHold";
-import Login from "./pages/Login/Login";
-import ContentList from "./components/Content/ContentList";
-import WriteContentForm from "./components/Content/WriteContentForm";
-import DetailContent from "./components/Content/DetailContent";
-import EditContent from "./components/Content/EditContent";
 import { ProtectedRoute } from "../src/components/common/ProtectedRoute";
-import { AuthHandler } from "./pages/Login/AuthHandler";
+
+const Home = lazy(() => import("./pages/Home/Home"));
+const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
+const RecordList = lazy(() => import("./pages/Record/RecordList"));
+const WriteRecord = lazy(() => import("./pages/Record/WriteRecord"));
+const HoldList = lazy(() => import("./pages/Hold/HoldList"));
+const EditHold = lazy(() => import("./pages/Hold/EditHold"));
+const WriteHold = lazy(() => import("./pages/Hold/WriteHold"));
+const Login = lazy(() => import("./pages/Login/Login"));
+const ContentList = lazy(() => import("./components/Content/ContentList"));
+const WriteContentForm = lazy(
+  () => import("./components/Content/WriteContentForm")
+);
+const DetailContent = lazy(() => import("./components/Content/DetailContent"));
+const EditContent = lazy(() => import("./components/Content/EditContent"));
+const AuthHandler = lazy(() => import("./pages/Login/AuthHandler"));
 
 const queryClient = new QueryClient();
 

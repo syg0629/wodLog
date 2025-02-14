@@ -6,7 +6,7 @@ import { supabase } from "../../config/supabaseClient";
 import { getGoogleUserInfo, getGoogleToken } from "../../api/auth/googleAuth";
 import { getKakaoUserInfo, getKakaoToken } from "../../api/auth/kakaoAuth";
 
-export const AuthHandler = () => {
+const AuthHandler = () => {
   const navigate = useNavigate();
   const setAccessToken = useSetAtom(accessTokenAtom);
   const setUserInfo = useSetAtom(userInfoAtom);
@@ -70,3 +70,5 @@ export const AuthHandler = () => {
 
   return null;
 };
+
+export default AuthHandler;
