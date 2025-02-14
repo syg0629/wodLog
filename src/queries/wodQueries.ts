@@ -30,7 +30,7 @@ export const wodQueryKeys = createQueryKeys("wod", {
         .from("wod")
         .select("content")
         .like("title", `%${today}%`);
-      const detailWodHome = await handleSupabaseResponse(data);
+      const detailWodHome = handleSupabaseResponse(data);
       if (detailWodHome.length === 0) {
         return null;
       }

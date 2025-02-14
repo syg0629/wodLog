@@ -1,8 +1,8 @@
 import { PostgrestSingleResponse } from "@supabase/supabase-js";
 
-export const handleSupabaseResponse = async <T>(
+export const handleSupabaseResponse = <T>(
   response: PostgrestSingleResponse<T>
-): Promise<T> => {
+): T => {
   if (response.error) {
     throw response.error;
   }

@@ -67,7 +67,7 @@ export const holdQueryKeys = createQueryKeys("hold", {
         .select("remainingHoldDays")
         .eq("id", writerUuid)
         .single();
-      return await handleSupabaseResponse(data);
+      return handleSupabaseResponse(data);
     },
   }),
   // Hold/WriteHold

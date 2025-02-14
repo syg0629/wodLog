@@ -12,8 +12,7 @@ export const createListQueryFn =
       .from(table)
       .select("*, userInfo(userName)")
       .order("id", { ascending: false });
-    const response = await handleSupabaseResponse(data);
-    return deltaToHtml(response);
+    return deltaToHtml(handleSupabaseResponse(data));
   };
 
 export const createDetailQueryFn =
@@ -23,30 +22,33 @@ export const createDetailQueryFn =
       .from(table)
       .select("*, userInfo(userName, auth)")
       .eq("id", id);
-    const response = await handleSupabaseResponse(data);
-    return deltaToHtml(response)[0];
+    return deltaToHtml(handleSupabaseResponse(data))[0];
   };
 
 export const createSaveQueryFn =
-  <T extends ContentWithUserInfo>(
-    table: Tables,
-    isEdit: boolean,
-    contentId: number
-  ) =>
+  <T extends ContentWithUserInfo>(table: Tables) =>
   async (data: T): Promise<T> => {
     const { title, content, createdDate } = data;
     const writerUuid = data.userInfo.writerUuid;
 
-    const savedData: PostgrestSingleResponse<T[]> = isEdit
-      ? await supabase
-          .from(table)
-          .update({ title, content, createdDate })
-          .eq("id", contentId)
-          .select()
-      : await supabase
-          .from(table)
-          .insert([{ title, content, writerUuid, createdDate }])
-          .select();
+    const savedData: PostgrestSingleResponse<T[]> = await supabase
+      .from(table)
+      .insert([{ title, content, writerUuid, createdDate }])
+      .select();
 
-    return (await handleSupabaseResponse(savedData))[0];
+    return handleSupabaseResponse(savedData)[0];
+  };
+
+export const editSaveQueryFn =
+  <T extends ContentWithUserInfo>(table: Tables, contentId: number) =>
+  async (data: T): Promise<T> => {
+    const { title, content, createdDate } = data;
+
+    const savedData: PostgrestSingleResponse<T[]> = await supabase
+      .from(table)
+      .update({ title, content, createdDate })
+      .eq("id", contentId)
+      .select();
+
+    return handleSupabaseResponse(savedData)[0];
   };

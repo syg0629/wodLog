@@ -9,7 +9,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { FaExclamationCircle } from "react-icons/fa";
-import { createSaveQueryFn } from "../../queries/createQueryFns";
+import {
+  createSaveQueryFn,
+  editSaveQueryFn,
+} from "../../queries/createQueryFns";
 import { ContentWithUserInfo } from "../../types/type";
 import { useAuthenticatedUserInfo } from "../../hooks/useAuthenticatedUserInfo";
 
@@ -54,11 +57,9 @@ const WriteContentForm = ({
 
   const saveData = useMutation<ContentWithUserInfo, Error, ContentWithUserInfo>(
     {
-      mutationFn: createSaveQueryFn<ContentWithUserInfo>(
-        contentType,
-        isEdit,
-        contentId
-      ),
+      mutationFn: isEdit
+        ? createSaveQueryFn<ContentWithUserInfo>(contentType)
+        : editSaveQueryFn<ContentWithUserInfo>(contentType, contentId),
       onSuccess: (savedData: ContentWithUserInfo) => {
         navigate(`/${contentType}/${savedData.id}`);
       },
