@@ -17,12 +17,6 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.28.14
         version: 5.66.0(react@18.3.1)
-      '@types/dompurify':
-        specifier: ^3.0.5
-        version: 3.2.0
-      '@types/lodash':
-        specifier: ^4.17.7
-        version: 4.17.15
       axios:
         specifier: ^1.7.4
         version: 1.7.9
@@ -84,6 +78,12 @@ importers:
       '@tanstack/react-query-devtools':
         specifier: ^5.32.1
         version: 5.66.0(@tanstack/react-query@5.66.0(react@18.3.1))(react@18.3.1)
+      '@types/dompurify':
+        specifier: ^3.2.0
+        version: 3.2.0
+      '@types/lodash':
+        specifier: ^4.17.15
+        version: 4.17.15
       '@types/react':
         specifier: ^18.2.56
         version: 18.3.18
