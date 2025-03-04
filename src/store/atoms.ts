@@ -1,12 +1,16 @@
 import { atom } from "jotai";
-import { atomWithStorage } from "jotai/utils";
+import { atomWithStorage, createJSONStorage } from "jotai/utils";
 import { supabase } from "../config/supabaseClient";
 import { UserInfo } from "../types/type";
+
+// sessionStorage에 저장하는 JSON storage 생성
+const storage = createJSONStorage<string | null>(() => sessionStorage);
 
 // accessToken 저장 atom
 export const accessTokenAtom = atomWithStorage<string | null>(
   "accessToken",
-  null
+  null,
+  storage
 );
 
 // 사용자 정보 저장 atom
