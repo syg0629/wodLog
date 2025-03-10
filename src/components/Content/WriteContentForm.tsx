@@ -58,8 +58,8 @@ const WriteContentForm = ({
   const saveData = useMutation<ContentWithUserInfo, Error, ContentWithUserInfo>(
     {
       mutationFn: isEdit
-        ? createSaveQueryFn<ContentWithUserInfo>(contentType)
-        : editSaveQueryFn<ContentWithUserInfo>(contentType, contentId),
+        ? editSaveQueryFn<ContentWithUserInfo>(contentType, contentId)
+        : createSaveQueryFn<ContentWithUserInfo>(contentType),
       onSuccess: (savedData: ContentWithUserInfo) => {
         navigate(`/${contentType}/${savedData.id}`);
       },
